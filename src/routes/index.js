@@ -22,7 +22,6 @@ const Router = () => {
           <Route exact path="/about-us" component={AboutUs}/>
           <Route exact path="/admin" component={AdminDashboard} />
           <Route exact path="/contact" component={Contact} />
-
         </Switch>
       </BrowserRouter>
     </div>
