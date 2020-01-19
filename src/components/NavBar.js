@@ -1,36 +1,39 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { Menu } from "semantic-ui-react";
 
-const Navbar = () => {
-  return (
-    <nav>
-      <div>
-        <NavLink exact to="/">
-          Home
-        </NavLink>
-      </div>
-      <div>
-        <NavLink exact to="/events">
-          Events
-        </NavLink>
-      </div>
-      <div>
-        <NavLink exact to="/signup">
-          Sign Up
-        </NavLink>
-      </div>
-      <div>
-        <NavLink exact to="/about-us">
-          About Us
-        </NavLink>
-      </div>
-      <div>
-        <NavLink exact to="/contact">
-          Contact
-        </NavLink>
-      </div>
-    </nav>
-  );
-};
+class Navbar extends React.Component {
+  render() {
+    return (
+      <Menu>
+        <Menu.Item>
+          <NavLink exact to="/">
+            Home
+          </NavLink>
+        </Menu.Item >
+        <Menu.Item>
+          <NavLink exact to="/events">
+            Events
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item>
+          <NavLink exact to="/signup">
+            Sign Up
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item>
+          <NavLink exact to="/about-us">
+            About Us
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item>
+          <NavLink exact to="/contact">
+            Contact
+          </NavLink>
+        </Menu.Item>
+      </Menu>
+    );
+  }
+}
 
 export default Navbar;

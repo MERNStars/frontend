@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import { Menu } from 'semantic-ui-react'
+
+
 
 export default class AboutUs extends Component {
   render() {
