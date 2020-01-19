@@ -3,19 +3,24 @@ import Axios from 'axios';
 import Moment from 'react-moment';
 import styles from '../styles/event.module.scss';
 
-import { Button, Segment, Image, Label } from 'semantic-ui-react'
+
+import { Button, Segment, Image, Label, Placeholder, Modal, Header } from 'semantic-ui-react'
+
+require('dotenv').config()
+
 
 class Event extends React.Component {
 
   state = {
     event: null,
+    presenters: []
   }
 
   componentDidMount = async () => {
     const {id} = this.props.match.params
     const response = await Axios.get(`https://weexplorebackend.herokuapp.com/events/${id}/id`)
-    const data = response.data
-    this.setState({ event: data});
+    const data = response.data 
+    this.setState({ event: data, presenters: data.presenters});
   }
 
   renderEvent = () => {
@@ -27,7 +32,15 @@ class Event extends React.Component {
             <p><Moment format= "D MMM HH:MM a">{event_date.begin}</Moment></p>
             <h1>{event_name}</h1>
             <p>{description}</p>
-            <Button size='massive'>Attend</Button>
+            <Modal trigger={<Button size='massive'>Attend</Button>}>
+              <Modal.Header>Select a Photo</Modal.Header>
+                <Modal.Content image>
+                  <Image wrapped size='medium' src='/images/avatar/large/rachel.png' />
+                  <Modal.Description>
+                    <Header>Default Profile Image</Header>
+                  </Modal.Description>
+                </Modal.Content>
+            </Modal>
           </Segment>
           <Segment>
             <Image src={ require('../assets/placeholder.jpg')} size='medium'></Image>
@@ -46,8 +59,26 @@ class Event extends React.Component {
             <Segment><h2>End <Moment format= "D MMM HH:MM a">{event_date.end}</Moment></h2></Segment>
           </Segment.Group>
           <Segment.Group horizontal>
-            <Segment><h2>Start <Moment format= "D MMM HH:MM a">{event_date.begin}</Moment></h2></Segment>
-            <Segment><h2>End <Moment format= "D MMM HH:MM a">{event_date.end}</Moment></h2></Segment>
+            <Segment>
+              <Placeholder style={{ height: 150, width: 150 }}>
+                <Placeholder.Image />
+              </Placeholder>
+            </Segment>
+            <Segment>
+              <h3>Address</h3>
+              <p>51 Morton St</p>
+              <p>Clayton, VIC 3168</p>
+              <p>Start Time: <Moment format= "HH:MM a">{event_date.begin}</Moment></p>
+              <p>Event Duration: <Moment to={event_date.begin} ago>{event_date.end}</Moment> </p>
+            </Segment>
+          </Segment.Group>
+          <Segment.Group >
+            <Segment textAlign='center'>
+              <h2>Presenters</h2>
+            </Segment>
+            <Segment>
+              {this.renderPresenters()}
+            </Segment>
           </Segment.Group>
         </Segment.Group>
       </div>
@@ -62,6 +93,9 @@ class Event extends React.Component {
     )
   }
 
+  renderPresenters = () => {
+
+  }
   
   
   render(){
