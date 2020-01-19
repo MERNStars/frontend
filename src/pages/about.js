@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Segment, Container, Card, Button } from "semantic-ui-react";
+import styles from "../styles/aboutus.module.scss";
 
 const items = [
   {
@@ -42,15 +43,13 @@ export default class AboutUs extends Component {
             </p>
           </Segment>
         </Container>
-        <br />
-        <br />
-        <div>
+        <div className={styles.section}>
           <h1>Other Services</h1>
           <Card.Group centered items={items} />
         </div>
-        <br />
-        <div>
-          <h1>Want To Know More?</h1>
+
+        <div className={styles.section}>
+          <h2>Want To Know More?</h2>
           <Container>
             <Link exact to="/contact">
               <Button fluid negative>
@@ -59,7 +58,7 @@ export default class AboutUs extends Component {
             </Link>
           </Container>
         </div>
-        <br />
+
       </div>
     );
   }
