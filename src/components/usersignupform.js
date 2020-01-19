@@ -1,7 +1,8 @@
 import React from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Field, reduxForm } from "redux-form";
 import { useForm } from "react-hook-form";
+
 require("dotenv").config();
 
 const UserSignUpForm = props => {
@@ -21,7 +22,6 @@ const UserSignUpForm = props => {
       .post(`https://weexplorebackend.herokuapp.com/users/create`, data)
       .then(response => {
         console.log(response.data);
-        props.history.push("/");
       });
   };
 
@@ -60,7 +60,7 @@ const UserSignUpForm = props => {
           />
         </div>
         <div>
-        <label>Last Name</label>
+          <label>Last Name</label>
           <input
             name="last_name"
             type="text"
@@ -68,23 +68,35 @@ const UserSignUpForm = props => {
           />
         </div>
 
-
         <div>
-        <label>Age</label>
-          <input
-            name="age"
-            type="number"
-            ref={register({ required: true })}
-          />
+          <label>Age</label>
+          <input name="age" type="number" ref={register({ required: true })} />
         </div>
 
-        {/*       TODO
-      sex,
-      age,
-      religion,
-      newsletter,
-      interests */}
+        <div>
+          <label>Sex</label>
+          <select name="sex" ref={register}>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="others">Others</option>
+            <option value="unspecified">Unspecified</option>
+          </select>
+        </div>
 
+        <label>Would you like newsletters sent to your email?</label>
+        <label>
+          <input type="radio" name="newsletter" ref={register} value={true} />
+          Yes
+        </label>
+        <label>
+          <input type="radio" name="newsletter" ref={register} value={false} />
+          No
+        </label>
+
+        <div>
+          <label>Interests</label>
+          <input name="interests" type="textarea" ref={register} />
+        </div>
         <input type="submit" />
       </form>
     </>
