@@ -1,6 +1,6 @@
 .eventCard {
   height: 400px;
-  width: 400px;
+  width: 300px;
   text-align: center;
   border: 1px black solid;
   border-radius: 15px;
@@ -8,10 +8,26 @@
   h1 {
     font-size: 14px;
   }
-  .eventDate {
-    height: auto;
-    width: 40px;
-    border: 1px black solid;
-    border-radius: 15px;
+  .top {
+    height: 50%;
+    width: inherit;
+    img {
+      z-index: -1;
+      max-height: 100%;
+      max-width: 100%;
+      opacity: 0.6;
+    };
+    .eventDate {
+      height: auto;
+      margin-top: 20px;
+      margin-left: 20px;
+      width: 40px;
+      border: 1px black solid;
+      border-radius: 15px;
+      z-index: 1;
+      position: absolute;
+    }
   }
+  
+  
 }

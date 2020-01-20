@@ -10,8 +10,13 @@ class Event extends React.Component {
     const { event_name, event_date } = this.props
     return(
       <div className = {styles.eventCard}>
-        <div className = {styles.eventDate}><sub><Moment format="D MMM">{event_date.begin}</Moment></sub></div>
-        <h1> {event_name}</h1>
+        <div className = {styles.top}>
+          <div className = {styles.eventDate}><sub><Moment format="D MMM">{event_date.begin}</Moment></sub></div>
+          <img src={ require('../assets/placeholder.jpg') } alt="fresh fruit on table"></img>
+        </div>
+        <div className = {styles.bottom}>
+          <h1> {event_name}</h1>
+        </div>
       </div>
     )
   }
