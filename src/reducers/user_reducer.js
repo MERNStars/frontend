@@ -68,12 +68,10 @@ function storeToken(username, token) {
 }
 
 export const userLogin = user => {
-  console.log(user.username, user.password);
-  console.log(process.env.REACT_APP_BACKEND_DB_URL);
 
   return dispatch => {
     axios
-      .post(`${BASE_URL}/users/login`, {
+      .post(`${process.env.REACT_APP_BACKEND_DB_URL}/users/login`, {
         username: user.username,
         password: user.password
       })

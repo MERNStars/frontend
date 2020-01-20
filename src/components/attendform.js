@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Field, reduxForm, FieldArray } from "redux-form";
+import {withRouter} from 'react-router-dom';
 
 class AttendForm extends Component {
   submit = data => {
@@ -99,4 +100,4 @@ class AttendForm extends Component {
   }
 }
 
-export default reduxForm({ form: "AttendForm" })(AttendForm);
+export default withRouter(reduxForm({ form: "AttendForm" })(AttendForm));

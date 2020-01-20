@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "axios";
-// import { Field, reduxForm } from "redux-form";
 import { useForm } from "react-hook-form";
 import {createUser} from '../reducers/user_reducer';
 import {connect} from 'react-redux';
