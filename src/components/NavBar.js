@@ -18,7 +18,7 @@ class Navbar extends React.Component {
         </Menu.Item>
         <Menu.Item>
           <NavLink exact to="/login">
-            Login In
+            Log In
           </NavLink>
         </Menu.Item>
         <Menu.Item>
