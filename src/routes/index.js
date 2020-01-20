@@ -8,6 +8,7 @@ import AdminDashboard from "../pages/AdminDashboard";
 import Navbar from '../components/NavBar'
 import AboutUs from '../pages/about'
 import Contact from '../pages/contact'
+import Login from '../pages/Login';
 
 const Router = () => {
   return (
@@ -22,6 +23,7 @@ const Router = () => {
           <Route exact path="/about-us" component={AboutUs}/>
           <Route exact path="/admin" component={AdminDashboard} />
           <Route exact path="/contact" component={Contact} />
+          <Route exact path="/login" component={Login} />
         </Switch>
       </BrowserRouter>
     </div>
