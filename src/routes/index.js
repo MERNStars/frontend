@@ -9,10 +9,9 @@ import Navbar from "../components/NavBar";
 import AboutUs from "../pages/about";
 import Contact from "../pages/contact";
 import Login from "../pages/Login";
-
+import CreateEvent from "../pages/CreateEvent";
 
 const Router = () => {
-  
   return (
     <div>
       <BrowserRouter>
@@ -23,6 +22,7 @@ const Router = () => {
           <Route exact path="/signup" component={SignUp} />
           <Route exact path={`/events/:id`} component={Event} />
           <Route exact path="/about-us" component={AboutUs} />
+          <Route exact path="/create-event" component={CreateEvent} />
           <Route exact path="/admin" component={AdminDashboard} />
           <Route exact path="/contact" component={Contact} />
           <Route exact path="/login" component={Login} />
