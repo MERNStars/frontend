@@ -17,27 +17,38 @@ import {
 require("dotenv").config();
 
 class Event extends React.Component {
-  state = {
-    event: null,
-    presenters: []
-  };
-
   submit = data => {
     console.log(data);
   };
 
-  info = {
-    username: localStorage.username
+  state = {
+    event: null,
+    presenters: [],
+    presenterDetails: []
   }
 
   componentDidMount = async () => {
-    const { id } = this.props.match.params;
-    const response = await Axios.get(
-      `https://weexplorebackend.herokuapp.com/events/${id}/id`
-    );
-    const data = response.data;
-    this.setState({ event: data, presenters: data.presenters });
-  };
+    const {id} = this.props.match.params
+    const response = await Axios.get(`https://weexplorebackend.herokuapp.com/events/${id}/id`)
+    const data = response.data 
+    this.setState({ event: data, presenters: data.presenters});
+    this.getPresenter()
+  }
+
+   
+  // Remove this and do this in the backend
+
+  getPresenter = () => {
+    let presentArray = []
+    this.state.presenters.map( async (presenter) => {
+      const response = await Axios.get(`https://weexplorebackend.herokuapp.com/presenters/${presenter}`)
+      presentArray.push( response.data)
+    })
+      this.setState( {presenterDetails: presentArray})
+  }
+>>>>>>> master
+
+
 
   renderEvent = () => {
     const {
@@ -119,7 +130,15 @@ class Event extends React.Component {
             <Segment textAlign="center">
               <h2>Presenters</h2>
             </Segment>
+<<<<<<< HEAD
             <Segment>{this.renderPresenters()}</Segment>
+=======
+            <Segment>
+              { this.state.presenterDetails.length > 0 && 
+               this.renderPresenters()
+               }
+            </Segment>
+>>>>>>> master
           </Segment.Group>
         </Segment.Group>
       </div>
@@ -127,6 +146,7 @@ class Event extends React.Component {
   };
 
   renderIcons() {
+<<<<<<< HEAD
     console.log(this.state.event);
     const { is_family_friendly } = this.state.event;
     return is_family_friendly ? "Family Friendly" : "18+";
@@ -136,6 +156,20 @@ class Event extends React.Component {
 
   render() {
     console.log(this.state.event);
+=======
+    const { is_family_friendly } = this.state.event
+    return(
+    is_family_friendly ? "Child Friendly" : "18+" 
+    )
+  }
+
+  renderPresenters = () => {
+      console.log( this.state.presenterDetails)
+  }
+  
+  
+  render(){
+>>>>>>> master
     return (
       <div className={styles.eventContainer}>
         <h1>Hello World</h1>

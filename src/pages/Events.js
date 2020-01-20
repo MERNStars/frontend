@@ -5,7 +5,6 @@ import styles from '../styles/events.module.scss';
 import EventCard from '../components/eventCard';
 
 
-
 export default class Events extends Component {
 
   state = {
