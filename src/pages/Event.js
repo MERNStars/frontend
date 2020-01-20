@@ -25,28 +25,30 @@ class Event extends React.Component {
     event: null,
     presenters: [],
     presenterDetails: []
-  }
+  };
 
   componentDidMount = async () => {
-    const {id} = this.props.match.params
-    const response = await Axios.get(`https://weexplorebackend.herokuapp.com/events/${id}/id`)
-    const data = response.data 
-    this.setState({ event: data, presenters: data.presenters});
-    this.getPresenter()
-  }
+    const { id } = this.props.match.params;
+    const response = await Axios.get(
+      `https://weexplorebackend.herokuapp.com/events/${id}/id`
+    );
+    const data = response.data;
+    this.setState({ event: data, presenters: data.presenters });
+    this.getPresenter();
+  };
 
-   
   // Remove this and do this in the backend
 
   getPresenter = () => {
-    let presentArray = []
-    this.state.presenters.map( async (presenter) => {
-      const response = await Axios.get(`https://weexplorebackend.herokuapp.com/presenters/${presenter}`)
-      presentArray.push( response.data)
-    })
-      this.setState( {presenterDetails: presentArray})
-  }
-
+    let presentArray = [];
+    this.state.presenters.map(async presenter => {
+      const response = await Axios.get(
+        `https://weexplorebackend.herokuapp.com/presenters/${presenter}`
+      );
+      presentArray.push(response.data);
+    });
+    this.setState({ presenterDetails: presentArray });
+  };
 
   renderEvent = () => {
     const {
@@ -69,7 +71,11 @@ class Event extends React.Component {
               <Modal.Header>Attendees</Modal.Header>
               <Modal.Content>
                 <Modal.Description>
-                  <AttendForm onSubmit={this.submit} event={this.state.event} initialValues={{username: localStorage.username}}/>
+                  <AttendForm
+                    onSubmit={this.submit}
+                    event={this.state.event}
+                    initialValues={{ username: localStorage.username }}
+                  />
                 </Modal.Description>
               </Modal.Content>
             </Modal>
@@ -136,18 +142,15 @@ class Event extends React.Component {
   };
 
   renderIcons() {
-    const { is_family_friendly } = this.state.event
-    return(
-    is_family_friendly ? "Child Friendly" : "18+" 
-    )
+    const { is_family_friendly } = this.state.event;
+    return is_family_friendly ? "Child Friendly" : "18+";
   }
 
   renderPresenters = () => {
-      console.log( this.state.presenterDetails)
-  }
-  
-  
-  render(){
+    console.log(this.state.presenterDetails);
+  };
+
+  render() {
     return (
       <div className={styles.eventContainer}>
         <h1>Hello World</h1>
