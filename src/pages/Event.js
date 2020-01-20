@@ -4,17 +4,17 @@ import Axios from "axios";
 import Moment from "react-moment";
 import styles from "../styles/event.module.scss";
 import AttendForm from "../components/attendform";
-import { createRef }  from 'react';
+
+import { Link } from 'react-router-dom';
+
+
 
 import {
   Button,
   Segment,
   Image,
   Label,
-  Placeholder,
-  Modal,
-  Header,
-  Sticky
+  Modal
 } from "semantic-ui-react";
 
 require("dotenv").config();
@@ -30,8 +30,8 @@ class Event extends React.Component {
     // });
   };
 
-  contextRef = createRef()
-
+  
+  
 
   state = {
     event: null,
@@ -55,12 +55,7 @@ class Event extends React.Component {
     } = this.state.event;
 
     return (
-      <div ref={this.contextRef}>
-        <Sticky context={this.contextRef}>
-          <Segment className={styles.stickyFooter}>
-            <h1>Hello World</h1>
-          </Segment>
-        </Sticky>
+      <div>
         <Segment.Group horizontal>
           <Segment>
             <p>
@@ -112,9 +107,7 @@ class Event extends React.Component {
           </Segment.Group>
           <Segment.Group horizontal>
             <Segment>
-              <Placeholder style={{ height: 150, width: 150 }}>
-                <Placeholder.Image />
-              </Placeholder>
+               {/* Insert code for google map here. */}
             </Segment>
             <Segment>
               <h3>Address</h3>
@@ -140,7 +133,18 @@ class Event extends React.Component {
 
           </Segment.Group>
         </Segment.Group>
-        
+        <div className={styles.containerFooter}>
+          <div className={styles.Footer}>
+            <Modal trigger={<Button size="massive" floated="right">Attend</Button>}>
+                <Modal.Header>Attendees</Modal.Header>
+                <Modal.Content>
+                  <Modal.Description>
+                    <AttendForm onSubmit={this.submit} event={this.state.event} initialValues={{username: localStorage.username}}/>
+                  </Modal.Description>
+                </Modal.Content>
+              </Modal>
+          </div>
+        </div>
       </div>
     );
   };
@@ -167,9 +171,11 @@ class Event extends React.Component {
   
   render(){
     return (
+      <div>
+        <Link to={{ pathname:`/events`}}>Back to events</Link>
       <div className={styles.eventContainer}>
-        <h1>Hello World</h1>
         {this.state.event ? this.renderEvent() : null}
+      </div>
       </div>
     );
   }

@@ -3,6 +3,7 @@ import axios from 'axios';
 import styles from '../styles/events.module.scss';
 
 import EventCard from '../components/eventCard';
+import SearchBar from '../components/searchBar';
 
 
 export default class Events extends Component {
@@ -19,20 +20,28 @@ export default class Events extends Component {
     this.setState( {events: data })
   }
 
+  categorySearch = (events) => {
+    this.setState( {events: events});
+  }
+
+
 
   render() {
     const {events} = this.state
     return(
-      <div className="events">
+      <div className={styles.Main}>
       <h1>All Events</h1>
+      <SearchBar 
+        categorySearch={this.categorySearch}/>
+      
       <div className={styles.eventContainer}>
-        {events ? events.map( (event, i) => {
+        {events && events.map( (event, i) => {
           return (
             < EventCard 
               { ...event} 
               index={i}/> 
           )
-        }) : null}
+        })}
         </div>
       </div>
     )

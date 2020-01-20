@@ -20,10 +20,9 @@ class EventCard extends React.Component {
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
-        <a href="#">
           <Icon name='user' />
           {this.props.event_capacity}
-        </a>
+
       </Card.Content>
     </Card>
   )

@@ -1,19 +1,51 @@
 import React, { Component } from "react";
 // import UserSignUpForm from "../components/usersignupform";
 import UserSignUpForm from "../components/SignUpForm";
+import {connect} from 'react-redux';
+import {createUser} from '../reducers/user_reducer';
+import { Redirect } from 'react-router-dom'
 
-export default class SignUp extends Component {
-  submit = data => {
+function mapStateToProps(state){
+  return {message: state.userReducer.message, userLoggedIn: state.userReducer.userLoggedIn}
+}
+
+class SignUp extends Component {
+
+  state = {
+    display_message: "Sign Up",
+    redirect: false
+  }
+
+  submit = (data) => {
     console.log(data);
-  
+    this.props.createUser(data);
+    this.setState({display_message: "Your account has been created.", redirect: true});
   };
+
+  redirectToLogin = () => {
+    if(this.state.redirect){
+      return <Redirect to="/login" />;
+    }
+  }
 
   render() {
     return (
       <div>
-        <h1>Sign Up</h1>
+        {this.redirectToLogin()}
+        <h1>{this.state.display_message}</h1>
         <UserSignUpForm  onSubmit={this.submit}/>
       </div>
     );
   }
 }
+
+//Things to implement
+const mapDispatchToProps = dispatch => {
+  return {
+      createUser: userData => {
+      dispatch(createUser(userData));
+      }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
