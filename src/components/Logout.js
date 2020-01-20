@@ -6,7 +6,8 @@ function mapStateToProps(state) {
   return {
     message: state.userReducer.message,
     userLoggedIn: state.userReducer.userLoggedIn,
-    token: state.userReducer.token
+    token: state.userReducer.token,
+    isAdmin: state.userReducer.isAdmin
   };
 }
 
@@ -26,6 +27,7 @@ class Logout extends Component {
       <div>
         <button onClick={this.logout}>Logout</button>
         <div>{this.props.message}</div>
+        <div>{this.props.isAdmin ? "You are an admin." : "You are not an admin."}</div>
       </div>
     );
   }

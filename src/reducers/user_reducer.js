@@ -39,7 +39,9 @@ const initialState = {
 
   token: "",
 
-  username: ""
+  username: "",
+
+  isAdmin: false
 };
 
 const userCreated = message => ({
@@ -47,10 +49,10 @@ const userCreated = message => ({
   message: message
 });
 
-const userLoggedIn = (username, message) => ({
+const userLoggedIn = (username, data) => ({
   type: "USER_LOGGED_IN",
   username: username,
-  message: message
+  data: data
 });
 
 const userLoggedOut = message => ({
@@ -71,13 +73,14 @@ export const userLogin = user => {
 
   return dispatch => {
     axios
-      .post(`${process.env.REACT_APP_BACKEND_DB_URL}/users/login`, {
+      .post(`${BASE_URL}/users/login`, {
         username: user.username,
         password: user.password
       })
       .then(response => {
         console.log("hello!!");
         dispatch(userLoggedIn(user.username, response.data));
+        console.log(response.data.isAdmin)
         storeToken(user.username, response.data.token);
       })
       .catch(err => console.error("Error xxxx: " + err));
@@ -114,6 +117,7 @@ export const createUser = user => {
 
 const userReducer = (state = initialState, action) => {
   let newState = {};
+ 
   switch (action.type) {
     case "USER_CREATED":
       newState = { ...state, message: "Your account has been created." };
@@ -121,8 +125,9 @@ const userReducer = (state = initialState, action) => {
     case "USER_LOGGED_IN":
       newState = {
         ...state,
-        token: action.token,
+        token: action.data.token,
         userLoggedIn: true,
+        isAdmin: action.data.isAdmin,
         username: action.username,
         message: "You are logged in."
       };
