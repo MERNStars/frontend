@@ -19,7 +19,7 @@ const UserSignUpForm = props => {
     console.log(data);
 
     axios
-      .post(`https://weexplorebackend.herokuapp.com/users/create`, data)
+      .post(`${process.env.BACKEND_DB_URL}/users/create`, data)
       .then(response => {
         console.log(response.data);
       });
