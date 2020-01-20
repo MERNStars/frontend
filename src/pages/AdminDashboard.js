@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 
-export default class Event extends Component {
+export default class AdminDashboard extends Component {
   render() {
     return (
       <div>
-        <h1>Event</h1>
+        <h1>Admin Dashboard</h1>
       </div>
     )
   }
