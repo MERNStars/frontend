@@ -46,8 +46,6 @@ class Event extends React.Component {
     })
       this.setState( {presenterDetails: presentArray})
   }
->>>>>>> master
-
 
 
   renderEvent = () => {
@@ -130,15 +128,7 @@ class Event extends React.Component {
             <Segment textAlign="center">
               <h2>Presenters</h2>
             </Segment>
-<<<<<<< HEAD
             <Segment>{this.renderPresenters()}</Segment>
-=======
-            <Segment>
-              { this.state.presenterDetails.length > 0 && 
-               this.renderPresenters()
-               }
-            </Segment>
->>>>>>> master
           </Segment.Group>
         </Segment.Group>
       </div>
@@ -146,17 +136,6 @@ class Event extends React.Component {
   };
 
   renderIcons() {
-<<<<<<< HEAD
-    console.log(this.state.event);
-    const { is_family_friendly } = this.state.event;
-    return is_family_friendly ? "Family Friendly" : "18+";
-  }
-
-  renderPresenters = () => {};
-
-  render() {
-    console.log(this.state.event);
-=======
     const { is_family_friendly } = this.state.event
     return(
     is_family_friendly ? "Child Friendly" : "18+" 
@@ -169,7 +148,6 @@ class Event extends React.Component {
   
   
   render(){
->>>>>>> master
     return (
       <div className={styles.eventContainer}>
         <h1>Hello World</h1>
