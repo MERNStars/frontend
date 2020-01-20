@@ -2,6 +2,7 @@ import React from 'react';
 import styles from '../styles/event.module.scss';
 import Moment from 'react-moment';
 import { Card, Icon, Image } from 'semantic-ui-react'
+import { Link } from 'react-router-dom';
 
 class Event extends React.Component {
 
@@ -28,11 +29,12 @@ class Event extends React.Component {
   )
 
   render() {
+    const {index} = this.props
     console.log( this.props)
     return(
-      <div className={styles.eventCard}>
-        <a href="#">{this.CardExampleCard()}</a>
-      </div>
+      <Link to={`/events/${index}`} ><div className={styles.eventCard}>
+        {this.CardExampleCard()}
+      </div></Link>
     )
   }
 

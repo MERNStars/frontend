@@ -27,10 +27,11 @@ export default class Events extends Component {
       <div className="events">
       <h1>All Events</h1>
       <div className={styles.eventContainer}>
-        {events ? events.map( (event) => {
+        {events ? events.map( (event, i) => {
           return (
             < Event 
-              { ...event} /> 
+              { ...event} 
+              index={i}/> 
           )
         }) : null}
         </div>
