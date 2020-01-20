@@ -1,11 +1,18 @@
-import React, { Component } from 'react'
+import React from 'react';
 
-export default class Event extends Component {
+class Event extends React.Component {
+
+
   render() {
-    return (
-      <div>
-        <h1>Event</h1>
+    console.log( this.props)
+    return(
+      <div className = "event-card">
+        <h1> {this.props.event_name}</h1>
       </div>
     )
   }
+
 }
+
+export default Event
+
