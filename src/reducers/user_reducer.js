@@ -80,7 +80,6 @@ export const userLogin = user => {
       .then(response => {
         console.log("hello!!");
         dispatch(userLoggedIn(user.username, response.data));
-        console.log(response.data.isAdmin)
         storeToken(user.username, response.data.token);
       })
       .catch(err => console.error("Error xxxx: " + err));
