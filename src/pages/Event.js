@@ -18,7 +18,13 @@ require("dotenv").config();
 
 class Event extends React.Component {
   submit = data => {
-    console.log(data);
+    const newData = {};
+    newData._id = this.state.event._id;
+    newData.attendees = data;
+    console.log(newData);
+    // Axios.patch("http://localhost:8888/events/update", newData).then(response => {
+    //   console.log(response.newData);
+    // });
   };
 
   state = {
