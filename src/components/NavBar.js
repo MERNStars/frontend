@@ -7,7 +7,6 @@ function mapStateToProps(state){
   return {userLoggedIn: state.userReducer.userLoggedIn}
 }
 
-
 class Navbar extends React.Component {
   
   render() {
