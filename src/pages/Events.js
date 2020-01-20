@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import styles from '../styles/events.module.scss';
 
-import Event from './Event';
+import EventCard from '../components/eventCard';
 
 
 
@@ -29,7 +29,7 @@ export default class Events extends Component {
       <div className={styles.eventContainer}>
         {events ? events.map( (event, i) => {
           return (
-            < Event 
+            < EventCard 
               { ...event} 
               index={i}/> 
           )
