@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
+import styles from '../styles/events.module.scss';
 
 import Event from './Event';
 
@@ -23,12 +24,14 @@ export default class Events extends Component {
     return(
       <div className="events">
       <h1>All Events</h1>
+      <div className={styles.eventContainer}>
         {events ? events.map( (event) => {
           return (
             < Event 
               { ...event} /> 
           )
         }) : null}
+        </div>
       </div>
     )
   }

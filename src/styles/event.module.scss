@@ -1,0 +1,17 @@
+.eventCard {
+  height: 400px;
+  width: 400px;
+  text-align: center;
+  border: 1px black solid;
+  border-radius: 15px;
+  margin: 10px;
+  h1 {
+    font-size: 14px;
+  }
+  .eventDate {
+    height: auto;
+    width: 40px;
+    border: 1px black solid;
+    border-radius: 15px;
+  }
+}
