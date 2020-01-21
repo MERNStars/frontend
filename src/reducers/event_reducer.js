@@ -15,6 +15,7 @@ const initialState = {
     "addiction recovery",
     "weight-loss program"
   ],
+
   event_statuses: [
     "scheduled",
     "canceled",
@@ -22,9 +23,25 @@ const initialState = {
     "completed",
     "sold out"
   ],
+  
+    message: '',
 
-  message: ""
-};
+    events: []
+}
+
+export const populateEvents = (events) => {
+    return {
+        type: "POPULATE_EVENTS",
+        data: events
+    }
+}
+
+export const deleteEvents = (events) => {
+    return {
+        type: "EVENT_DELETED",
+        data: events
+    }
+}
 
 export const createEvent = event => {
   return dispatch => {
@@ -66,20 +83,27 @@ const eventCreated = message => ({
   message: message
 });
 
-const eventReducer = (state = initialState, action) => {
-  let newState = {};
-  switch (action.type) {
-    case "EVENT_CREATED":
-      newState = { ...state, message: "Your event has been created." };
-      break;
-    case "EVENT_DELETED":
-      newState = { ...state, message: "Your event has been deleted." };
-      break;
-    default:
-      newState = { ...state };
-      break;
-  }
-  return newState;
-};
+const eventReducer = (state=initialState, action) => {
+
+    let newState = {};
+    switch(action.type){
+        case "EVENT_CREATED":
+            newState = { ...state, message: "Your event has been created." };
+            break;
+        case "EVENT_DELETED":
+            newState = { ...state, message: "Your event has been deleted.", events: action.data };
+            break;  
+        case "POPULATE_EVENTS":
+            newState = { ...state, events: action.data };
+            break;
+        case "EVENT_EDITED":
+            newState = { ...state, events: action.data };
+            break;
+        default:
+            newState = { ...state};
+            break;
+    }
+    return newState;
+}
 
 export default eventReducer;
