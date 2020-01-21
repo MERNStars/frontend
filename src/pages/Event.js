@@ -13,7 +13,8 @@ class Event extends React.Component {
 
   state = {
     event: null,
-    presenters: []
+    presenters: [],
+    presenterDetails: [],
   }
 
   componentDidMount = async () => {
@@ -21,7 +22,17 @@ class Event extends React.Component {
     const response = await Axios.get(`https://weexplorebackend.herokuapp.com/events/${id}/id`)
     const data = response.data 
     this.setState({ event: data, presenters: data.presenters});
+    this.getPresenter()
   }
+
+  getPresenter = () => {
+    this.state.presenters.map( async (presenter) => {
+      const response = await Axios.get(`https://weexplorebackend.herokuapp.com/presenters/${presenter}`)
+      this.state.presenterDetails.push(response.data)
+    })
+  }
+
+
 
   renderEvent = () => {
     const { event_name, event_date, description, event_category } = this.state.event
@@ -94,7 +105,7 @@ class Event extends React.Component {
   }
 
   renderPresenters = () => {
-
+    console.log( this.state.presenterDetails)
   }
   
   
