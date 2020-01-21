@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {BASE_URL} from './config';
+require('dotenv').config()
 
 const initialState = { 
     religions: ['agnostic', 'anglican', 'assyrian apostolic', 'atheist', 'australian aboriginal traditonal religions', 'baptist', 'buddhism', 'catholic', 'eastern orthodox', 'hinduism', 'islam', 'jehovah witness', 'judaism', 'later-day saints', 'lutheran', 'other religion', 'other christian', 'preferred not to indicate', 'presbyterian', 'salvation army', 'secular beliefs', 'seventh-day adventist', 'torres strait islander spirituality', 'uniting church', 'unspecified'],
@@ -11,7 +12,9 @@ const initialState = {
 
     message: 'Welcome!',
 
-    token: ''
+    token: '',
+
+    username: ''
 }
 
 const userCreated = message => ({
@@ -19,8 +22,9 @@ const userCreated = message => ({
     message: message
 });
 
-const userLoggedIn = message => ({
+const userLoggedIn = (username, message) => ({
     type: "USER_LOGGED_IN",
+    username: username,
     message: message
 });
 
@@ -29,24 +33,27 @@ const userLoggedOut = (message) => ({
     message: message
 });
 
-function storeToken(token) {
+function storeToken(username, token) {
     if (typeof(Storage) !== "undefined") {
         localStorage.weexplore_token = token;
+        localStorage.username = username;
     }
   }
 
 export const userLogin = user => {
-    // console.log(user.username, user.password);
+    console.log(user.username, user.password);
+    console.log(process.env.REACT_APP_BACKEND_DB_URL)
     
     return dispatch => {
       axios
-        .post(`${BASE_URL}/users/login`, {
+        .post(`${process.env.REACT_APP_BACKEND_DB_URL}/users/login`, {
             username: user.username,
-            password: user.password,
+            password: user.password
         })
         .then(response => {
-          dispatch(userLoggedIn(response.data));
-          storeToken(response.data.token);
+            console.log("hello!!");
+          dispatch(userLoggedIn(user.username, response.data));
+          storeToken(user.username, response.data.token);
         })
         .catch(err => console.error("Error xxxx: " + err));
     };
@@ -89,7 +96,7 @@ const userReducer = (state=initialState, action) => {
             newState = { ...state, message: "Your account has been created." };
             break;
         case "USER_LOGGED_IN":
-            newState = { ...state, token: action.token, userLoggedIn: true, message: "You are logged in." };
+            newState = { ...state, token: action.token, userLoggedIn: true, username: action.username, message: "You are logged in." };
             break;   
         case "USER_LOGGED_OUT":
             newState = { ...state, token: null, userLoggedIn: false, message: "You have been logged out." };

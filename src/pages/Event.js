@@ -1,16 +1,25 @@
-import React from 'react';
-import Axios from 'axios';
-import Moment from 'react-moment';
-import styles from '../styles/event.module.scss';
+import React from "react";
+import Axios from "axios";
+import Moment from "react-moment";
+import styles from "../styles/event.module.scss";
+import AttendForm from "../components/attendform";
 
+import {
+  Button,
+  Segment,
+  Image,
+  Label,
+  Placeholder,
+  Modal,
+  Header
+} from "semantic-ui-react";
 
-import { Button, Segment, Image, Label, Placeholder, Modal, Header } from 'semantic-ui-react'
-
-require('dotenv').config()
-
+require("dotenv").config();
 
 class Event extends React.Component {
-  
+  submit = data => {
+    console.log(data);
+  };
 
   state = {
     event: null,
@@ -37,43 +46,64 @@ class Event extends React.Component {
     })
       this.setState( {presenterDetails: presentArray})
   }
+>>>>>>> master
 
 
 
   renderEvent = () => {
-    const { event_name, event_date, description, event_category } = this.state.event
+    const {
+      _id,
+      event_name,
+      event_date,
+      description,
+      event_category
+    } = this.state.event;
     return (
       <div>
         <Segment.Group horizontal>
           <Segment>
-            <p><Moment format= "D MMM HH:MM a">{event_date.begin}</Moment></p>
+            <p>
+              <Moment format="D MMM HH:MM a">{event_date.begin}</Moment>
+            </p>
             <h1>{event_name}</h1>
             <p>{description}</p>
-            <Modal trigger={<Button size='massive'>Attend</Button>}>
-              <Modal.Header>Select a Photo</Modal.Header>
-                <Modal.Content image>
-                  <Image wrapped size='medium' src='/images/avatar/large/rachel.png' />
-                  <Modal.Description>
-                    <Header>Default Profile Image</Header>
-                  </Modal.Description>
-                </Modal.Content>
+            <Modal trigger={<Button size="massive">Attend</Button>}>
+              <Modal.Header>Attendees</Modal.Header>
+              <Modal.Content>
+                <Modal.Description>
+                  <AttendForm onSubmit={this.submit} event={this.state.event} initialValues={{username: localStorage.username}}/>
+                </Modal.Description>
+              </Modal.Content>
             </Modal>
           </Segment>
           <Segment>
-            <Image src={ require('../assets/placeholder.jpg')} size='medium'></Image>
+            <Image
+              src={require("../assets/placeholder.jpg")}
+              size="medium"
+            ></Image>
           </Segment>
         </Segment.Group>
-        <Segment textAlign='center'>
+        <Segment textAlign="center">
           <h1>About</h1>
           <p>{description}</p>
           <Label>{this.renderIcons()}</Label>
           <Label>{event_category}</Label>
         </Segment>
-        <Segment.Group >
-          <Segment textAlign='center'><h1>Date</h1></Segment>
+        <Segment.Group>
+          <Segment textAlign="center">
+            <h1>Date</h1>
+          </Segment>
           <Segment.Group horizontal>
-            <Segment><h2>Start <Moment format= "D MMM HH:MM a">{event_date.begin}</Moment></h2></Segment>
-            <Segment><h2>End <Moment format= "D MMM HH:MM a">{event_date.end}</Moment></h2></Segment>
+            <Segment>
+              <h2>
+                Start <Moment format="D MMM HH:MM a">{event_date.begin}</Moment>
+              </h2>
+            </Segment>
+            <Segment>
+              <h2>
+                End <Moment format="D MMM HH:MM a">{event_date.end}</Moment>
+              </h2>
+            </Segment>
           </Segment.Group>
           <Segment.Group horizontal>
             <Segment>
@@ -85,26 +115,48 @@ class Event extends React.Component {
               <h3>Address</h3>
               <p>51 Morton St</p>
               <p>Clayton, VIC 3168</p>
-              <p>Start Time: <Moment format= "HH:MM a">{event_date.begin}</Moment></p>
-              <p>Event Duration: <Moment to={event_date.begin} ago>{event_date.end}</Moment> </p>
+              <p>
+                Start Time: <Moment format="HH:MM a">{event_date.begin}</Moment>
+              </p>
+              <p>
+                Event Duration:{" "}
+                <Moment to={event_date.begin} ago>
+                  {event_date.end}
+                </Moment>{" "}
+              </p>
             </Segment>
           </Segment.Group>
-          <Segment.Group >
-            <Segment textAlign='center'>
+          <Segment.Group>
+            <Segment textAlign="center">
               <h2>Presenters</h2>
             </Segment>
+<<<<<<< HEAD
+            <Segment>{this.renderPresenters()}</Segment>
+=======
             <Segment>
               { this.state.presenterDetails.length > 0 && 
                this.renderPresenters()
                }
             </Segment>
+>>>>>>> master
           </Segment.Group>
         </Segment.Group>
       </div>
-    )
-  }
+    );
+  };
 
   renderIcons() {
+<<<<<<< HEAD
+    console.log(this.state.event);
+    const { is_family_friendly } = this.state.event;
+    return is_family_friendly ? "Family Friendly" : "18+";
+  }
+
+  renderPresenters = () => {};
+
+  render() {
+    console.log(this.state.event);
+=======
     const { is_family_friendly } = this.state.event
     return(
     is_family_friendly ? "Child Friendly" : "18+" 
@@ -117,14 +169,14 @@ class Event extends React.Component {
   
   
   render(){
+>>>>>>> master
     return (
       <div className={styles.eventContainer}>
         <h1>Hello World</h1>
-        { this.state.event ? this.renderEvent() : null }
-      </div>     
-    )
+        {this.state.event ? this.renderEvent() : null}
+      </div>
+    );
   }
 }
 
-export default Event
-
+export default Event;

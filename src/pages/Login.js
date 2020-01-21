@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux';
+import { Link } from "react-router-dom";
 import LoginForm from '../components/LoginForm';
 import Logout from '../components/Logout';
 
@@ -18,7 +19,12 @@ class Login extends Component {
             return <LoginForm />;
     }
   render() {
-    return this.renderForm();
+  return <>
+    <div>{this.renderForm()}</div>
+    <div><Link to="/signup"><button>Sign Up</button></Link></div>
+  
+  
+  </>;
   }
 }
 
