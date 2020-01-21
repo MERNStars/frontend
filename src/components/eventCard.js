@@ -29,10 +29,9 @@ class EventCard extends React.Component {
   )
 
   render() {
-    const {index} = this.props
-    console.log( this.props)
+    const {_id} = this.props
     return(
-      <Link to={{ pathname:`/events/${index}`}}><div className={styles.eventCard}>
+      <Link to={{ pathname:`/events/${_id}`}}><div className={styles.eventCard}>
         {this.CardExampleCard()}
       </div></Link>
     )
