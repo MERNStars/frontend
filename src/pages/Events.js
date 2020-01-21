@@ -17,6 +17,7 @@ export default class Events extends Component {
       console.log( `ERROR: ${error}` )
     })
     const data = await response.data 
+
     this.setState( {events: data })
   }
 
@@ -36,11 +37,11 @@ export default class Events extends Component {
       
       <div className={styles.eventContainer}>
         {events && events.map( (event, i) => {
-          return (
-            < EventCard 
+          if( event.published ){
+            return(< EventCard 
               { ...event} 
-              index={i}/> 
-          )
+              index={i}/>)
+          }
         })}
         </div>
       </div>

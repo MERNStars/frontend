@@ -11,7 +11,32 @@ import { Button, Segment, Image, Label, Modal } from "semantic-ui-react";
 require("dotenv").config();
 
 class Event extends React.Component {
-  submit = async data => {
+
+
+  state = {
+    event: null,
+    attending: false,
+    attend: 'Attend'
+  };
+
+  componentDidMount = async () => {
+    const { id } = this.props.match.params;
+    const response = await axios.get(
+      `https://weexplorebackend.herokuapp.com/events/${id}/id`
+    );
+    const data = response.data;
+    this.setState({ event: data });
+    this.checkAttendStatus()
+  };
+
+  checkAttendStatus() {
+    const { event } = this.state
+    return event ? 
+      event.attendees.find( attendee => attendee.username === localStorage.username) ? this.setState( {attending: true, attend: 'Unattend'}) : this.setState( {attending: false})
+      : null
+  }
+
+  attendEvent = async data => {
     try {
       await axios
         .patch(
@@ -19,8 +44,8 @@ class Event extends React.Component {
           {
             _id: this.state.event._id,
             username: data.username,
-            friends: data.friends == undefined ? [] : data.friends,
-            dependents: data.dependents == undefined ? [] : data.dependents
+            friends: data.friends === undefined ? [] : data.friends,
+            dependents: data.dependents === undefined ? [] : data.dependents
           },
           {
             headers: {
@@ -37,42 +62,40 @@ class Event extends React.Component {
     }
   };
 
-  state = {
-    event: null,
-    attending: false
-  };
-
-  componentDidMount = async () => {
-    const { id } = this.props.match.params;
-    const response = await axios.get(
-      `https://weexplorebackend.herokuapp.com/events/${id}/id`
-    );
-    const data = response.data;
-    this.setState({ event: data });
-    this.checkAttendStatus()
+  unattendEvent = async(event) => {
     console.log( this.state.event)
-    console.log( this.state.attending)
+    try {
+      await axios
+        .patch(
+          `${process.env.REACT_APP_BACKEND_DB_URL}/events/unattend`,
+          {
+            _id: this.state.event._id,
+            username: localStorage.username
+          },
+          {
+            headers: {
+              authorization: `${localStorage.weexplore_token}`
+            }
+          }
+        )
+        .then(response => {
+          console.log(response.data);
+          this.props.history.push(`/events/${this.state.event._id}`);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+    this.setState( { attending: false, attend: 'Attend'})
   };
-
-  checkAttendStatus() {
-    const { event } = this.state
-    return event ? 
-      event.attendees.find( attendee => attendee.username === localStorage.username) ? this.setState( {attending: true}) : this.setState( {attending: false})
-      : null
-  }
 
   renderEvent = () => {
     const {
-      _id,
       event_name,
       event_date,
       description,
       event_category
     } = this.state.event;
-
-
     return (
-    
       <div>
         <Segment.Group horizontal>
           <Segment>
@@ -81,18 +104,7 @@ class Event extends React.Component {
             </p>
             <h1>{event_name}</h1>
             <p>{description}</p>
-            <Modal trigger={<Button size="massive">Attend</Button>}>
-              <Modal.Header>Attendees</Modal.Header>
-              <Modal.Content>
-                <Modal.Description>
-                  <AttendForm
-                    onSubmit={this.submit}
-                    event={this.state.event}
-                    initialValues={{ username: localStorage.username }}
-                  />
-                </Modal.Description>
-              </Modal.Content>
-            </Modal>
+            {this.renderButton()}
           </Segment>
           <Segment>
             <Image
@@ -144,35 +156,36 @@ class Event extends React.Component {
             <Segment textAlign="center">
               <h2>Presenters</h2>
             </Segment>
-
             <Segment>{this.renderPresenters()}</Segment>
           </Segment.Group>
         </Segment.Group>
         <div className={styles.containerFooter}>
           <div className={styles.Footer}>
-            <Modal
-              trigger={
-                <Button size="massive" floated="right">
-                  Attend
-                </Button>
-              }
-            >
-              <Modal.Header>Attendees</Modal.Header>
-              <Modal.Content>
-                <Modal.Description>
-                  <AttendForm
-                    onSubmit={this.submit}
-                    event={this.state.event}
-                    initialValues={{ username: localStorage.username }}
-                  />
-                </Modal.Description>
-              </Modal.Content>
-            </Modal>
+            {this.renderButton()}
           </div>
         </div>
       </div>
     );
   };
+
+  renderButton() {
+    return(
+      <Modal trigger={<Button size="massive">{this.state.attend}</Button>}>
+          <Modal.Header>{this.state.attend}</Modal.Header>
+            <Modal.Content>
+              <Modal.Description>
+                {this.state.attending ? 
+                <>Are you sure you want to unattend?
+                  <Button onClick={this.unattendEvent}>Yes</Button>
+                </> : <AttendForm
+                onSubmit={this.attendEvent}
+                event={this.state.event}
+                initialValues={{ username: localStorage.username }}/>}
+              </Modal.Description>
+          </Modal.Content>
+      </Modal>
+    )
+  }
 
   renderIcons() {
     const { is_family_friendly } = this.state.event;
@@ -205,14 +218,6 @@ class Event extends React.Component {
         })
       : null;
   }
-
-  // Map through attendees array
-  // Put in component did mount. 
-  // if the object.username === localstorage.username render unattend button
-  // else render attend button. 
-  // let obj = arr.find(o => o.name === 'string 1');
-
- 
 
   render() {
     return (

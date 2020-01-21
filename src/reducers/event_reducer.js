@@ -43,6 +43,13 @@ export const deleteEvents = (events) => {
     }
 }
 
+export const updateEvents = (events) => {
+  return {
+    type: "UPDATE_EVENTS",
+    data: events
+  }
+}
+
 export const createEvent = event => {
   return dispatch => {
     console.log(`${event.event_date}T${event.event_start_time}`);
@@ -94,6 +101,9 @@ const eventReducer = (state=initialState, action) => {
             newState = { ...state, message: "Your event has been deleted.", events: action.data };
             break;  
         case "POPULATE_EVENTS":
+            newState = { ...state, events: action.data };
+            break;
+        case "UPDATE_EVENTS":
             newState = { ...state, events: action.data };
             break;
         case "EVENT_EDITED":

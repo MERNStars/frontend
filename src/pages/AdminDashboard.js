@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import AdminEvent from "../components/adminevents";
 import AdminMembers from "../components/adminmembers";
-import { Sidebar, Segment, Menu, Grid } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { populateEvents } from '../reducers/event_reducer'
 
@@ -47,7 +47,6 @@ class AdminDashboard extends Component {
     this.props.populateEvents(data)
   }
 
-  // Dispatch to event reducer to change the store state. 
 
   renderAdminPage() {
     console.log(this.props.events)
