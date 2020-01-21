@@ -58,7 +58,6 @@ export default class AboutUs extends Component {
             </Link>
           </Container>
         </div>
-
       </div>
     );
   }
