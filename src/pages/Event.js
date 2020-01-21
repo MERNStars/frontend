@@ -1,49 +1,41 @@
 import React from 'react';
+import { createRef }  from 'react';
 import Axios from 'axios';
 import Moment from 'react-moment';
 import styles from '../styles/event.module.scss';
 
 
-import { Button, Segment, Image, Label, Placeholder, Modal, Header } from 'semantic-ui-react'
+import { Button, Segment, Image, Label, Placeholder, Modal, Header, Sticky } from 'semantic-ui-react'
 
 require('dotenv').config()
 
 
 class Event extends React.Component {
-  
+  contextRef = createRef()
 
   state = {
     event: null,
-    presenters: [],
-    presenterDetails: []
   }
 
   componentDidMount = async () => {
     const {id} = this.props.match.params
     const response = await Axios.get(`https://weexplorebackend.herokuapp.com/events/${id}/id`)
     const data = response.data 
-    this.setState({ event: data, presenters: data.presenters});
-    this.getPresenter()
-  }
-
-   
-  // Remove this and do this in the backend
-
-  getPresenter = () => {
-    let presentArray = []
-    this.state.presenters.map( async (presenter) => {
-      const response = await Axios.get(`https://weexplorebackend.herokuapp.com/presenters/${presenter}`)
-      presentArray.push( response.data)
-    })
-      this.setState( {presenterDetails: presentArray})
+    this.setState({ event: data});
+    console.log( this.state.event)
   }
 
 
 
   renderEvent = () => {
-    const { event_name, event_date, description, event_category } = this.state.event
+    const { event_name, event_date, description, event_category} = this.state.event
     return (
-      <div>
+      <div ref={this.contextRef}>
+        <Sticky context={this.contextRef}>
+          <Segment className={styles.stickyFooter}>
+            <h1>Hello World</h1>
+          </Segment>
+        </Sticky>
         <Segment.Group horizontal>
           <Segment>
             <p><Moment format= "D MMM HH:MM a">{event_date.begin}</Moment></p>
@@ -94,12 +86,11 @@ class Event extends React.Component {
               <h2>Presenters</h2>
             </Segment>
             <Segment>
-              { this.state.presenterDetails.length > 0 && 
-               this.renderPresenters()
-               }
+              {this.renderPresenters()}
             </Segment>
           </Segment.Group>
         </Segment.Group>
+        
       </div>
     )
   }
@@ -111,10 +102,20 @@ class Event extends React.Component {
     )
   }
 
-  renderPresenters = () => {
-      console.log( this.state.presenterDetails)
+  renderPresenters() {
+    const {presenter_detail} = this.state.event
+    return( presenter_detail ? presenter_detail.map( (presenter) => {
+      return(
+        <div>
+          <Image src={ require('../assets/profile-photo.jpg')}  size='mini' avatar/>
+          <span>{presenter.title} {presenter.first_name} {presenter.last_name}</span><br></br>
+          <span><sub>{presenter.qualification}</sub></span>
+          <span><p>{presenter.short_description}</p></span>
+        </div>
+      )
+    }) : null)
   }
-  
+
   
   render(){
     return (
