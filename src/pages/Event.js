@@ -10,11 +10,12 @@ require('dotenv').config()
 
 
 class Event extends React.Component {
+  
 
   state = {
     event: null,
     presenters: [],
-    presenterDetails: [],
+    presenterDetails: []
   }
 
   componentDidMount = async () => {
@@ -25,11 +26,16 @@ class Event extends React.Component {
     this.getPresenter()
   }
 
+   
+  // Remove this and do this in the backend
+
   getPresenter = () => {
+    let presentArray = []
     this.state.presenters.map( async (presenter) => {
       const response = await Axios.get(`https://weexplorebackend.herokuapp.com/presenters/${presenter}`)
-      this.state.presenterDetails.push(response.data)
+      presentArray.push( response.data)
     })
+      this.setState( {presenterDetails: presentArray})
   }
 
 
@@ -88,7 +94,9 @@ class Event extends React.Component {
               <h2>Presenters</h2>
             </Segment>
             <Segment>
-              {this.renderPresenters()}
+              { this.state.presenterDetails.length > 0 && 
+               this.renderPresenters()
+               }
             </Segment>
           </Segment.Group>
         </Segment.Group>
@@ -97,20 +105,18 @@ class Event extends React.Component {
   }
 
   renderIcons() {
-    console.log( this.state.event)
     const { is_family_friendly } = this.state.event
     return(
-    is_family_friendly ? "Family Friendly" : "18+" 
+    is_family_friendly ? "Child Friendly" : "18+" 
     )
   }
 
   renderPresenters = () => {
-    console.log( this.state.presenterDetails)
+      console.log( this.state.presenterDetails)
   }
   
   
   render(){
-    console.log(this.state.event)
     return (
       <div className={styles.eventContainer}>
         <h1>Hello World</h1>

@@ -8,6 +8,7 @@ const initialState = {
 
     userLoggedIn: false,
 
+
     message: 'Welcome!',
 
     token: ''
