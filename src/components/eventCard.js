@@ -22,7 +22,6 @@ class EventCard extends React.Component {
       <Card.Content extra>
           <Icon name='user' />
           {this.props.event_capacity}
-
       </Card.Content>
     </Card>
   )
