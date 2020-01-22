@@ -1,17 +1,15 @@
 import React from "react";
-import {connect} from 'react-redux';
+import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { Menu } from "semantic-ui-react";
 
-function mapStateToProps(state){
-  return {userLoggedIn: state.userReducer.userLoggedIn}
+function mapStateToProps(state) {
+  return { userLoggedIn: state.userReducer.userLoggedIn };
 }
 
-
 class Navbar extends React.Component {
-  
   render() {
-    console.log(this.props.userLoggedIn)
+    console.log(this.props.userLoggedIn);
     return (
       <Menu>
         <Menu.Item>
@@ -29,9 +27,11 @@ class Navbar extends React.Component {
             <NavLink exact to="/login">
               Log Out
             </NavLink>
-          ) : <NavLink exact to="/login">
-          Log In
-        </NavLink>}
+          ) : (
+            <NavLink exact to="/login">
+              Log In
+            </NavLink>
+          )}
         </Menu.Item>
         <Menu.Item>
           <NavLink exact to="/about-us">
@@ -41,6 +41,11 @@ class Navbar extends React.Component {
         <Menu.Item>
           <NavLink exact to="/contact">
             Contact
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item>
+          <NavLink exact to="/admin">
+            Admin
           </NavLink>
         </Menu.Item>
       </Menu>
