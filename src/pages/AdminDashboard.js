@@ -45,7 +45,7 @@ class AdminDashboard extends Component {
 
   renderAdminPage() {
     console.log(this.props.isAdmin)
-    if (this.props.isAdmin) {
+    // if (this.props.isAdmin) {
       const { events, pageStatus } = this.state;
       console.log(pageStatus);
       return (
@@ -71,9 +71,9 @@ class AdminDashboard extends Component {
           </Grid>
         </>
       );
-    } else {
-      return <h1>You are not authorised to view this page</h1>;
-    }
+    // } else {
+    //   return <h1>You are not authorised to view this page</h1>;
+    // }
   }
 
   render() {
