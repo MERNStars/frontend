@@ -24,7 +24,6 @@ export default class AdminEvents extends Component {
   render() {
     return (
       <>
-        <h1>Events</h1>
         <h3>Published Events</h3>
         <div className={styles.eventsContainer}>
           {this.props.events
