@@ -10,6 +10,8 @@ const initialState = {
 
     message: 'Welcome!',
 
+    redirect_to_login: false,
+
     token: ''
 }
 
@@ -55,10 +57,6 @@ export const logUserOut = () => {
     return dispatch => {
         dispatch(userLoggedOut("You've been logged out."));
     }
-}
-
-export const logout = () => {
-
 }
 
 export const createUser = user => {
