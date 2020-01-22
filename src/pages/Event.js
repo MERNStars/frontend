@@ -21,7 +21,13 @@ require("dotenv").config();
 
 class Event extends React.Component {
   submit = data => {
-    console.log(data);
+    const newData = {};
+    newData._id = this.state.event._id;
+    newData.attendees = data;
+    console.log(newData);
+    // Axios.patch("http://localhost:8888/events/update", newData).then(response => {
+    //   console.log(response.newData);
+    // });
   };
 
   contextRef = createRef()
@@ -38,7 +44,6 @@ class Event extends React.Component {
     this.setState({ event: data});
     console.log( this.state.event)
   }
-
 
   renderEvent = () => {
     const {
@@ -67,7 +72,11 @@ class Event extends React.Component {
               <Modal.Header>Attendees</Modal.Header>
               <Modal.Content>
                 <Modal.Description>
-                  <AttendForm onSubmit={this.submit} event={this.state.event} initialValues={{username: localStorage.username}}/>
+                  <AttendForm
+                    onSubmit={this.submit}
+                    event={this.state.event}
+                    initialValues={{ username: localStorage.username }}
+                  />
                 </Modal.Description>
               </Modal.Content>
             </Modal>
@@ -137,10 +146,8 @@ class Event extends React.Component {
   };
 
   renderIcons() {
-    const { is_family_friendly } = this.state.event
-    return(
-    is_family_friendly ? "Child Friendly" : "18+" 
-    )
+    const { is_family_friendly } = this.state.event;
+    return is_family_friendly ? "Child Friendly" : "18+";
   }
 
   renderPresenters() {
