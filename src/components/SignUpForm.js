@@ -14,14 +14,26 @@ function mapStateToProps(state){
 function validate(values) {
     let errors = {};
   
-    if (!values.name) {
-      errors.name = "Required";
+    if (!values.first_name) {
+      errors.first_name = "Required";
     }
   
+    if (!values.last_name) {
+        errors.last_name = "Required";
+    }
+
     if (!values['username']) {
       errors.username = "Required";
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.username)) {
       errors.username = "Invalid email address";
+    }
+
+    if(!/^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/i.test(values.password)){
+        errors.password = "Password must be 8 characters or longer, including at a number, a symbol and a capital letter";
+    }
+
+    if(values.password !== values.confirmPassword ){
+        errors.confirmPassword = "Password doesn't match"
     }
   
     return errors;
@@ -29,27 +41,33 @@ function validate(values) {
 
 class SignUpForm extends Component{
 
-    renderTextField({input, label, type}){
+    renderTextField({input, label, type,  meta: { touched, error, warning }}){
         // console.log(input)
         return (
             <div className="Small-Text">
                 <label>{label}</label> <br/>
                 <input className="text-field" onChange={input.onChange} placeholder={label} type={type} />
+                {touched &&
+            ((error && <span>{error}</span>) ||
+              (warning && <span>{warning}</span>))}
             </div>
         )
     }
 
-    renderAgeNumberPicker({input, name, label}){
+    renderAgeNumberPicker({input, name, label,  meta: { touched, error, warning }}){
      
         return (
             <div className="Small-Text">
                 <label>{label}</label> <br/>
                 <NumberPicker {...input} name={name} format="###" min={13} max={150} value={input.value !== ''? Number.parseInt(input.value) : 18 } />
+                {touched &&
+            ((error && <span>{error}</span>) ||
+              (warning && <span>{warning}</span>))}
             </div>
         )
     }
 
-    renderSexCombobox = ({input, name, label}) =>{
+    renderSexCombobox = ({input, name, label,  meta: { touched, error, warning }}) =>{
         const {sexes} = this.props;
         return (
             <div className="My-Radio"> 
