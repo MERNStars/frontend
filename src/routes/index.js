@@ -10,7 +10,9 @@ import AboutUs from "../pages/about";
 import Contact from "../pages/contact";
 import Login from "../pages/Login";
 
+
 const Router = () => {
+  
   return (
     <div>
       <BrowserRouter>

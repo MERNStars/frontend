@@ -17,6 +17,7 @@ export default class Events extends Component {
     })
     const data = await response.data 
     this.setState( {events: data })
+    console.log( this.state.events)
   }
 
 
