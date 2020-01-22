@@ -3,6 +3,8 @@ import Axios from 'axios';
 import { Input, Dropdown } from 'semantic-ui-react';
 import {connect} from 'react-redux';
 
+import styles from '../styles/searchBar.module.scss';
+
 require("dotenv").config();
 
 function mapStateToProps(state){
@@ -56,7 +58,7 @@ class SearchBar extends React.Component {
   render() {
     console.log( this.props.categories)
     return(
-      <div>
+      <div className={styles.searchContainer}>
       <Input
           icon={{ name: 'search', circular: true, link: true }}
           placeholder='Search...'
@@ -65,7 +67,6 @@ class SearchBar extends React.Component {
        <Dropdown
           placeholder='Select Category'
           fluid
-          search
           selection
           options={this.state.categoryOptions}
           onChange={this.findCategory}
