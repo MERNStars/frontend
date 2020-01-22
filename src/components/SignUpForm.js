@@ -35,6 +35,14 @@ function validate(values) {
     if(values.password !== values.confirmPassword ){
         errors.confirmPassword = "Password doesn't match"
     }
+
+    if(!values.age){
+        errors.age = "Required";
+    }
+
+    if(!values.sex){
+        errors.sex = "Required";
+    }
   
     return errors;
   }
@@ -46,7 +54,7 @@ class SignUpForm extends Component{
         return (
             <div className="Small-Text">
                 <label>{label}</label> <br/>
-                <input className="text-field" onChange={input.onChange} placeholder={label} type={type} />
+                <input {...input} className="text-field" onChange={input.onChange} placeholder={label} type={type} />
                 {touched &&
             ((error && <span>{error}</span>) ||
               (warning && <span>{warning}</span>))}
@@ -60,9 +68,7 @@ class SignUpForm extends Component{
             <div className="Small-Text">
                 <label>{label}</label> <br/>
                 <NumberPicker {...input} name={name} format="###" min={13} max={150} value={input.value !== ''? Number.parseInt(input.value) : 18 } />
-                {touched &&
-            ((error && <span>{error}</span>) ||
-              (warning && <span>{warning}</span>))}
+                {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
             </div>
         )
     }
@@ -73,6 +79,7 @@ class SignUpForm extends Component{
             <div className="My-Radio"> 
                 {label}: 
                 <DropdownList  {...input} name={name} data={sexes} value={input.value}/>
+                {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
             </div>
         )
     }
