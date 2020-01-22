@@ -20,19 +20,17 @@ class EventCard extends React.Component {
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
-        <a href="#">
           <Icon name='user' />
           {this.props.event_capacity}
-        </a>
+
       </Card.Content>
     </Card>
   )
 
   render() {
-    const {index} = this.props
-    console.log( this.props)
+    const {_id} = this.props
     return(
-      <Link to={{ pathname:`/events/${index}`}}><div className={styles.eventCard}>
+      <Link to={{ pathname:`/events/${_id}`}}><div className={styles.eventCard}>
         {this.CardExampleCard()}
       </div></Link>
     )

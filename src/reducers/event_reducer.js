@@ -1,4 +1,5 @@
 const initialState = { 
+    
     event_categories: ["bible seminar", "career seminar", "exercise class", "health seminar", "healthy cooking", "lifestyle change workshop", "mental health workshop", "massage service", "others", "addiction recovery", "weight-loss program"],
     
     event_statuses: ["scheduled", "canceled", "postponed", "completed", "sold out"],
@@ -8,6 +9,7 @@ const initialState = {
 
 
 const eventReducer = (state=initialState, action) => {
+
     let newState = {};
     switch(action.type){
         case "EVENT_CREATED":

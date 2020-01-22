@@ -5,7 +5,6 @@ import styles from '../styles/events.module.scss';
 import EventCard from '../components/eventCard';
 
 
-
 export default class Events extends Component {
 
   state = {
@@ -18,6 +17,7 @@ export default class Events extends Component {
     })
     const data = await response.data 
     this.setState( {events: data })
+    console.log( this.state.events)
   }
 
 

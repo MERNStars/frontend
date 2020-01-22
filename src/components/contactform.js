@@ -56,7 +56,7 @@ class ContactForm extends React.Component {
         <Field
           name="text"
           component={this.renderField}
-          type="text"
+          type="textarea"
           label="text"
         />
         <div>
@@ -76,4 +76,4 @@ class ContactForm extends React.Component {
   }
 }
 
-export default reduxForm({ form: "ContactForm" })(ContactForm);
+export default reduxForm({ form: "ContactForm", validate })(ContactForm);
