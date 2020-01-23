@@ -12,6 +12,7 @@ require("dotenv").config();
 
 class Event extends React.Component {
   submit = async data => {
+
     try {
       await axios
         .patch(
@@ -19,8 +20,8 @@ class Event extends React.Component {
           {
             _id: this.state.event._id,
             username: data.username,
-            friends: data.friends,
-            dependents: data.dependents
+            friends: data.friends == undefined ? [] : data.friends,
+            dependents: data.dependents == undefined ? [] : data.dependents
           },
           {
             headers: {
@@ -29,7 +30,7 @@ class Event extends React.Component {
           }
         )
         .then(response => {
-          console.log(response);
+          console.log(response.data);
           this.props.history.push("/events");
         });
     } catch (error) {
