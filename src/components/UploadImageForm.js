@@ -17,9 +17,7 @@ class UploadImageForm extends Component {
 
   onFormSubmit = (e) => {
     e.preventDefault() // Stop form submit
-    this.fileUpload(this.state.file).then((response)=>{
-      console.log(response.data);
-    })
+    this.fileUpload(this.state.file);
   }
 
     //when a new file has been chosen
@@ -31,35 +29,37 @@ class UploadImageForm extends Component {
 
   fileUpload = async (file) => {
 
+    
+    // console.log(url);
+    const fileParts = file.name.split('.');
+    const fileType = fileParts[fileParts.length - 1];
+
     const option = {
-        method: "GET",
         headers: {
         authorization: `${localStorage.weexplore_token}`
-         },
-        url: `${process.env.REACT_APP_BACKEND_DB_URL}/image/geturl`
+         }
     }
     
-    const response = await axios(option)
+    const response = await axios.post(`${BASE_URL}/image/geturl`, { file_type: fileType }, option )
     .catch(error => {
       console.log(`ERROR: ${error}`);
     });
-    
-    
+
     const url = await response.data.data;
-    console.log(url);
-    // const formData = new FormData();
-    // formData.append('file',file)
+    
+    console.log("File type: " + fileType);
     const config = {
-        method: "POST",
         headers: {
-        'Access-Control-Allow-Methods': 'POST',
-        'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        data: file,
-        url: url
+        'Content-Type': fileType
+        }
     }
-    return  axios(config);
+    axios.put(url, file, config)
+    .then((response)=>{
+      console.log(response.data);
+    })
+    .catch(err=>console.error("Awww! " + err));
   }
+
 
   render() {
     return (
