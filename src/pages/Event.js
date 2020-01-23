@@ -38,7 +38,8 @@ class Event extends React.Component {
   };
 
   state = {
-    event: null
+    event: null,
+    attending: false
   };
 
   componentDidMount = async () => {
@@ -48,7 +49,17 @@ class Event extends React.Component {
     );
     const data = response.data;
     this.setState({ event: data });
+    this.checkAttendStatus()
+    console.log( this.state.event)
+    console.log( this.state.attending)
   };
+
+  checkAttendStatus() {
+    const { event } = this.state
+    return event ? 
+      event.attendees.find( attendee => attendee.username === localStorage.username) ? this.setState( {attending: true}) : this.setState( {attending: false})
+      : null
+  }
 
   renderEvent = () => {
     const {
@@ -61,6 +72,7 @@ class Event extends React.Component {
 
 
     return (
+    
       <div>
         <Segment.Group horizontal>
           <Segment>
@@ -194,9 +206,13 @@ class Event extends React.Component {
       : null;
   }
 
-  renderAttendButton(){
-    
-  }
+  // Map through attendees array
+  // Put in component did mount. 
+  // if the object.username === localstorage.username render unattend button
+  // else render attend button. 
+  // let obj = arr.find(o => o.name === 'string 1');
+
+ 
 
   render() {
     return (
