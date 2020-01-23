@@ -11,48 +11,30 @@ import { Button, Segment, Image, Label, Modal } from "semantic-ui-react";
 require("dotenv").config();
 
 class Event extends React.Component {
-  submit = data => {
-    const newData = {
-      _id: this.state.event._id,
-      username: data.username,
-      friends: data.friends,
-      dependents: data.dependents
-    };
-    // newData._id = this.state.event._id;
-    // newData.username = data.username;
-    // newData.friends = data.friends;
-    // newData.dependents = data.dependents;
-    console.log("Submit data: " + newData);
-
-    axios
-      .patch("https://weexplorebackend.herokuapp.com/events/attend", {
-        _id: this.state.event._id,
-        username: data.username,
-        friends: data.friends,
-        dependents: data.dependents
-      }, {
-        headers: {
-          "content-type": "application/x-www-form-urlencoded",
-          authorization: `${localStorage.weexplore_token}`
-        }
-      })
-      .then(response => console.log(response));
-
-    // const options = {
-    //   method: "PATCH",
-    //   headers: {
-    //     "content-type": "application/x-www-form-urlencoded",
-    //     authorization: `${localStorage.weexplore_token}`
-    //   },
-    //   url: "http://localhost:8888/events/attend",
-    //   body: newData
-    // };
-
-    // axios(options)
-    //   .then(result => console.log(result))
-    //   .catch(error => {
-    //     console.log(`ERROR: ${error}`);
-    //   });
+  submit = async data => {
+    try {
+      await axios
+        .patch(
+          `${process.env.REACT_APP_BACKEND_DB_URL}/events/attend`,
+          {
+            _id: this.state.event._id,
+            username: data.username,
+            friends: data.friends,
+            dependents: data.dependents
+          },
+          {
+            headers: {
+              authorization: `${localStorage.weexplore_token}`
+            }
+          }
+        )
+        .then(response => {
+          console.log(response);
+          this.props.history.push("/events");
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   state = {
