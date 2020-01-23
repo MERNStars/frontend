@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import AdminEventCard from "../components/adminEventCards";
+import EditEvent from "../components/editEvent";
 import styles from "../styles/admin.module.scss";
 import Axios from 'axios';
 
@@ -22,6 +23,9 @@ export default class AdminEvents extends Component {
 
   editEvent = event => {
     this.setState( {selectedEvent: event })
+    return(
+      <EditEvent {...event}/>
+      )
     // Render "eventForm"
     // Insert code to grab event with axios call and patch event. 
   }

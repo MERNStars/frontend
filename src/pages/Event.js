@@ -54,6 +54,7 @@ class Event extends React.Component {
       event_category
     } = this.state.event;
 
+
     return (
       <div>
         <Segment.Group horizontal>
@@ -166,6 +167,10 @@ class Event extends React.Component {
         </div>
       )
     }) : null)
+  }
+
+  renderAttendButton(){
+    
   }
 
   
