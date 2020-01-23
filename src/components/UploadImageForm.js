@@ -36,7 +36,7 @@ class UploadImageForm extends Component {
         headers: {
         authorization: `${localStorage.weexplore_token}`
          },
-        url: `${BASE_URL}/image/geturl`
+        url: `${process.env.REACT_APP_BACKEND_DB_URL}/image/geturl`
     }
     
     const response = await axios(option)
