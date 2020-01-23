@@ -5,7 +5,6 @@ import Moment from 'react-moment';
 class AdminEventCard extends React.Component {
 
   renderEvents(){
-    console.log( this.props)
     return( this.props.published ? 
         this.displayCard( this.props ): null
       )
@@ -36,11 +35,16 @@ class AdminEventCard extends React.Component {
         </Card.Content>
         <Card.Content extra>
           <Button size="small">Edit</Button>
-          <Button size="small">Delete</Button>
+          <Button size="small" onClick={this.handleSubmit}>Delete</Button>
           <Button size="small">Cancel</Button>
         </Card.Content>
       </Card>
     )
+  }
+
+  handleSubmit = e => {
+    e.preventDefault()
+    this.props.deleteEvent(this.props)
   }
 
 
