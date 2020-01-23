@@ -68,8 +68,6 @@ function storeToken(username, token) {
 }
 
 export const userLogin = user => {
-  console.log(user.username, user.password);
-  console.log(process.env.REACT_APP_BACKEND_DB_URL);
 
   return dispatch => {
     axios

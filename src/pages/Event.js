@@ -1,49 +1,54 @@
-
 import React from "react";
-import Axios from "axios";
+import axios from "axios";
 import Moment from "react-moment";
 import styles from "../styles/event.module.scss";
 import AttendForm from "../components/attendform";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-
-
-import {
-  Button,
-  Segment,
-  Image,
-  Label,
-  Modal
-} from "semantic-ui-react";
+import { Button, Segment, Image, Label, Modal } from "semantic-ui-react";
 
 require("dotenv").config();
 
 class Event extends React.Component {
-  submit = data => {
-    const newData = {};
-    newData._id = this.state.event._id;
-    newData.attendees = data;
-    console.log(newData);
-    // Axios.patch("http://localhost:8888/events/update", newData).then(response => {
-    //   console.log(response.newData);
-    // });
+  submit = async data => {
+    try {
+      await axios
+        .patch(
+          `${process.env.REACT_APP_BACKEND_DB_URL}/events/attend`,
+          {
+            _id: this.state.event._id,
+            username: data.username,
+            friends: data.friends,
+            dependents: data.dependents
+          },
+          {
+            headers: {
+              authorization: `${localStorage.weexplore_token}`
+            }
+          }
+        )
+        .then(response => {
+          console.log(response);
+          this.props.history.push("/events");
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  
-  
-
   state = {
-    event: null,
-  }
+    event: null
+  };
 
   componentDidMount = async () => {
-    const {id} = this.props.match.params
-    const response = await Axios.get(`https://weexplorebackend.herokuapp.com/events/${id}/id`)
-    const data = response.data 
-    this.setState({ event: data});
-    console.log( this.state.event)
-  }
+    const { id } = this.props.match.params;
+    const response = await axios.get(
+      `https://weexplorebackend.herokuapp.com/events/${id}/id`
+    );
+    const data = response.data;
+    this.setState({ event: data });
+  };
 
   renderEvent = () => {
     const {
@@ -107,9 +112,7 @@ class Event extends React.Component {
             </Segment>
           </Segment.Group>
           <Segment.Group horizontal>
-            <Segment>
-               {/* Insert code for google map here. */}
-            </Segment>
+            <Segment>{/* Insert code for google map here. */}</Segment>
             <Segment>
               <h3>Address</h3>
               <p>51 Morton St</p>
@@ -131,19 +134,28 @@ class Event extends React.Component {
             </Segment>
 
             <Segment>{this.renderPresenters()}</Segment>
-
           </Segment.Group>
         </Segment.Group>
         <div className={styles.containerFooter}>
           <div className={styles.Footer}>
-            <Modal trigger={<Button size="massive" floated="right">Attend</Button>}>
-                <Modal.Header>Attendees</Modal.Header>
-                <Modal.Content>
-                  <Modal.Description>
-                    <AttendForm onSubmit={this.submit} event={this.state.event} initialValues={{username: localStorage.username}}/>
-                  </Modal.Description>
-                </Modal.Content>
-              </Modal>
+            <Modal
+              trigger={
+                <Button size="massive" floated="right">
+                  Attend
+                </Button>
+              }
+            >
+              <Modal.Header>Attendees</Modal.Header>
+              <Modal.Content>
+                <Modal.Description>
+                  <AttendForm
+                    onSubmit={this.submit}
+                    event={this.state.event}
+                    initialValues={{ username: localStorage.username }}
+                  />
+                </Modal.Description>
+              </Modal.Content>
+            </Modal>
           </div>
         </div>
       </div>
@@ -156,31 +168,43 @@ class Event extends React.Component {
   }
 
   renderPresenters() {
-    const {presenter_detail} = this.state.event
-    return( presenter_detail ? presenter_detail.map( (presenter) => {
-      return(
-        <div>
-          <Image src={ require('../assets/profile-photo.jpg')}  size='mini' avatar/>
-          <span>{presenter.title} {presenter.first_name} {presenter.last_name}</span><br></br>
-          <span><sub>{presenter.qualification}</sub></span>
-          <span><p>{presenter.short_description}</p></span>
-        </div>
-      )
-    }) : null)
+    const { presenter_detail } = this.state.event;
+    return presenter_detail
+      ? presenter_detail.map(presenter => {
+          return (
+            <div>
+              <Image
+                src={require("../assets/profile-photo.jpg")}
+                size="mini"
+                avatar
+              />
+              <span>
+                {presenter.title} {presenter.first_name} {presenter.last_name}
+              </span>
+              <br></br>
+              <span>
+                <sub>{presenter.qualification}</sub>
+              </span>
+              <span>
+                <p>{presenter.short_description}</p>
+              </span>
+            </div>
+          );
+        })
+      : null;
   }
 
   renderAttendButton(){
     
   }
 
-  
-  render(){
+  render() {
     return (
       <div>
-        <Link to={{ pathname:`/events`}}>Back to events</Link>
-      <div className={styles.eventContainer}>
-        {this.state.event ? this.renderEvent() : null}
-      </div>
+        <Link to={{ pathname: `/events` }}>Back to events</Link>
+        <div className={styles.eventContainer}>
+          {this.state.event ? this.renderEvent() : null}
+        </div>
       </div>
     );
   }
