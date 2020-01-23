@@ -4,9 +4,14 @@ import AdminEvent from "../components/adminevents";
 import AdminMembers from "../components/adminmembers";
 import { Sidebar, Segment, Menu, Grid } from "semantic-ui-react";
 import { connect } from "react-redux";
+import { populateEvents } from '../reducers/event_reducer'
 
 function mapStateToProps(state) {
-  return { isAdmin: state.userReducer.isAdmin };
+  return { isAdmin: state.userReducer.isAdmin, events: state.eventReducer.events };
+}
+
+const mapDispatchToProps = {
+  populateEvents
 }
 
 function AdminDisplay(props) {
@@ -19,7 +24,6 @@ function AdminDisplay(props) {
 
 class AdminDashboard extends Component {
   state = {
-    events: [],
     pageStatus: "events"
   };
 
@@ -40,13 +44,17 @@ class AdminDashboard extends Component {
         console.log(`ERROR: ${error}`);
       });
     const data = await response.data;
-    this.setState({ events: data });
+    this.props.populateEvents(data)
   }
 
+  // Dispatch to event reducer to change the store state. 
+
   renderAdminPage() {
+    console.log(this.props.events)
     console.log(this.props.isAdmin)
     // if (this.props.isAdmin) {
-      const { events, pageStatus } = this.state;
+      const { pageStatus } = this.state;
+      const { events } = this.props
       console.log(pageStatus);
       return (
         <>
@@ -81,4 +89,4 @@ class AdminDashboard extends Component {
   }
 }
 
-export default connect(mapStateToProps)(AdminDashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(AdminDashboard);
