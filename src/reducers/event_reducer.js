@@ -4,8 +4,25 @@ const initialState = {
     
     event_statuses: ["scheduled", "canceled", "postponed", "completed", "sold out"],
 
-    message: ''
+    message: '',
+
+    events: []
 }
+
+export const populateEvents = (events) => {
+    return {
+        type: "POPULATE_EVENTS",
+        data: events
+    }
+}
+
+export const deleteEvents = (events) => {
+    return {
+        type: "EVENT_DELETED",
+        data: events
+    }
+}
+
 
 
 const eventReducer = (state=initialState, action) => {
@@ -16,8 +33,14 @@ const eventReducer = (state=initialState, action) => {
             newState = { ...state, message: "Your event has been created." };
             break;
         case "EVENT_DELETED":
-            newState = { ...state, message: "Your event has been deleted." };
-            break;    
+            newState = { ...state, message: "Your event has been deleted.", events: action.data };
+            break;  
+        case "POPULATE_EVENTS":
+            newState = { ...state, events: action.data };
+            break;
+        case "EVENT_EDITED":
+            newState = { ...state, events: action.data };
+            break;
         default:
             newState = { ...state};
             break;
