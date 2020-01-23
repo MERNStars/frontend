@@ -1,6 +1,8 @@
 import React from 'react';
 import { Card, Icon, Button, Modal } from 'semantic-ui-react'
 import Moment from 'react-moment';
+import AttendeeList from './eventAttendeesList';
+
 
 class AdminEventCard extends React.Component {
 
@@ -8,7 +10,11 @@ class AdminEventCard extends React.Component {
     return( this.props.published ? 
         this.displayCard( this.props ): null
       )
+      
   }
+
+
+
 
   displayCard = event => {
     return(
@@ -16,19 +22,13 @@ class AdminEventCard extends React.Component {
         <Card.Content>
           <Card.Header>{event.event_name}</Card.Header>
           <Card.Meta>
-            <span className='date'><Moment format="D MMM">{this.props.event_date.begin}</Moment></span>
+            <span className='date'><Moment format="D MMM">{event.event_date.begin}</Moment></span>
           </Card.Meta>
           <Modal trigger={<Button basic><Icon name="user"/>Attending: {event.attendee_count}</Button>}>
               <Modal.Header>Attendees</Modal.Header>
               <Modal.Content>
                 <Modal.Description>
-                  {event.attendees.map( (attendee) => {
-                    return(
-                      <>
-                      <p>{attendee.username}</p>
-                      </>
-                    )
-                  })}
+                  <AttendeeList {...event}/>
                 </Modal.Description>
               </Modal.Content>
             </Modal>
@@ -47,6 +47,7 @@ class AdminEventCard extends React.Component {
     this.props.deleteEvent(this.props)
   }
 
+  // Get attendees
 
   render() {
     
