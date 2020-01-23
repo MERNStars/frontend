@@ -12,7 +12,6 @@ require("dotenv").config();
 
 class Event extends React.Component {
   submit = async data => {
-
     try {
       await axios
         .patch(

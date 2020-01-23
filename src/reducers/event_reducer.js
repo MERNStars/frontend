@@ -1,9 +1,29 @@
-const initialState = { 
-    
-    event_categories: ["bible seminar", "career seminar", "exercise class", "health seminar", "healthy cooking", "lifestyle change workshop", "mental health workshop", "massage service", "others", "addiction recovery", "weight-loss program"],
-    
-    event_statuses: ["scheduled", "canceled", "postponed", "completed", "sold out"],
+import Axios from "axios";
+require("dotenv").config();
 
+const initialState = {
+  event_categories: [
+    "bible seminar",
+    "career seminar",
+    "exercise class",
+    "health seminar",
+    "healthy cooking",
+    "lifestyle change workshop",
+    "mental health workshop",
+    "massage service",
+    "others",
+    "addiction recovery",
+    "weight-loss program"
+  ],
+
+  event_statuses: [
+    "scheduled",
+    "canceled",
+    "postponed",
+    "completed",
+    "sold out"
+  ],
+  
     message: '',
 
     events: []
@@ -23,7 +43,45 @@ export const deleteEvents = (events) => {
     }
 }
 
+export const createEvent = event => {
+  return dispatch => {
+    console.log(`${event.event_date}T${event.event_start_time}`);
+    console.log(`${event.event_date}T${event.event_end_time}`);
+    Axios.post(
+      `http://localhost:8888/events/create`,
+      {
+        event_name: event.event_name,
+        description: event.description,
+        event_date: {
+          begin: `${event.event_date}T${event.event_start_time}`,
+          end: `${event.event_date}T${event.event_end_time}`
+        },
+        registration_closed_date: `${event.registration_closed_date}T23:55:55.000Z`,
+        presenters: ["5e2001deccc10275c4a1a11f"],
+        is_family_friendly: event.is_family_friendly,
+        minimum_age: event.minimum_age,
+        event_category: event.event_category,
+        status: event.status,
+        images: event.images,
+        event_capacity: event.event_capacity,
+        published: event.published
+      },
+      {
+        headers: {
+          authorization: `${localStorage.weexplore_token}`
+        }
+      }
+    ).then(response => {
+      console.log(response);
+      dispatch(eventCreated(response.data));
+    });
+  };
+};
 
+const eventCreated = message => ({
+  type: "EVENT_CREATED",
+  message: message
+});
 
 const eventReducer = (state=initialState, action) => {
 
