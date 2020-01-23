@@ -23,6 +23,11 @@ class Navbar extends React.Component {
           </NavLink>
         </Menu.Item>
         <Menu.Item>
+          <NavLink exact to="/new-event">
+            New Event
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item>
           {this.props.userLoggedIn ? (
             <NavLink exact to="/login">
               Log Out
