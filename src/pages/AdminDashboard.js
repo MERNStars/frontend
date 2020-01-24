@@ -47,7 +47,6 @@ class AdminDashboard extends Component {
     this.props.populateEvents(data)
   }
 
-  // Dispatch to event reducer to change the store state. 
 
   renderAdminPage() {
     console.log(this.props.events)
