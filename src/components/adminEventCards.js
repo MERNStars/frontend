@@ -20,7 +20,8 @@ class AdminEventCard extends React.Component {
 
   state = { 
     modalOpen: false,
-    status_options: [] }
+    status_options: [] 
+  }
 
   componentDidMount() {
     let array =[]
@@ -45,7 +46,6 @@ class AdminEventCard extends React.Component {
   }
 
   displayCard = event => {
-    console.log( event )
     return(
       <Card fluid>
         <Card.Content>

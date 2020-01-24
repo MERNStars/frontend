@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import AdminEvent from "../components/adminevents";
 import AdminMembers from "../components/adminmembers";
-import { Sidebar, Segment, Menu, Grid } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { populateEvents } from '../reducers/event_reducer'
 
