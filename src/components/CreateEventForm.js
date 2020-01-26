@@ -1,14 +1,15 @@
 import React, { Component } from "react";
-import { Field, reduxForm } from "redux-form";
+import { Field, reduxForm, FieldArray } from "redux-form";
 import RenderTextField from "./RenderTextField";
-import RenderPresentersField from "./RenderPresentersField";
 import { connect } from "react-redux";
 import { DropdownList } from "react-widgets";
+import { Link } from "react-router-dom";
 
 function mapStateToProps(state) {
   return {
     categories: state.eventReducer.event_categories,
-    status: state.eventReducer.event_statuses
+    status: state.eventReducer.event_statuses,
+    selectedPresenters: state.presenterReducer.selectedPresenters
   };
 }
 
@@ -59,11 +60,16 @@ class CreateEventForm extends Component {
     );
   };
 
+  RenderPresentersData = () => {
+    if (this.props.selectedPresenters) {
+      console.log(this.props.selectedPresenters);
+    }
+  };
+
   render() {
     return (
       <div>
         <h1>Create an Event</h1>
-    <div><RenderPresentersField /></div>
         <form onSubmit={this.props.handleSubmit}>
           <Field
             name="event_name"
@@ -101,12 +107,7 @@ class CreateEventForm extends Component {
             type="date"
             label="Registration close date"
           />
-          <Field
-            name="presenters"
-            component={RenderTextField}
-            type="text"
-            label="Presenters"
-          />
+          <Link to="presenters">Presenters</Link>
           <Field
             name="is_family_friendly"
             component={RenderTextField}

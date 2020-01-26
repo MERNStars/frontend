@@ -64,7 +64,7 @@ export const createEvent = event => {
           end: `${event.event_date}T${event.event_end_time}`
         },
         registration_closed_date: `${event.registration_closed_date}T23:55:55.000Z`,
-        presenters: ["5e2001deccc10275c4a1a11f"],
+        presenters: event.presenters,
         is_family_friendly: event.is_family_friendly,
         minimum_age: event.minimum_age,
         event_category: event.event_category,

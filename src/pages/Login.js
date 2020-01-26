@@ -11,7 +11,7 @@ function mapStateToProps(state){
 class Login extends Component {
     renderForm(){
         const {userLoggedIn} = this.props;
-        console.log(userLoggedIn, localStorage.weexplore_token);
+        // console.log(userLoggedIn, localStorage.weexplore_token);
         
         if(userLoggedIn || localStorage.weexplore_token)
             return <Logout />;
