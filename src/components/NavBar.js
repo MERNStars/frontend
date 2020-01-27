@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { Menu } from "semantic-ui-react";
+import AdminAccount from '../components/adminAccount'
 
 function mapStateToProps(state) {
   return { userLoggedIn: state.userReducer.userLoggedIn };
@@ -9,7 +10,7 @@ function mapStateToProps(state) {
 
 class Navbar extends React.Component {
   render() {
-    console.log(this.props.userLoggedIn);
+    let result = AdminAccount()
     return (
       <Menu>
         <Menu.Item>
@@ -20,11 +21,6 @@ class Navbar extends React.Component {
         <Menu.Item>
           <NavLink exact to="/events">
             Events
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item>
-          <NavLink exact to="/new-event">
-            New Event
           </NavLink>
         </Menu.Item>
         <Menu.Item>
@@ -48,11 +44,13 @@ class Navbar extends React.Component {
             Contact
           </NavLink>
         </Menu.Item>
-        <Menu.Item>
-          <NavLink exact to="/admin">
-            Admin
-          </NavLink>
-        </Menu.Item>
+        {result ? (
+          <Menu.Item>
+            <NavLink exact to="/admin">
+              Admin
+            </NavLink>
+          </Menu.Item>
+        ) : null}
       </Menu>
     );
   }

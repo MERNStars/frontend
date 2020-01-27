@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import AdminEvent from "../components/adminevents";
 import AdminMembers from "../components/adminmembers";
-import { Grid } from "semantic-ui-react";
+import { Grid, Card } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { populateEvents } from '../reducers/event_reducer'
 import {loadPresenters} from '../reducers/presenter_reducer';
@@ -53,7 +53,7 @@ class AdminDashboard extends Component {
 
   renderAdminPage() {
 
-    if (this.props.isAdmin) {
+    // if (this.props.isAdmin) {
       const { pageStatus } = this.state;
       const { events } = this.props
       return (
@@ -68,6 +68,10 @@ class AdminDashboard extends Component {
                 <button onClick={this.handleClick}>Members</button>
               </div>
               <Grid.Column width={10}>
+                <Card 
+                header='+'
+                description="Add New Event"
+                />
                 <AdminDisplay
                   page={true}
                   events={events}
@@ -77,9 +81,9 @@ class AdminDashboard extends Component {
           </Grid>
         </>
       );
-    } else {
-      return <h1>You are not authorised to view this page</h1>;
-    }
+    // } else {
+    //   return <h1>You are not authorised to view this page</h1>;
+    // }
   }
 
   render() {
