@@ -41,7 +41,7 @@ class CreateEventForm extends Component {
     this.props.populatePresenters(data);
   }
 
-  printPresenters = ({ input, name, label }) => {
+  renderPresentersField = ({ input, name, label }) => {
     let emptyArray = [];
     this.props.presenters.map(presenter => {
       emptyArray.push({
@@ -50,20 +50,17 @@ class CreateEventForm extends Component {
       });
     });
     return (
-      <div>
+      <>
         {label}:
         <Multiselect
           {...input}
           name={name}
           data={emptyArray}
-          valueField="id"
           textField="name"
           onBlur={this.props.onBlur}
-          allowCreate={true}
-          onCreate={name => this.input.push(name)}
           value={input.value !== "[]" ? [...input.value] : "[]"}
         />
-      </div>
+      </>
     );
   };
 
@@ -162,7 +159,7 @@ class CreateEventForm extends Component {
           />
           <Field
             name="selectedPresenters"
-            component={this.printPresenters}
+            component={this.renderPresentersField}
             label="Presenters"
           />
           <Field
@@ -205,7 +202,7 @@ class CreateEventForm extends Component {
             name="published"
             component={RenderTextField}
             type="checkbox"
-            label="Published"
+            label="Publish event"
           />
 
           <button type="submit">Submit</button>
