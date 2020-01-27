@@ -34,7 +34,7 @@ export default class AdminEvents extends Component {
         <div className={styles.eventsContainer}>
           {this.props.events
             ? this.props.events.map((event, i) => {
-                return <AdminEventCard {...event} index={i} />;
+                return <AdminEventCard {...event} key={i+1} index={i} />;
               })
             : null}
         </div>

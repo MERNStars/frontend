@@ -11,6 +11,7 @@ import Contact from "../pages/contact";
 import Login from "../pages/Login";
 import CreateEvent from "../pages/CreateEvent";
 import NewEvent from "../pages/NewEvent";
+import EditEvent from "../pages/EditEvent";
 
 const Router = () => {
   return (
@@ -24,6 +25,7 @@ const Router = () => {
           <Route exact path={`/events/:id`} component={Event} />
           <Route exact path="/about-us" component={AboutUs} />
           <Route exact path="/create-event" component={CreateEvent} />
+          <Route exact path="/edit-event/:index" component={EditEvent} />
           <Route exact path="/new-event" component={NewEvent} />
           <Route exact path="/admin" component={AdminDashboard} />
           <Route exact path="/contact" component={Contact} />

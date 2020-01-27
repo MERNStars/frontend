@@ -4,7 +4,7 @@ const RenderTextField = ({input, label, type,  meta: { touched, error, warning }
   return (
       <div className="Small-Text">
           <label>{label}</label> <br/>
-          <input {...input} className="text-field" onChange={input.onChange} placeholder={label} type={type} />
+          <input {...input} className="text-field" onChange={input.onChange} placeholder={label} type={type} disabled={input.disabled} />
           {touched &&
       ((error && <span>{error}</span>) ||
         (warning && <span>{warning}</span>))}

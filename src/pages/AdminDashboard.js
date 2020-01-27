@@ -5,13 +5,14 @@ import AdminMembers from "../components/adminmembers";
 import { Sidebar, Segment, Menu, Grid } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { populateEvents } from '../reducers/event_reducer'
+import {loadPresenters} from '../reducers/presenter_reducer';
 
 function mapStateToProps(state) {
-  return { isAdmin: state.userReducer.isAdmin, events: state.eventReducer.events };
+  return { isAdmin: state.userReducer.isAdmin, events: state.eventReducer.events, presenters: state.presenterReducer.presenters };
 }
 
 const mapDispatchToProps = {
-  populateEvents
+  populateEvents, loadPresenters
 }
 
 function AdminDisplay(props) {
@@ -38,24 +39,26 @@ class AdminDashboard extends Component {
   };
 
   async componentDidMount() {
+    this.props.loadPresenters();
     const response = await axios
       .get("https://weexplorebackend.herokuapp.com/events")
       .catch(error => {
         console.log(`ERROR: ${error}`);
       });
     const data = await response.data;
-    this.props.populateEvents(data)
+    this.props.populateEvents(data);
+    // console.log("No. presenters" + this.props.presenters.length);
   }
 
   // Dispatch to event reducer to change the store state. 
 
   renderAdminPage() {
-    console.log(this.props.events)
-    console.log(this.props.isAdmin)
+    // console.log(this.props.events)
+    // console.log(this.props.isAdmin)
     // if (this.props.isAdmin) {
       const { pageStatus } = this.state;
       const { events } = this.props
-      console.log(pageStatus);
+      // console.log(pageStatus);
       return (
         <>
           <Grid columns={2} divided>
