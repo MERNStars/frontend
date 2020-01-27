@@ -1,5 +1,8 @@
 import React from "react";
+import RenderCategoriesField from "../FormFields/CategoriesFormField";
+import RenderStatusField from "../FormFields/StatusFormField";
 import { Field, reduxForm } from "redux-form";
+import { connect } from "react-redux";
 
 const RenderTextField = ({ input, label, type, meta: { touched, error } }) => (
   <div>
@@ -11,8 +14,15 @@ const RenderTextField = ({ input, label, type, meta: { touched, error } }) => (
   </div>
 );
 
+function mapStateToProps(state) {
+  return {
+    categories: state.eventReducer.event_categories,
+    status: state.eventReducer.event_statuses
+  };
+}
+
 const WizardFormFirstPage = props => {
-  const { handleSubmit } = props;
+  const { categories, status, handleSubmit } = props;
   return (
     <form onSubmit={handleSubmit}>
       <Field
@@ -69,6 +79,20 @@ const WizardFormFirstPage = props => {
         type="number"
         label="Event Capacity"
       />
+      <Field
+        name="event_category"
+        component={RenderCategoriesField}
+        categories={categories}
+        type="text"
+        label="Event Category"
+      />
+      <Field
+        name="status"
+        component={RenderStatusField}
+        status={status}
+        type="text"
+        label="Status"
+      />
       <div>
         <button type="submit" className="next">
           Next
@@ -79,8 +103,7 @@ const WizardFormFirstPage = props => {
 };
 
 export default reduxForm({
-  form: "wizard", // <------ same form name
-  destroyOnUnmount: false, // <------ preserve form data
-  forceUnregisterOnUnmount: true // <------ unregister fields on unmount
-  // validate
-})(WizardFormFirstPage);
+  form: "wizard",
+  destroyOnUnmount: false,
+  forceUnregisterOnUnmount: true
+})(connect(mapStateToProps)(WizardFormFirstPage));

@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-import { Field, reduxForm, FieldArray } from "redux-form";
+import { Field, reduxForm } from "redux-form";
 import RenderTextField from "./RenderTextField";
 import { connect } from "react-redux";
 import { DropdownList } from "react-widgets";
+import RenderCategoriesField from "./FormFields/CategoriesFormField";
+import RenderStatusField from "../components/FormFields/StatusFormField";
 
 // packages for retrieving presenters data
 import { Multiselect } from "react-widgets";
@@ -64,59 +66,8 @@ class CreateEventForm extends Component {
     );
   };
 
-  RenderCategoriesField = ({
-    input,
-    name,
-    label,
-    meta: { touched, error, warning }
-  }) => {
-    const { categories } = this.props;
-    return (
-      <div className="My-Radio">
-        {label}:
-        <DropdownList
-          {...input}
-          name={name}
-          data={categories}
-          value={input.value}
-        />
-        {touched &&
-          ((error && <span>{error}</span>) ||
-            (warning && <span>{warning}</span>))}
-      </div>
-    );
-  };
-
-  RenderStatusField = ({
-    input,
-    name,
-    label,
-    meta: { touched, error, warning }
-  }) => {
-    const { status } = this.props;
-    return (
-      <div className="My-Radio">
-        {label}:
-        <DropdownList
-          {...input}
-          name={name}
-          data={status}
-          value={input.value}
-        />
-        {touched &&
-          ((error && <span>{error}</span>) ||
-            (warning && <span>{warning}</span>))}
-      </div>
-    );
-  };
-
-  RenderPresentersData = () => {
-    if (this.props.selectedPresenters) {
-      console.log(this.props.selectedPresenters);
-    }
-  };
-
   render() {
+    const { status, categories } = this.props;
     return (
       <div>
         <h1>Create an Event</h1>
@@ -176,13 +127,15 @@ class CreateEventForm extends Component {
           />
           <Field
             name="event_category"
-            component={this.RenderCategoriesField}
+            component={RenderCategoriesField}
+            categories={categories}
             type="text"
             label="Event Category"
           />
           <Field
             name="status"
-            component={this.RenderStatusField}
+            component={RenderStatusField}
+            status={status}
             type="text"
             label="Status"
           />

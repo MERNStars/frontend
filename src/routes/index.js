@@ -11,7 +11,8 @@ import Contact from "../pages/contact";
 import Login from "../pages/Login";
 import CreateEvent from "../pages/CreateEvent";
 import NewEvent from "../pages/NewEvent";
-import WizardForm from '../pages/WizardForm';
+import CreateEventWizardForm from "../pages/CreateEventWizardForm";
+import NewPresenter from '../pages/NewPresenter'
 
 const Router = () => {
   return (
@@ -24,11 +25,12 @@ const Router = () => {
           <Route exact path="/signup" component={SignUp} />
           <Route exact path={`/events/:id`} component={Event} />
           <Route exact path="/about-us" component={AboutUs} />
-          <Route exact path="/create-event" component={WizardForm} />
+          <Route exact path="/create-event" component={CreateEventWizardForm} />
           <Route exact path="/new-event" component={NewEvent} />
           <Route exact path="/admin" component={AdminDashboard} />
           <Route exact path="/contact" component={Contact} />
           <Route exact path="/login" component={Login} />
+          <Route exact path="/create-presenter" component={NewPresenter} />
         </Switch>
       </BrowserRouter>
     </div>

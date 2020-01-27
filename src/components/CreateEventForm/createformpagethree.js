@@ -1,6 +1,6 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
-import UploadImageForm from '../components/UploadImageForm';
+import UploadImageForm from "../UploadImageForm";
 
 const RenderTextField = ({ input, label, type, meta: { touched, error } }) => (
   <div>
@@ -23,8 +23,6 @@ const WizardFormThirdPage = props => {
         type="checkbox"
         label="Published"
       />
-      
-
       <div>
         <button type="button" className="previous" onClick={previousPage}>
           Previous
@@ -37,7 +35,7 @@ const WizardFormThirdPage = props => {
   );
 };
 export default reduxForm({
-  form: "wizard", //Form name is same
+  form: "wizard",
   destroyOnUnmount: false,
-  forceUnregisterOnUnmount: true // <------ unregister fields on unmount
+  forceUnregisterOnUnmount: true
 })(WizardFormThirdPage);
