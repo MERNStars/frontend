@@ -11,7 +11,6 @@ import Contact from "../pages/contact";
 import Login from "../pages/Login";
 import CreateEvent from "../pages/CreateEvent";
 import NewEvent from "../pages/NewEvent";
-import Presenters from "../pages/Presenters"
 
 const Router = () => {
   return (
@@ -29,7 +28,6 @@ const Router = () => {
           <Route exact path="/admin" component={AdminDashboard} />
           <Route exact path="/contact" component={Contact} />
           <Route exact path="/login" component={Login} />
-          <Route exact path="/presenters" component={Presenters} />
         </Switch>
       </BrowserRouter>
     </div>

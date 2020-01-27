@@ -24,9 +24,11 @@ class CreateEvent extends Component {
   };
 
   submit = data => {
-    
-    console.log(this.props.selectedPresenters)
-    data.presenters = this.props.selectedPresenters
+    let presentersID = [];
+    data.selectedPresenters.map(presenter => {
+      presentersID.push(presenter.id)
+    })
+    data.presenters = presentersID
     console.log(data);
     this.props.createEvent(data);
     this.setState({
