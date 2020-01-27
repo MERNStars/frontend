@@ -3,6 +3,20 @@ import CreateEventForm from "../components/CreateEventForm";
 import { createEvent } from "../reducers/event_reducer";
 import { connect } from "react-redux";
 
+function mapStateToProps(state) {
+  return {
+    selectedPresenters: state.presenterReducer.selectedPresenters
+  };
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    createEvent: eventData => {
+      dispatch(createEvent(eventData));
+    }
+  };
+};
+
 class CreateEvent extends Component {
   state = {
     display_message: "Create Event",
@@ -10,6 +24,11 @@ class CreateEvent extends Component {
   };
 
   submit = data => {
+    let presentersID = [];
+    data.selectedPresenters.map(presenter => {
+      presentersID.push(presenter.id)
+    })
+    data.presenters = presentersID
     console.log(data);
     this.props.createEvent(data);
     this.setState({
@@ -21,17 +40,10 @@ class CreateEvent extends Component {
     return (
       <div>
         <CreateEventForm onSubmit={this.submit} />
+        
       </div>
     );
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    createEvent: eventData => {
-      dispatch(createEvent(eventData));
-    }
-  };
-};
-
-export default connect(null, mapDispatchToProps)(CreateEvent);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateEvent);

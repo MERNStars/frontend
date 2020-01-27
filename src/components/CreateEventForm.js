@@ -1,18 +1,72 @@
 import React, { Component } from "react";
-import { Field, reduxForm } from "redux-form";
+import { Field, reduxForm, FieldArray } from "redux-form";
 import RenderTextField from "./RenderTextField";
-import RenderPresentersField from "./RenderPresentersField";
 import { connect } from "react-redux";
 import { DropdownList } from "react-widgets";
+
+// packages for retrieving presenters data
+import { Multiselect } from "react-widgets";
+import axios from "axios";
+import { populatePresenters } from "../reducers/presenter_reducer";
+
+require("dotenv").config();
 
 function mapStateToProps(state) {
   return {
     categories: state.eventReducer.event_categories,
-    status: state.eventReducer.event_statuses
+    status: state.eventReducer.event_statuses,
+    selectedPresenters: state.presenterReducer.selectedPresenters,
+    presenters: state.presenterReducer.presenters
   };
 }
 
+const mapDispatchToProps = {
+  populatePresenters
+};
+
 class CreateEventForm extends Component {
+  // Brings in presenters data
+  async componentDidMount() {
+    const response = await axios
+      .get(`${process.env.REACT_APP_BACKEND_DB_TEST}/presenters/`, {
+        headers: {
+          authorization: `${localStorage.weexplore_token}`
+        }
+      })
+      .catch(error => {
+        console.log(`ERROR: ${error}`);
+      });
+
+    const data = await response.data;
+    this.props.populatePresenters(data);
+  }
+
+  printPresenters = ({ input, name, label }) => {
+    let emptyArray = [];
+    this.props.presenters.map(presenter => {
+      emptyArray.push({
+        id: presenter._id,
+        name: `${presenter.first_name} ${presenter.last_name} ${presenter.qualification}`
+      });
+    });
+    return (
+      <div>
+        {label}:
+        <Multiselect
+          {...input}
+          name={name}
+          data={emptyArray}
+          valueField="id"
+          textField="name"
+          onBlur={this.props.onBlur}
+          allowCreate={true}
+          onCreate={name => this.input.push(name)}
+          value={input.value !== "[]" ? [...input.value] : "[]"}
+        />
+      </div>
+    );
+  };
+
   RenderCategoriesField = ({
     input,
     name,
@@ -59,11 +113,16 @@ class CreateEventForm extends Component {
     );
   };
 
+  RenderPresentersData = () => {
+    if (this.props.selectedPresenters) {
+      console.log(this.props.selectedPresenters);
+    }
+  };
+
   render() {
     return (
       <div>
         <h1>Create an Event</h1>
-    <div><RenderPresentersField /></div>
         <form onSubmit={this.props.handleSubmit}>
           <Field
             name="event_name"
@@ -102,9 +161,8 @@ class CreateEventForm extends Component {
             label="Registration close date"
           />
           <Field
-            name="presenters"
-            component={RenderTextField}
-            type="text"
+            name="selectedPresenters"
+            component={this.printPresenters}
             label="Presenters"
           />
           <Field
@@ -159,4 +217,4 @@ class CreateEventForm extends Component {
 
 export default reduxForm({
   form: "CreateEventForm"
-})(connect(mapStateToProps)(CreateEventForm));
+})(connect(mapStateToProps, mapDispatchToProps)(CreateEventForm));

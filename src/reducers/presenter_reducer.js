@@ -3,7 +3,8 @@ require("dotenv").config();
 
 const initialState = { 
     message: '',
-    presenters: []
+    presenters: [],
+    selectedPresenters: null
 }
 
 const presentersLoaded = (presenters) => ({
@@ -25,7 +26,24 @@ export const loadPresenters = () => {
         .catch(error => {
             console.log(`ERROR: ${error}`);
         });
+    }
+}
      
+
+
+
+export const populatePresenters = (presenters) => {
+    return {
+        type: "POPULATE_PRESENTERS",
+        data: presenters
+    }
+}
+
+
+export const selectPresenters = (presenters) => {
+    return {
+        type: "SELECT_PRESENTERS",
+        data: presenters
     }
 }
 
@@ -40,6 +58,13 @@ const presenterReducer = (state=initialState, action) => {
             break;    
         case "PRESENTERS_POPULATED":
             newState = { ...state, presenters: action.data };
+            break;
+        case "POPULATE_PRESENTERS":
+            newState = {...state, presenters: action.data};
+            break;
+        case "SELECT_PRESENTERS":
+            console.log(action.data)
+            newState = {...state, selectedPresenters: action.data};
             break;
         default:
             newState = { ...state};

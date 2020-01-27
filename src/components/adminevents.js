@@ -9,33 +9,33 @@ require('dotenv').config()
 
 export default class AdminEvents extends Component {
 
-  createEvent() {
-    // Insert code to create a new event. 
-  }
-
   editEvent = event => {
-    this.setState( {selectedEvent: event })
     return(
       <EditEvent {...event}/>
       )
-    // Render "eventForm"
-    // Insert code to grab event with axios call and patch event. 
   }
     
-
-  publishEvent = () => {
-    // Insert code to grab event with axios and change event status from unpublished to publish
-  }
 
   render() {
     return (
       <>
-        <h3>Published Events</h3>
+      <h3>Published Events</h3>
         <div className={styles.eventsContainer}>
           {this.props.events
             ? this.props.events.map((event, i) => {
+                return ( event.published ? <AdminEventCard {...event} index={i} /> : null )})
+            : null}
+        </div>
+        <h3>Unpublished Events</h3>
+        <div className={styles.eventsContainer}>
+          {this.props.events
+            ? this.props.events.map((event, i) => {
+<<<<<<< HEAD
                 return <AdminEventCard {...event} key={i+1} index={i} />;
               })
+=======
+                return ( event.published ? null : <AdminEventCard {...event} index={i} /> )})
+>>>>>>> master
             : null}
         </div>
       </>
