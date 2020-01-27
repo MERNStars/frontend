@@ -30,17 +30,16 @@ class CreateEvent extends Component {
     })
     data.presenters = presentersID
     console.log(data);
-    this.props.createEvent(data);
-    this.setState({
-      display_message: "Your event has been created."
-    });
+    // this.props.createEvent(data);
+    // this.setState({
+    //   display_message: "Your event has been created."
+    // });
   };
 
   render() {
     return (
       <div>
         <CreateEventForm onSubmit={this.submit} />
-        
       </div>
     );
   }
