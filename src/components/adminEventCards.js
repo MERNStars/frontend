@@ -27,9 +27,9 @@ class AdminEventCard extends React.Component {
     let array =[]
     this.props.event_statuses.map( (status, index) => {
       return(array.push( {
-        key: status,
+        key: index,
         text: status,
-        value: index
+        value: status
       }))
     })
     this.setState( { status_options: array})
@@ -83,7 +83,7 @@ class AdminEventCard extends React.Component {
                 inline
                 options={this.state.status_options}
                 onChange={this.updateEventStatus}
-                defaultValue={this.props.event_statuses[0]}
+                defaultValue={event.status}
               />
             </span> : <Button size="small" onClick={this.publishEvent}>Publish</Button>}
         </Card.Content>
@@ -137,11 +137,9 @@ class AdminEventCard extends React.Component {
   }
 
   // Update Status Functions
-  // ToDo
-  // Get a dropdown box appearing.
 
- updateEventStatus =  async (e, {value}) => {
-    let newStatus = this.props.event_statuses[value]
+ updateEventStatus =  async (e, {key}) => {
+    let newStatus = this.props.event_statuses[key]
     console.log( newStatus)
     const options = {
       method: "PATCH",
