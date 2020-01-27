@@ -52,8 +52,6 @@ class AdminDashboard extends Component {
 
 
   renderAdminPage() {
-
-    // if (this.props.isAdmin) {
       const { pageStatus } = this.state;
       const { events } = this.props
       return (
@@ -69,6 +67,7 @@ class AdminDashboard extends Component {
               </div>
               <Grid.Column width={10}>
                 <Card 
+                href="/create-event"
                 header='+'
                 description="Add New Event"
                 />
@@ -81,9 +80,6 @@ class AdminDashboard extends Component {
           </Grid>
         </>
       );
-    // } else {
-    //   return <h1>You are not authorised to view this page</h1>;
-    // }
   }
 
   render() {
