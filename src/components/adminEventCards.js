@@ -3,6 +3,8 @@ import { Card, Icon, Button, Modal, Dropdown } from 'semantic-ui-react'
 import Moment from 'react-moment';
 import AttendeeList from './eventAttendeesList';
 import Axios from 'axios';
+import { withRouter } from 'react-router-dom';
+
 
 import {deleteEvents, updateEvents} from '../reducers/event_reducer';
 import { connect } from 'react-redux';
@@ -27,9 +29,9 @@ class AdminEventCard extends React.Component {
     let array =[]
     this.props.event_statuses.map( (status, index) => {
       return(array.push( {
-        key: status,
+        key: index,
         text: status,
-        value: index
+        value: status
       }))
     })
     this.setState( { status_options: array})
@@ -43,6 +45,11 @@ class AdminEventCard extends React.Component {
     return( 
         this.displayCard( this.props )
       )  
+  }
+
+  onClickEdit = () => {
+    console.log("Click Edit " + this.props.index);
+    this.props.history.push(`/edit-event/${this.props.index}`);
   }
 
   displayCard = event => {
@@ -64,7 +71,7 @@ class AdminEventCard extends React.Component {
             </Modal>
         </Card.Content>
         <Card.Content extra>
-          <Button size="small">Edit</Button>
+          <Button size="small" onClick={ this.onClickEdit }>Edit</Button>
           <Modal open={this.state.modalOpen}
                 onClose={this.handleClose}
                 basic
@@ -83,7 +90,7 @@ class AdminEventCard extends React.Component {
                 inline
                 options={this.state.status_options}
                 onChange={this.updateEventStatus}
-                defaultValue={this.props.event_statuses[0]}
+                defaultValue={event.status}
               />
             </span> : <Button size="small" onClick={this.publishEvent}>Publish</Button>}
         </Card.Content>
@@ -137,11 +144,9 @@ class AdminEventCard extends React.Component {
   }
 
   // Update Status Functions
-  // ToDo
-  // Get a dropdown box appearing.
 
- updateEventStatus =  async (e, {value}) => {
-    let newStatus = this.props.event_statuses[value]
+ updateEventStatus =  async (e, {key}) => {
+    let newStatus = this.props.event_statuses[key]
     console.log( newStatus)
     const options = {
       method: "PATCH",
@@ -179,4 +184,15 @@ class AdminEventCard extends React.Component {
   }
 }
 
+<<<<<<< HEAD
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(AdminEventCard));
+
+
+// To Do:
+// - seperate them from published to unpublished
+//    - Make a patch request to the server 
+//    - Make a patch request to the server to change published boolean to true. 
+// - Change the cancel button to a drop down of status changes? Or a button called status change?
+=======
 export default connect(mapStateToProps,mapDispatchToProps)(AdminEventCard)
+>>>>>>> master

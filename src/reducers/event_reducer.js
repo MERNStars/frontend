@@ -43,6 +43,15 @@ export const deleteEvents = (events) => {
     }
 }
 
+const eventCreated = message => ({
+  type: "EVENT_CREATED",
+  message: message
+});
+
+const eventUpdated = data => ({
+  type: "EVENT_EDITED",
+  data: data
+});
 export const updateEvents = (events) => {
   return {
     type: "UPDATE_EVENTS",
@@ -52,8 +61,8 @@ export const updateEvents = (events) => {
 
 export const createEvent = event => {
   return dispatch => {
-    console.log(`${event.event_date}T${event.event_start_time}`);
-    console.log(`${event.event_date}T${event.event_end_time}`);
+    // console.log(`${event.event_date}T${event.event_start_time}`);
+    // console.log(`${event.event_date}T${event.event_end_time}`);
     Axios.post(
       `http://localhost:8888/events/create`,
       {
@@ -79,16 +88,39 @@ export const createEvent = event => {
         }
       }
     ).then(response => {
-      console.log(response);
+      // console.log(response);
       dispatch(eventCreated(response.data));
     });
   };
 };
 
-const eventCreated = message => ({
-  type: "EVENT_CREATED",
-  message: message
-});
+export const editEvent = event => {
+  return dispatch => {
+    console.log("Edit Event ...");
+    console.log(event);
+    Axios({
+      url: "http://localhost:8888/events/update",
+      method: "PATCH",
+      data: event,
+      headers: {
+          authorization: `${localStorage.weexplore_token}`
+        }
+    }
+    ).then(response => {
+        console.log("Data from response...");
+        
+        console.log(response.data);
+        dispatch(eventUpdated(response.data));
+    })
+    .catch(err => {
+      console.error("Ooops...there is a problem.");
+      
+      console.error(err);
+    });
+  };
+}
+
+
 
 const eventReducer = (state=initialState, action) => {
 
@@ -107,7 +139,16 @@ const eventReducer = (state=initialState, action) => {
             newState = { ...state, events: action.data };
             break;
         case "EVENT_EDITED":
-            newState = { ...state, events: action.data };
+            let updated_events = state.events;
+            console.log("Before data...");
+            console.log(updated_events);
+                        
+            console.log("Returned data...")
+            console.log(action.data);
+            
+            const index = updated_events.findIndex(event => event._id === action.data._id);
+            updated_events[index] = action.data;
+            newState = { ...state, events: updated_events };
             break;
         default:
             newState = { ...state};
