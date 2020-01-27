@@ -4,7 +4,8 @@ import AdminEvent from "../components/adminevents";
 import AdminMembers from "../components/adminmembers";
 import { Grid } from "semantic-ui-react";
 import { connect } from "react-redux";
-import { populateEvents } from '../reducers/event_reducer'
+import { populateEvents } from '../reducers/event_reducer';
+
 
 function mapStateToProps(state) {
   return { isAdmin: state.userReducer.isAdmin, events: state.eventReducer.events };
