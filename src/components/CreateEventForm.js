@@ -4,7 +4,6 @@ import RenderTextField from "./RenderTextField";
 import { connect } from "react-redux";
 import { DropdownList } from "react-widgets";
 
-
 // packages for retrieving presenters data
 import { Multiselect } from "react-widgets";
 import axios from "axios";
@@ -61,7 +60,7 @@ class CreateEventForm extends Component {
           textField="name"
           onBlur={this.props.onBlur}
           allowCreate={true}
-          onCreate={(name) => this.input.push(name)}
+          onCreate={name => this.input.push(name)}
           value={input.value !== "[]" ? [...input.value] : "[]"}
         />
       </div>
@@ -165,10 +164,7 @@ class CreateEventForm extends Component {
             name="selectedPresenters"
             component={this.printPresenters}
             label="Presenters"
-            
           />
-
-          <br />
           <Field
             name="is_family_friendly"
             component={RenderTextField}
