@@ -4,8 +4,12 @@ import AdminEvent from "../components/adminevents";
 import AdminMembers from "../components/adminmembers";
 import { Grid } from "semantic-ui-react";
 import { connect } from "react-redux";
+
+import Moment from 'moment';
+
 import { populateEvents } from '../reducers/event_reducer'
 import {loadPresenters} from '../reducers/presenter_reducer';
+
 
 function mapStateToProps(state) {
   return { isAdmin: state.userReducer.isAdmin, events: state.eventReducer.events, presenters: state.presenterReducer.presenters };
@@ -46,8 +50,13 @@ class AdminDashboard extends Component {
         console.log(`ERROR: ${error}`);
       });
     const data = await response.data;
+
+    const sortedArray  = data.sort((a,b) => new Moment(a.event_date.begin).format('YYYYMMDD') - new Moment(b.event_date.begin).format('YYYYMMDD'))
+
+
     this.props.populateEvents(data);
     // console.log("No. presenters" + this.props.presenters.length);
+
   }
 
 

@@ -4,9 +4,7 @@ import axios from 'axios';
 class eventAttendeesList extends React.Component {
 
   state = {
-    attendees: [],
-    friends: [],
-    dependents: []
+    attendees: []
   }
 
   async componentDidMount() {
@@ -20,28 +18,38 @@ class eventAttendeesList extends React.Component {
     const response = await axios(options).catch(error => {
       console.log(`ERROR: ${error}`);
     });
-    this.setState( { attendees: response.data})
-    console.log( this.state.attendees)
+    if( response !== undefined){
+      this.setState( { attendees: response.data})
+    }
+  }
+
+  renderAttendees() {
+    return( <>
+      {this.state.attendees.map( (attendee) => {
+        return(
+          <div>
+            <strong>{attendee.first_name} {attendee.last_name}</strong><br></br>
+            Friends: 
+            <ul>
+            {attendee.friends.map( (friend) => {
+              return (<li>{friend} </li>)
+            })}
+            </ul>
+            Dependents: 
+            <ul>
+            {attendee.dependents.map( (child) => {
+              return ( <li>{child.name}, Age: {child.age}</li> ) 
+            })}
+            </ul>
+          </div>
+        )
+      })}
+    </>)
+   
   }
 
   render(){
-    return(
-      <>
-        {this.state.attendees.map( (attendee) => {
-          return(
-            <div>
-              <strong>{attendee.first_name} {attendee.last_name}</strong><br></br>
-              Friends: {attendee.friends.map( (friend) => {
-                return (<>{friend} </>)
-              })}<br></br>
-              Dependents: {attendee.dependents.map( (child) => {
-                return ( <>{child.name} {child.age}</> ) 
-              })}
-            </div>
-          )
-        })}
-      </>
-    )
+    return this.state.attendees ? this.renderAttendees() : null
   }
 }
 
