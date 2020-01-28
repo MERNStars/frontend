@@ -185,4 +185,4 @@ componentDidMount() {
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(AdminEventCard)
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(AdminEventCard));
