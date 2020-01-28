@@ -5,6 +5,7 @@ import AdminMembers from "../components/adminmembers";
 import { Grid } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { populateEvents } from '../reducers/event_reducer';
+import Moment from 'moment';
 
 
 function mapStateToProps(state) {
@@ -45,6 +46,8 @@ class AdminDashboard extends Component {
         console.log(`ERROR: ${error}`);
       });
     const data = await response.data;
+    const sortedArray  = data.sort((a,b) => new Moment(a.event_date.begin).format('YYYYMMDD') - new Moment(b.event_date.begin).format('YYYYMMDD'))
+    console.log(sortedArray)
     this.props.populateEvents(data)
   }
 
