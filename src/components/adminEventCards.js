@@ -186,15 +186,4 @@ class AdminEventCard extends React.Component {
   }
 }
 
-<<<<<<< HEAD
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(AdminEventCard));
-
-
-// To Do:
-// - seperate them from published to unpublished
-//    - Make a patch request to the server 
-//    - Make a patch request to the server to change published boolean to true. 
-// - Change the cancel button to a drop down of status changes? Or a button called status change?
-=======
-export default connect(mapStateToProps,mapDispatchToProps)(AdminEventCard)
->>>>>>> master

@@ -23,19 +23,14 @@ export default class AdminEvents extends Component {
         <div className={styles.eventsContainer}>
           {this.props.events
             ? this.props.events.map((event, i) => {
-                return ( event.published ? <AdminEventCard {...event} index={i} /> : null )})
+                return ( event.published ? <AdminEventCard {...event} key={i} index={i} /> : null )})
             : null}
         </div>
         <h3>Unpublished Events</h3>
         <div className={styles.eventsContainer}>
           {this.props.events
             ? this.props.events.map((event, i) => {
-<<<<<<< HEAD
-                return <AdminEventCard {...event} key={i+1} index={i} />;
-              })
-=======
                 return ( event.published ? null : <AdminEventCard {...event} index={i} /> )})
->>>>>>> master
             : null}
         </div>
       </>

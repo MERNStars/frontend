@@ -4,13 +4,16 @@ import RenderTextField from "./RenderTextField";
 // import RenderPresentersField from "./RenderPresentersField";
 import { connect } from "react-redux";
 import { DropdownList, Multiselect } from "react-widgets";
+import ImageUploadPreviewer from './ImageUploadPreviewer';
+import { setNewImage } from "../reducers/event_reducer";
 
 function mapStateToProps(state) {
   return {
     categories: state.eventReducer.event_categories,
     status: state.eventReducer.event_statuses,
     events: state.eventReducer.events,
-    presenters: state.presenterReducer.presenters
+    presenters: state.presenterReducer.presenters,
+    newImage: state.eventReducer.newImage
   };
 }
 
@@ -18,11 +21,14 @@ class EditEventForm extends Component {
 
     state = {
         //loading the detail of the event from the store
-        event: {}
+        event: {},
+        image_file: null
     }
 
     componentDidMount(){
-        this.setState({event: {...this.props.events[this.props.index]}});  
+        const {index, events} = this.props;
+        this.setState({event: {...events[index], image_file: events[index].images[0]}});  
+
     }
 
   RenderCategoriesField = ({
@@ -102,7 +108,7 @@ class EditEventForm extends Component {
   }
 
   RenderUneditableTextField = ({input, label, type,  meta: { touched, error, warning }}) => {
-  return (
+    return (
       <div className="Small-Text">
           <label>{label}</label> <br/>
           <input {...input} className="text-field" onChange={input.onChange} placeholder={label} type={type} disabled={true} />
@@ -111,18 +117,26 @@ class EditEventForm extends Component {
         (warning && <span>{warning}</span>))}
       </div>
       )
+  }
+
+  // onChange = (e) => {
+  //   console.log(e.target.files[0]);
+  //   if(e.target.files[0])
+  //       this.setState({file: URL.createObjectURL(e.target.files[0])});
+  // }
+
+  onChange = (e) => {
+    //   console.log(e.target.files[0]);
+    if(e.target.files[0]){
+        this.setState({image_file: URL.createObjectURL(e.target.files[0])});
+        this.props.newImage(e.target.files[0]);
     }
+  }
 
   RenderImageField = ({input, label, type, meta: {touched, error, warning}}) =>{
+    
     return <div className="image-file">
-      <label>{label}</label>
-      {(this.event.images || []).map(url => (<img src={url} alt={label} />))} 
-      <DropdownList
-          {...input}
-          // name={name}
-          data={this.event.images}
-          value={input.value}
-        />
+       <ImageUploadPreviewer {...input} onChange={input.onChange} type="file" value={input.value? input.value[0] : "" } />
       {touched &&
       ((error && <span>{error}</span>) ||
         (warning && <span>{warning}</span>))}
@@ -209,12 +223,9 @@ class EditEventForm extends Component {
             type="text"
             label="Status"
           />
-          <Field
-            name="images"
-            component={RenderTextField}
-            type="text"
-            label="Upload Images"
-          />
+          
+         <Field name="images" component={this.RenderImageField} onChange={this.onChange} type="file" />
+
           <Field
             name="event_capacity"
             component={RenderTextField}
@@ -235,6 +246,14 @@ class EditEventForm extends Component {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    newImage: fileData => {
+      dispatch(setNewImage(fileData));
+    }
+  };
+};
+
 export default reduxForm({
   form: "CreateEventForm"
-})(connect(mapStateToProps)(EditEventForm));
+})(connect(mapStateToProps, mapDispatchToProps)(EditEventForm));
