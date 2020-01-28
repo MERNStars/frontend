@@ -4,7 +4,7 @@ import styles from "../../styles/event.module.scss";
 import placeholder from "../../assets/placeholder.jpg";
 
 import Moment from "react-moment";
-import { Button, Segment, Image, Label, Modal } from "semantic-ui-react";
+import { Button, Segment, Image, Label } from "semantic-ui-react";
 
 function renderPresenters(props) {
   return props
@@ -29,7 +29,6 @@ function renderPresenters(props) {
       })
     : null;
 }
-
 function RenderEvent(event) {
   const {
     event_name,
@@ -37,7 +36,6 @@ function RenderEvent(event) {
     event_start_time,
     description,
     event_category,
-    status,
     is_family_friendly,
     event_end_time,
     selectedPresenters

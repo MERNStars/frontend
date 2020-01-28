@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Field, reduxForm } from "redux-form";
 import { Multiselect } from "react-widgets";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const renderPresentersField = ({ input, name, label, presenters, onBlur }) => {
   let emptyArray = [];
@@ -27,7 +28,18 @@ const renderPresentersField = ({ input, name, label, presenters, onBlur }) => {
 };
 
 const WizardFromSecondPage = props => {
-  const { handleSubmit, presenters, previousPage } = props;
+  const [presenters, setPresenters] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_BACKEND_DB_TEST}/presenters/`, {
+        headers: {
+          authorization: `${localStorage.weexplore_token}`
+        }
+      })
+      .then(response => setPresenters(response.data));
+  });
+  const { handleSubmit, previousPage } = props;
 
   return (
     <form onSubmit={handleSubmit}>

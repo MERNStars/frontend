@@ -9,7 +9,6 @@ import Navbar from "../components/NavBar";
 import AboutUs from "../pages/about";
 import Contact from "../pages/contact";
 import Login from "../pages/Login";
-import CreateEvent from "../pages/CreateEvent";
 import NewEvent from "../pages/NewEvent";
 import CreateEventWizardForm from "../pages/CreateEventWizardForm";
 import NewPresenter from "../pages/NewPresenter";
