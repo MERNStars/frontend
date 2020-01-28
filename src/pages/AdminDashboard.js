@@ -4,15 +4,15 @@ import AdminEvent from "../components/adminevents";
 import AdminMembers from "../components/adminmembers";
 import { Grid } from "semantic-ui-react";
 import { connect } from "react-redux";
-import { populateEvents } from '../reducers/event_reducer';
-
+import { populateEvents } from '../reducers/event_reducer'
+import {loadPresenters} from '../reducers/presenter_reducer';
 
 function mapStateToProps(state) {
-  return { isAdmin: state.userReducer.isAdmin, events: state.eventReducer.events };
+  return { isAdmin: state.userReducer.isAdmin, events: state.eventReducer.events, presenters: state.presenterReducer.presenters };
 }
 
 const mapDispatchToProps = {
-  populateEvents
+  populateEvents, loadPresenters
 }
 
 function AdminDisplay(props) {
@@ -39,17 +39,20 @@ class AdminDashboard extends Component {
   };
 
   async componentDidMount() {
+    this.props.loadPresenters();
     const response = await axios
       .get("https://weexplorebackend.herokuapp.com/events")
       .catch(error => {
         console.log(`ERROR: ${error}`);
       });
     const data = await response.data;
-    this.props.populateEvents(data)
+    this.props.populateEvents(data);
+    // console.log("No. presenters" + this.props.presenters.length);
   }
 
 
   renderAdminPage() {
+
     if (this.props.isAdmin) {
       const { pageStatus } = this.state;
       const { events } = this.props

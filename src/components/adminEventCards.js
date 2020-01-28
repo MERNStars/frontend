@@ -3,6 +3,8 @@ import { Card, Icon, Button, Modal, Dropdown } from 'semantic-ui-react'
 import Moment from 'react-moment';
 import AttendeeList from './eventAttendeesList';
 import Axios from 'axios';
+import { withRouter } from 'react-router-dom';
+
 
 import {deleteEvents, updateEvents} from '../reducers/event_reducer';
 import { connect } from 'react-redux';
@@ -45,6 +47,11 @@ class AdminEventCard extends React.Component {
       )  
   }
 
+  onClickEdit = () => {
+    console.log("Click Edit " + this.props.index);
+    this.props.history.push(`/edit-event/${this.props.index}`);
+  }
+
   displayCard = event => {
     return(
       <Card fluid>
@@ -64,7 +71,7 @@ class AdminEventCard extends React.Component {
             </Modal>
         </Card.Content>
         <Card.Content extra>
-          <Button size="small">Edit</Button>
+          <Button size="small" onClick={ this.onClickEdit }>Edit</Button>
           <Modal open={this.state.modalOpen}
                 onClose={this.handleClose}
                 basic
@@ -177,4 +184,15 @@ class AdminEventCard extends React.Component {
   }
 }
 
+<<<<<<< HEAD
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(AdminEventCard));
+
+
+// To Do:
+// - seperate them from published to unpublished
+//    - Make a patch request to the server 
+//    - Make a patch request to the server to change published boolean to true. 
+// - Change the cancel button to a drop down of status changes? Or a button called status change?
+=======
 export default connect(mapStateToProps,mapDispatchToProps)(AdminEventCard)
+>>>>>>> master
