@@ -1,7 +1,7 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { Multiselect } from "react-widgets";
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 const renderPresentersField = ({ input, name, label, presenters, onBlur }) => {
   let emptyArray = [];
@@ -26,7 +26,6 @@ const renderPresentersField = ({ input, name, label, presenters, onBlur }) => {
   );
 };
 
-
 const WizardFromSecondPage = props => {
   const { handleSubmit, presenters, previousPage } = props;
 
@@ -40,8 +39,10 @@ const WizardFromSecondPage = props => {
         label="Presenters"
       />
       <h4>Or Add new presenter</h4>
-      <button><Link to="/create-presenter">Create Presenter</Link></button>
-      
+      <button>
+        <Link to="/create-presenter">Create Presenter</Link>
+      </button>
+
       <div>
         <button type="button" className="previous" onClick={previousPage}>
           Previous

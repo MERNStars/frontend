@@ -4,16 +4,21 @@ import AdminEvent from "../components/adminevents";
 import AdminMembers from "../components/adminmembers";
 import { Grid, Card } from "semantic-ui-react";
 import { connect } from "react-redux";
-import { populateEvents } from '../reducers/event_reducer'
-import {loadPresenters} from '../reducers/presenter_reducer';
+import { populateEvents } from "../reducers/event_reducer";
+import { loadPresenters } from "../reducers/presenter_reducer";
 
 function mapStateToProps(state) {
-  return { isAdmin: state.userReducer.isAdmin, events: state.eventReducer.events, presenters: state.presenterReducer.presenters };
+  return {
+    isAdmin: state.userReducer.isAdmin,
+    events: state.eventReducer.events,
+    presenters: state.presenterReducer.presenters
+  };
 }
 
 const mapDispatchToProps = {
-  populateEvents, loadPresenters
-}
+  populateEvents,
+  loadPresenters
+};
 
 function AdminDisplay(props) {
   const pageStatus = props.pageStatus;
@@ -50,36 +55,36 @@ class AdminDashboard extends Component {
     // console.log("No. presenters" + this.props.presenters.length);
   }
 
-
   renderAdminPage() {
-      const { pageStatus } = this.state;
-      const { events } = this.props
-      return (
-        <>
-          <Grid columns={2} divided>
-            <Grid.Row></Grid.Row>
-            <Grid.Row>
-              <Grid.Column width={2}></Grid.Column>
-              <div>
-                <button onClick={this.handleClick2}>Events</button>
-                <br />
-                <button onClick={this.handleClick}>Members</button>
-              </div>
-              <Grid.Column width={10}>
-                <Card 
+    const { pageStatus } = this.state;
+    const { events } = this.props;
+    return (
+      <>
+        <Grid columns={2} divided>
+          <Grid.Row></Grid.Row>
+          <Grid.Row>
+            <Grid.Column width={2}></Grid.Column>
+            <div>
+              <button onClick={this.handleClick2}>Events</button>
+              <br />
+              <button onClick={this.handleClick}>Members</button>
+            </div>
+            <Grid.Column width={10}>
+              <Card
                 href="/create-event"
-                header='+'
+                header="+"
                 description="Add New Event"
-                />
-                <AdminDisplay
-                  page={true}
-                  events={events}
-                  pageStatus={pageStatus}/>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </>
-      );
+              />
+              <AdminDisplay
+                page={true}
+                events={events}
+                pageStatus={pageStatus}
+              />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </>
+    );
   }
 
   render() {

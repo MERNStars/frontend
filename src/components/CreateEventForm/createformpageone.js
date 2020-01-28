@@ -3,6 +3,7 @@ import RenderCategoriesField from "../FormFields/CategoriesFormField";
 import RenderStatusField from "../FormFields/StatusFormField";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
+import validate from '../FormFields/validate'
 
 const RenderTextField = ({ input, label, type, meta: { touched, error } }) => (
   <div>
@@ -105,5 +106,6 @@ const WizardFormFirstPage = props => {
 export default reduxForm({
   form: "wizard",
   destroyOnUnmount: false,
-  forceUnregisterOnUnmount: true
+  forceUnregisterOnUnmount: true,
+  validate
 })(connect(mapStateToProps)(WizardFormFirstPage));

@@ -11,12 +11,10 @@ import { Button, Segment, Image, Label, Modal } from "semantic-ui-react";
 require("dotenv").config();
 
 class Event extends React.Component {
-
-
   state = {
     event: null,
     attending: false,
-    attend: 'Attend'
+    attend: "Attend"
   };
 
   componentDidMount = async () => {
@@ -26,14 +24,18 @@ class Event extends React.Component {
     );
     const data = response.data;
     this.setState({ event: data });
-    this.checkAttendStatus()
+    this.checkAttendStatus();
   };
 
   checkAttendStatus() {
-    const { event } = this.state
-    return event ? 
-      event.attendees.find( attendee => attendee.username === localStorage.username) ? this.setState( {attending: true, attend: 'Unattend'}) : this.setState( {attending: false})
-      : null
+    const { event } = this.state;
+    return event
+      ? event.attendees.find(
+          attendee => attendee.username === localStorage.username
+        )
+        ? this.setState({ attending: true, attend: "Unattend" })
+        : this.setState({ attending: false })
+      : null;
   }
 
   attendEvent = async data => {
@@ -62,8 +64,8 @@ class Event extends React.Component {
     }
   };
 
-  unattendEvent = async(event) => {
-    console.log( this.state.event)
+  unattendEvent = async event => {
+    console.log(this.state.event);
     try {
       await axios
         .patch(
@@ -85,7 +87,7 @@ class Event extends React.Component {
     } catch (error) {
       console.log(error);
     }
-    this.setState( { attending: false, attend: 'Attend'})
+    this.setState({ attending: false, attend: "Attend" });
   };
 
   renderEvent = () => {
@@ -160,31 +162,34 @@ class Event extends React.Component {
           </Segment.Group>
         </Segment.Group>
         <div className={styles.containerFooter}>
-          <div className={styles.Footer}>
-            {this.renderButton()}
-          </div>
+          <div className={styles.Footer}>{this.renderButton()}</div>
         </div>
       </div>
     );
   };
 
   renderButton() {
-    return(
+    return (
       <Modal trigger={<Button size="massive">{this.state.attend}</Button>}>
-          <Modal.Header>{this.state.attend}</Modal.Header>
-            <Modal.Content>
-              <Modal.Description>
-                {this.state.attending ? 
-                <>Are you sure you want to unattend?
-                  <Button onClick={this.unattendEvent}>Yes</Button>
-                </> : <AttendForm
+        <Modal.Header>{this.state.attend}</Modal.Header>
+        <Modal.Content>
+          <Modal.Description>
+            {this.state.attending ? (
+              <>
+                Are you sure you want to unattend?
+                <Button onClick={this.unattendEvent}>Yes</Button>
+              </>
+            ) : (
+              <AttendForm
                 onSubmit={this.attendEvent}
                 event={this.state.event}
-                initialValues={{ username: localStorage.username }}/>}
-              </Modal.Description>
-          </Modal.Content>
+                initialValues={{ username: localStorage.username }}
+              />
+            )}
+          </Modal.Description>
+        </Modal.Content>
       </Modal>
-    )
+    );
   }
 
   renderIcons() {

@@ -4,8 +4,8 @@ import WizardFormThirdPage from "../components/CreateEventForm/createformpagethr
 import WizardFromSecondPage from "../components/CreateEventForm/createformpagetwo";
 import { connect } from "react-redux";
 import { reduxForm } from "redux-form";
-
 import axios from "axios";
+import PreviewForm from "../components/CreateEventForm/previewevent";
 import { populatePresenters } from "../reducers/presenter_reducer";
 
 function mapStateToProps(state) {
@@ -23,8 +23,10 @@ class CreateEventWizardForm extends Component {
     super(props);
     this.nextPage = this.nextPage.bind(this);
     this.previousPage = this.previousPage.bind(this);
+    this.previewEvent = this.previewEvent.bind(this);
     this.state = {
-      page: 1
+      page: 1,
+      event: ""
     };
   }
   nextPage() {
@@ -33,6 +35,11 @@ class CreateEventWizardForm extends Component {
 
   previousPage() {
     this.setState({ page: this.state.page - 1 });
+  }
+
+  previewEvent(data) {
+    this.setState({ event: data });
+    this.setState({ page: this.state.page + 1 });
   }
 
   async componentDidMount() {
@@ -55,8 +62,7 @@ class CreateEventWizardForm extends Component {
   };
 
   render() {
-    const { handleSubmit, presenters } = this.props;
-    console.log(presenters);
+    const { presenters } = this.props;
     const { page } = this.state;
     return (
       <div>
@@ -70,6 +76,13 @@ class CreateEventWizardForm extends Component {
         )}
         {page === 3 && (
           <WizardFormThirdPage
+            previousPage={this.previousPage}
+            onSubmit={this.previewEvent}
+          />
+        )}
+        {page === 4 && (
+          <PreviewForm
+            eventData={this.state.event}
             previousPage={this.previousPage}
             onSubmit={this.handleSubmit}
           />

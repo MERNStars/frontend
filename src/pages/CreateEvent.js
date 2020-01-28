@@ -20,7 +20,8 @@ const mapDispatchToProps = dispatch => {
 class CreateEvent extends Component {
   state = {
     display_message: "Create Event",
-    event: null
+    event: null,
+    previewEventDetail: ""
   };
 
   submit = data => {
