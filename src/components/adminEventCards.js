@@ -3,6 +3,8 @@ import { Card, Icon, Button, Modal, Dropdown} from 'semantic-ui-react'
 import Moment from 'react-moment';
 import AttendeeList from './eventAttendeesList';
 import Axios from 'axios';
+import { withRouter } from 'react-router-dom';
+
 
 
 import {deleteEvents, updateEvents} from '../reducers/event_reducer';
@@ -46,6 +48,11 @@ componentDidMount() {
       )  
   }
 
+  onClickEdit = () => {
+    console.log("Click Edit " + this.props.index);
+    this.props.history.push(`/edit-event/${this.props.index}`);
+  }
+
   displayCard = event => {
     console.log( event )
     return(
@@ -65,7 +72,7 @@ componentDidMount() {
             </Modal>
         </Card.Content>
         <Card.Content extra>
-          <Button size="small">Edit</Button>
+          <Button size="small" onClick={ this.onClickEdit }>Edit</Button>
           <Modal open={this.state.modalOpen}
                 onClose={this.handleClose}
                 basic
