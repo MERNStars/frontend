@@ -161,7 +161,7 @@ class SignUpForm extends Component {
           component={this.renderTextField}
           type="email"
           label="Email"
-          value={this.state.event.username}
+          value={localStorage.username}
         />
         <Field
           name="password"

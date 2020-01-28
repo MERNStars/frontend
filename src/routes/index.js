@@ -14,6 +14,7 @@ import CreateEventWizardForm from "../pages/CreateEventWizardForm";
 import NewPresenter from "../pages/NewPresenter";
 import EditEvent from "../pages/EditEvent";
 import AdminAccount from "../components/adminAccount";
+import EditAccountDetails from '../pages/EditAccount'
 
 const Router = () => {
   return (
@@ -41,6 +42,7 @@ const Router = () => {
             path="/create-presenter"
             component={NewPresenter}
           />
+          <Route exact path="/edit-account" component={EditAccountDetails}/>
         </Switch>
       </BrowserRouter>
     </div>
