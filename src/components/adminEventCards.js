@@ -1,11 +1,9 @@
 import React from 'react';
-import { Card, Icon, Button, Modal, Dropdown } from 'semantic-ui-react'
+import { Card, Icon, Button, Modal, Dropdown} from 'semantic-ui-react'
 import Moment from 'react-moment';
 import AttendeeList from './eventAttendeesList';
 import Axios from 'axios';
 import { withRouter } from 'react-router-dom';
-
-
 import {deleteEvents, updateEvents} from '../reducers/event_reducer';
 import { connect } from 'react-redux';
 
@@ -22,10 +20,10 @@ class AdminEventCard extends React.Component {
 
   state = { 
     modalOpen: false,
-    status_options: [] 
+    status_options: []
   }
 
-  componentDidMount() {
+componentDidMount() {
     let array =[]
     this.props.event_statuses.map( (status, index) => {
       return(array.push( {
@@ -67,12 +65,11 @@ class AdminEventCard extends React.Component {
   }
 
   displayCard = event => {
+    console.log( event )
     return(
       <Card fluid>
         <Card.Content>
           <Card.Header>{event.event_name}</Card.Header>
-          <Card.Meta>Presenter</Card.Meta>
-          {this.renderPresenters( event )}
           <Card.Meta>
             <span className='date'><Moment format="D MMM">{event.event_date.begin}</Moment></span>
           </Card.Meta>
@@ -80,7 +77,7 @@ class AdminEventCard extends React.Component {
               <Modal.Header>Attendees</Modal.Header>
               <Modal.Content>
                 <Modal.Description>
-                  <AttendeeList {...event}/>
+                  <AttendeeList  {...event}/>
                 </Modal.Description>
               </Modal.Content>
             </Modal>
@@ -200,4 +197,4 @@ class AdminEventCard extends React.Component {
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(AdminEventCard)
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(AdminEventCard));

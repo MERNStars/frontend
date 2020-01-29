@@ -26,7 +26,9 @@ const initialState = {
   
     message: '',
 
-    events: []
+    events: [],
+
+    newImage: null
 }
 
 export const populateEvents = (events) => {
@@ -52,10 +54,32 @@ const eventUpdated = data => ({
   type: "EVENT_EDITED",
   data: data
 });
+
+const newImage = data => ({
+  type: "NEW_IMAGE",
+  data: data
+});
+
+const noImage = () => ({
+  type: "RESET_IMAGE"
+})
+
 export const updateEvents = (events) => {
   return {
     type: "UPDATE_EVENTS",
     data: events
+  }
+}
+
+export const setNewImage = fileData => {
+  return dispatch => {
+    dispatch(newImage(fileData));
+  }
+}
+
+export const resetNewImage = () => {
+  return dispatch => {
+    dispatch(noImage());
   }
 }
 
@@ -149,6 +173,14 @@ const eventReducer = (state=initialState, action) => {
             const index = updated_events.findIndex(event => event._id === action.data._id);
             updated_events[index] = action.data;
             newState = { ...state, events: updated_events };
+            break;
+
+        case "NEW_IMAGE":
+            newState = { ...state, newImage: action.data };
+            break;
+
+        case "RESET_IMAGE":
+            newState = { ...state, newImage: null };
             break;
         default:
             newState = { ...state};
