@@ -102,7 +102,7 @@ componentDidMount() {
                 inline
                 options={this.state.status_options}
                 onChange={this.updateEventStatus}
-                placeholder="scheduled"
+                placeholder={event.status}
               />
             </span> : <Button size="small" onClick={this.publishEvent}>Publish</Button>}
         </Card.Content>
