@@ -4,9 +4,6 @@ import Moment from 'react-moment';
 import AttendeeList from './eventAttendeesList';
 import Axios from 'axios';
 import { withRouter } from 'react-router-dom';
-
-
-
 import {deleteEvents, updateEvents} from '../reducers/event_reducer';
 import { connect } from 'react-redux';
 
