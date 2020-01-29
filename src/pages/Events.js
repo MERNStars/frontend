@@ -37,7 +37,7 @@ export default class Events extends Component {
       
       <div className={styles.eventContainer}>
         {events && events.map( (event, i) => {
-          if( event.published ){
+          if( event.published && event.status !== "completed" ){
             return(< EventCard 
               { ...event} 
               index={i}/>)
