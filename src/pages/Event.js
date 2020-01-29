@@ -168,9 +168,17 @@ class Event extends React.Component {
    
   };
 
+  attendButton() {
+    if( this.state.event.status === "scheduled"){
+      return <Button size="massive" basic id={styles.button}>{this.state.attend}</Button>
+    } else {
+      return <Button size="massive" id={styles.button} disabled>{this.state.event.status}</Button>
+    }  
+  }
+
   renderButton() {
     return (
-      <Modal trigger={<Button size="massive" basic id={styles.button}>{this.state.attend}</Button>}>
+      <Modal trigger={ this.state.event ? this.attendButton() : null}>
         <Modal.Header>{this.state.attend}</Modal.Header>
         <Modal.Content>
           <Modal.Description>
