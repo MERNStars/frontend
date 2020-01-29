@@ -27,9 +27,9 @@ componentDidMount() {
     let array =[]
     this.props.event_statuses.map( (status, index) => {
       return(array.push( {
-        key: index,
+        key: status,
         text: status,
-        value: status
+        value: index
       }))
     })
     this.setState( { status_options: array})
@@ -48,6 +48,20 @@ componentDidMount() {
   onClickEdit = () => {
     console.log("Click Edit " + this.props.index);
     this.props.history.push(`/edit-event/${this.props.index}`);
+  }
+
+  renderPresenters = event => {
+    console.log( `hello world`)
+    this.props.presenters.map( (presenter) => {
+      return (
+      event.presenters.map( (pres) => {
+        if( presenter._id === pres._id ) {
+          return(
+            presenter.first_name
+          )
+        }
+      })
+    )})
   }
 
   displayCard = event => {
@@ -82,13 +96,13 @@ componentDidMount() {
                 </Modal.Description>
               </Modal.Content>
           </Modal>
-          {event.published ? <span>
+          {event.published && event.status !== "completed" ? <span>
               Status{' '}
               <Dropdown
                 inline
                 options={this.state.status_options}
                 onChange={this.updateEventStatus}
-                defaultValue={event.status}
+                placeholder="scheduled"
               />
             </span> : <Button size="small" onClick={this.publishEvent}>Publish</Button>}
         </Card.Content>
@@ -143,8 +157,9 @@ componentDidMount() {
 
   // Update Status Functions
 
- updateEventStatus =  async (e, {key}) => {
-    let newStatus = this.props.event_statuses[key]
+ updateEventStatus =  async (e, {value}) => {
+   console.log( this.props.event_statuses[value])
+    let newStatus = this.props.event_statuses[value]
     console.log( newStatus)
     const options = {
       method: "PATCH",

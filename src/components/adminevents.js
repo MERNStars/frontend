@@ -10,6 +10,7 @@ export default class AdminEvents extends Component {
   };
 
   render() {
+
     return (
       <>
         <h3>Published Events</h3>

@@ -98,79 +98,79 @@ class Event extends React.Component {
       event_category
     } = this.state.event;
     return (
-      <div>
-        <Segment.Group horizontal>
-          <Segment>
-            <p>
-              <Moment format="D MMM HH:MM a">{event_date.begin}</Moment>
-            </p>
-            <h1>{event_name}</h1>
-            <p>{description}</p>
-            {this.renderButton()}
-          </Segment>
-          <Segment>
+    <>
+      <div className={styles.eventBox}>
+        <div className={styles.innerContainer}>
+          <div className={styles.description}>
+            <div className={styles.endContainer}>
+              <Moment format="D MMM YYYY">{event_date.begin}</Moment>
+            </div>
+            <div className={styles.mainContainer}>
+              <h1>{event_name}</h1>
+              <p>{description}</p>
+            </div>
+            <div className={styles.endContainer}>
+              {this.renderButton()}
+            </div>
+          </div>
+        <div className={styles.eventImage}>
             <Image
               src={require("../assets/placeholder.jpg")}
-              size="medium"
+              size="big"
+              rounded
+              id={styles.image}
             ></Image>
-          </Segment>
-        </Segment.Group>
-        <Segment textAlign="center">
-          <h1>About</h1>
-          <p>{description}</p>
-          <Label>{this.renderIcons()}</Label>
-          <Label>{event_category}</Label>
-        </Segment>
-        <Segment.Group>
-          <Segment textAlign="center">
-            <h1>Date</h1>
-          </Segment>
-          <Segment.Group horizontal>
-            <Segment>
-              <h2>
-                Start <Moment format="D MMM HH:MM a">{event_date.begin}</Moment>
-              </h2>
-            </Segment>
-            <Segment>
-              <h2>
-                End <Moment format="D MMM HH:MM a">{event_date.end}</Moment>
-              </h2>
-            </Segment>
-          </Segment.Group>
-          <Segment.Group horizontal>
-            <Segment>{/* Insert code for google map here. */}</Segment>
-            <Segment>
-              <h3>Address</h3>
+          </div>
+        </div>
+      </div>
+      <div className={styles.eventBox} id={styles.shadedBox}>
+        <div className={styles.innerContainer}>
+          <div className={styles.description} id={styles.about}>
+            <div className={styles.endContainer}><h1>About</h1></div>
+            <p>{description}</p>
+            <div className={styles.endContainer}>
+              <Label>{this.renderIcons()}</Label>
+              <Label>{event_category}</Label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className={styles.eventBox}>
+        <div className={styles.outerContainer}>
+          <div className={styles.extraContainer}>
+            <h1 id={styles.datetitle}>Date</h1>
+            <h2 id={styles.startTime}>Start <Moment format="D MMM HH:MM a">{event_date.begin}</Moment></h2>
+            <h2 id={styles.endTime}>End <Moment format="D MMM HH:MM a">{event_date.end}</Moment></h2>
+            <div className={styles.googleMap}></div>
+            <div className={styles.address}>
+              <h2>Address</h2>
               <p>51 Morton St</p>
               <p>Clayton, VIC 3168</p>
-              <p>
-                Start Time: <Moment format="HH:MM a">{event_date.begin}</Moment>
-              </p>
-              <p>
-                Event Duration:{" "}
-                <Moment to={event_date.begin} ago>
-                  {event_date.end}
-                </Moment>{" "}
-              </p>
-            </Segment>
-          </Segment.Group>
-          <Segment.Group>
-            <Segment textAlign="center">
-              <h2>Presenters</h2>
-            </Segment>
-            <Segment>{this.renderPresenters()}</Segment>
-          </Segment.Group>
-        </Segment.Group>
+              <sub>Start Time: <Moment format="HH:MM a">{event_date.begin}</Moment></sub>
+              <sub>Event Duration:{" "}<Moment to={event_date.begin} ago> {event_date.end}</Moment>{" "}</sub>
+            </div>  
+          </div>
+        </div>
+      </div>
+      <div className={styles.eventBox} id={styles.shadedBox}>
+        <div className={styles.innerContainer}>
+          <div className={styles.insideContainer}>
+            <div className={styles.Heading}><h2>Presenters</h2></div>
+            {this.renderPresenters()}
+        </div>
+        </div>
+      </div>
         <div className={styles.containerFooter}>
           <div className={styles.Footer}>{this.renderButton()}</div>
         </div>
-      </div>
+     </>
     );
+   
   };
 
   renderButton() {
     return (
-      <Modal trigger={<Button size="massive">{this.state.attend}</Button>}>
+      <Modal trigger={<Button size="massive" basic id={styles.button}>{this.state.attend}</Button>}>
         <Modal.Header>{this.state.attend}</Modal.Header>
         <Modal.Content>
           <Modal.Description>
@@ -202,12 +202,8 @@ class Event extends React.Component {
     return presenter_detail
       ? presenter_detail.map(presenter => {
           return (
-            <div>
-              <Image
-                src={require("../assets/profile-photo.jpg")}
-                size="mini"
-                avatar
-              />
+            <div className={styles.presenterBox}>
+              <div>
               <span>
                 {presenter.title} {presenter.first_name} {presenter.last_name}
               </span>
@@ -218,6 +214,8 @@ class Event extends React.Component {
               <span>
                 <p>{presenter.short_description}</p>
               </span>
+              </div>
+              <img id={styles.profileImg} src={require("../assets/profile-photo.jpg")} alt="profile of presenter"/>
             </div>
           );
         })
