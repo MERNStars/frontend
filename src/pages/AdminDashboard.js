@@ -18,7 +18,7 @@ const mapDispatchToProps = {
 function AdminDisplay(props) {
   const pageStatus = props.pageStatus;
   if (pageStatus === "events") {
-    return <AdminEvent events={props.events} />;
+    return <AdminEvent events={props.events} presenters={props.presenters} />;
   }
   return <AdminMembers />;
 }
@@ -55,7 +55,7 @@ class AdminDashboard extends Component {
 
     if (this.props.isAdmin) {
       const { pageStatus } = this.state;
-      const { events } = this.props
+      const { events, presenters } = this.props
       return (
         <>
           <Grid columns={2} divided>
@@ -71,6 +71,7 @@ class AdminDashboard extends Component {
                 <AdminDisplay
                   page={true}
                   events={events}
+                  presenters={presenters}
                   pageStatus={pageStatus}/>
               </Grid.Column>
             </Grid.Row>

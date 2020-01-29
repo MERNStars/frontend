@@ -17,7 +17,7 @@ export default class AdminEvents extends Component {
   }
     
   render() {
-    
+    console.log( this.props)
     return (
       <>
       <h3>Published Events</h3>

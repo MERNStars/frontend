@@ -29,9 +29,9 @@ class AdminEventCard extends React.Component {
     let array =[]
     this.props.event_statuses.map( (status, index) => {
       return(array.push( {
-        key: index,
+        key: status,
         text: status,
-        value: status
+        value: index
       }))
     })
     this.setState( { status_options: array})
@@ -52,12 +52,27 @@ class AdminEventCard extends React.Component {
     this.props.history.push(`/edit-event/${this.props.index}`);
   }
 
+  renderPresenters = event => {
+    console.log( `hello world`)
+    this.props.presenters.map( (presenter) => {
+      return (
+      event.presenters.map( (pres) => {
+        if( presenter._id === pres._id ) {
+          return(
+            presenter.first_name
+          )
+        }
+      })
+    )})
+  }
+
   displayCard = event => {
     return(
       <Card fluid>
         <Card.Content>
           <Card.Header>{event.event_name}</Card.Header>
           <Card.Meta>Presenter</Card.Meta>
+          {this.renderPresenters( event )}
           <Card.Meta>
             <span className='date'><Moment format="D MMM">{event.event_date.begin}</Moment></span>
           </Card.Meta>
@@ -84,13 +99,13 @@ class AdminEventCard extends React.Component {
                 </Modal.Description>
               </Modal.Content>
           </Modal>
-          {event.published ? <span>
+          {event.published && event.status !== "completed" ? <span>
               Status{' '}
               <Dropdown
                 inline
                 options={this.state.status_options}
                 onChange={this.updateEventStatus}
-                defaultValue={event.status}
+                placeholder="scheduled"
               />
             </span> : <Button size="small" onClick={this.publishEvent}>Publish</Button>}
         </Card.Content>
@@ -145,8 +160,9 @@ class AdminEventCard extends React.Component {
 
   // Update Status Functions
 
- updateEventStatus =  async (e, {key}) => {
-    let newStatus = this.props.event_statuses[key]
+ updateEventStatus =  async (e, {value}) => {
+   console.log( this.props.event_statuses[value])
+    let newStatus = this.props.event_statuses[value]
     console.log( newStatus)
     const options = {
       method: "PATCH",
