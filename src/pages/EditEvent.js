@@ -1,14 +1,12 @@
 // ****NEW CODE****
 import React from "react";
-import { loadPresenters } from "../reducers/presenter_reducer";
 import CreateEventWizardForm from "../components/CreateEventWizardForm";
 import { connect } from "react-redux";
 import {
   editEvent,
-  createEvent,
   resetNewImage
 } from "../reducers/event_reducer";
-import { withRouter, Redirect } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import S3 from "react-aws-s3";
 const { uuid } = require("uuidv4");
 
