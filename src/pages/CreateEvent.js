@@ -1,3 +1,5 @@
+// PAGE NOT IN USE... DELETE LATER
+
 import React, { Component } from "react";
 import CreateEventForm from "../components/CreateEventForm";
 import { createEvent } from "../reducers/event_reducer";
@@ -20,7 +22,8 @@ const mapDispatchToProps = dispatch => {
 class CreateEvent extends Component {
   state = {
     display_message: "Create Event",
-    event: null
+    event: null,
+    previewEventDetail: ""
   };
 
   submit = data => {

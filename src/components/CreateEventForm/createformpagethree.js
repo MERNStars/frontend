@@ -1,6 +1,7 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 import UploadImageForm from "../UploadImageForm";
+import validate from '../FormFields/validate'
 
 const RenderTextField = ({ input, label, type, meta: { touched, error } }) => (
   <div>
@@ -28,7 +29,7 @@ const WizardFormThirdPage = props => {
           Previous
         </button>
         <button type="submit" disabled={pristine || submitting}>
-          Submit
+          Preview
         </button>
       </div>
     </form>
@@ -37,5 +38,6 @@ const WizardFormThirdPage = props => {
 export default reduxForm({
   form: "wizard",
   destroyOnUnmount: false,
-  forceUnregisterOnUnmount: true
+  forceUnregisterOnUnmount: true,
+  validate
 })(WizardFormThirdPage);

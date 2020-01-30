@@ -13,7 +13,6 @@ function mapStateToProps(state) {
 
 class Logout extends Component {
   logout = () => {
-    // console.log(this.state.username, this.state.password);
     this.props.logout();
     if (typeof Storage !== "undefined") {
       localStorage.removeItem("weexplore_token");
@@ -22,7 +21,6 @@ class Logout extends Component {
   };
 
   render() {
-    // const {message} = this.props;
     return (
       <div>
         <button onClick={this.logout}>Logout</button>

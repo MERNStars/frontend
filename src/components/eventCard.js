@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../styles/event.module.scss';
 import Moment from 'react-moment';
-import { Card, Icon, Image } from 'semantic-ui-react'
+import { Card, Icon, Image, Label } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
 
 class EventCard extends React.Component {
@@ -22,9 +22,11 @@ class EventCard extends React.Component {
       <Card.Content extra>
           <Icon name='user' />
           {this.props.event_capacity}
+          <Label basic color='red' pointing>{this.props.status}</Label>
       </Card.Content>
     </Card>
   )
+
 
   render() {
     const {_id} = this.props

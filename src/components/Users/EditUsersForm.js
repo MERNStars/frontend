@@ -58,9 +58,8 @@ function validate(values) {
   return errors;
 }
 
-class SignUpForm extends Component {
+class EditUserForm extends Component {
   renderTextField({ input, label, type, meta: { touched, error, warning } }) {
-    // console.log(input)
     return (
       <div className="Small-Text">
         <label>{label}</label> <br />
@@ -137,7 +136,6 @@ class SignUpForm extends Component {
 
   renderInterestMultiSelects = ({ input, name, label }) => {
     const { categories } = this.props;
-    console.log(input.value);
 
     return (
       <div className="My-Radio">
@@ -153,27 +151,41 @@ class SignUpForm extends Component {
     );
   };
 
+  RenderUneditableTextField = ({
+    input,
+    label,
+    type,
+    meta: { touched, error, warning }
+  }) => {
+    return (
+      <div className="Small-Text">
+        <label>{label}</label> <br />
+        <input
+          {...input}
+          className="text-field"
+          onChange={input.onChange}
+          placeholder={label}
+          type={type}
+          disabled={true}
+        />
+        {touched &&
+          ((error && <span>{error}</span>) ||
+            (warning && <span>{warning}</span>))}
+      </div>
+    );
+  };
+
   render() {
     return (
-      <form onSubmit={this.props.handleSubmit} className="SignUpForm">
+      <form onSubmit={this.props.handleSubmit} className="EditUserForm">
         <Field
           name="username"
-          component={this.renderTextField}
+          component={this.RenderUneditableTextField}
           type="email"
           label="Email"
-          value={localStorage.username}
-        />
-        <Field
-          name="password"
-          component={this.renderTextField}
-          type="password"
-          label="Password"
-        />
-        <Field
-          name="confirmPassword"
-          component={this.renderTextField}
-          type="password"
-          label="Confirm Password"
+          props={{
+            disabled: true // like this
+          }}
         />
         <Field
           name="first_name"
@@ -213,6 +225,6 @@ class SignUpForm extends Component {
   }
 }
 
-export default reduxForm({ form: "SignUpForm", validate })(
-  connect(mapStateToProps)(SignUpForm)
+export default reduxForm({ form: "EditUserForm", validate })(
+  connect(mapStateToProps)(EditUserForm)
 );
