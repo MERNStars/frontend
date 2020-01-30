@@ -151,16 +151,13 @@ componentDidMount() {
     const response = await Axios(options).catch( (err) => {
       console.log( `Error: ${err}`)
     })
-    console.log( response.data )
     this.dispatchEvent(response.data)
   }
 
   // Update Status Functions
 
  updateEventStatus =  async (e, {value}) => {
-   console.log( this.props.event_statuses[value])
     let newStatus = this.props.event_statuses[value]
-    console.log( newStatus)
     const options = {
       method: "PATCH",
       headers: {
@@ -175,7 +172,6 @@ componentDidMount() {
     const response = await Axios(options).catch( (err) => {
       console.log( `Error: ${err}`)
     })
-    console.log( response.data )
     this.dispatchEvent(response.data)
   }
 
@@ -189,6 +185,8 @@ componentDidMount() {
     newEvents[eventIndex] = response
     this.props.updateEvents(newEvents)
   }
+
+
  
   render() {
     return(

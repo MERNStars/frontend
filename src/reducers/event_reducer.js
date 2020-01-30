@@ -123,7 +123,7 @@ export const editEvent = event => {
     console.log("Edit Event ...");
     console.log(event);
     Axios({
-      url: "http://localhost:8888/events/update",
+      url: `${process.env.REACT_APP_BACKEND_DB_URL}/events/update`,
       method: "PATCH",
       data: event,
       headers: {
