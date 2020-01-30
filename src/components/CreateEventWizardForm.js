@@ -34,17 +34,24 @@ class CreateEventWizardForm extends Component {
     const { page } = this.state;
     return (
       <div>
-        {page === 1 && <WizardFormFirstPage onSubmit={this.nextPage} />}
+        {page === 1 && (
+          <WizardFormFirstPage
+            onSubmit={this.nextPage}
+            initialValues={this.props.populatedValue}
+          />
+        )}
         {page === 2 && (
           <WizardFromSecondPage
             previousPage={this.previousPage}
             onSubmit={this.nextPage}
+            initialValues={this.props.populatedValue}
           />
         )}
         {page === 3 && (
           <WizardFormThirdPage
             previousPage={this.previousPage}
             onSubmit={this.props.handleSubmit}
+            initialValues={this.props.populatedValue}
           />
         )}
       </div>

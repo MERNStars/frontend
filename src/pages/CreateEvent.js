@@ -78,7 +78,7 @@ class CreateEvent extends React.Component {
   render() {
     return (
       <div>
-        <CreateEventWizardForm handleSubmit={this.handleSubmit} initialValues={{event_name: "test"}} />
+        <CreateEventWizardForm handleSubmit={this.handleSubmit}/>
       </div>
     );
   }
