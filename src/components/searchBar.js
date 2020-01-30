@@ -51,17 +51,16 @@ class SearchBar extends React.Component {
   }
 
   render() {
-    console.log( this.props.categories)
     return(
       <div className={styles.searchContainer}>
       <Input
           icon={{ name: 'search', circular: true, link: true }}
+          size='small'
           placeholder='Search...'
           onChange={this.updateKeyword}
         />
        <Dropdown
           placeholder='Select Category'
-          fluid
           selection
           options={this.state.categoryOptions}
           onChange={this.findCategory}
