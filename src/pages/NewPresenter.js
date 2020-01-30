@@ -9,7 +9,7 @@ export default class NewPresenter extends Component {
     console.log(data);
     try {
       Axios.post(
-        `${process.env.REACT_APP_BACKEND_DB_TEST}/presenters/create`,
+        `${process.env.REACT_APP_BACKEND_DB_URL}/presenters/create`,
         data,
         {
           headers: {

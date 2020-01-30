@@ -75,10 +75,10 @@ export const userLogin = user => {
         password: user.password
       })
       .then(response => {
-        // console.log("hello!!");
         dispatch(userLoggedIn(user.username, response.data));
         // console.log(response.data.isAdmin)
         storeToken(user.username, response.data.token);
+        window.location.reload(true);
       })
       .catch(err => console.error("Error xxxx: " + err));
   };

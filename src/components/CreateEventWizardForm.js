@@ -1,19 +1,10 @@
 import React, { Component } from "react";
-import WizardFormFirstPage from "../components/CreateEventForm/createformpageone";
-import WizardFormThirdPage from "../components/CreateEventForm/createformpagethree";
-import WizardFromSecondPage from "../components/CreateEventForm/createformpagetwo";
-import { connect } from "react-redux";
+import WizardFormFirstPage from "./CreateEventForm/createformpageone";
+import WizardFormThirdPage from "./CreateEventForm/createformpagethree";
+import WizardFromSecondPage from "./CreateEventForm/createformpagetwo";
 import { reduxForm } from "redux-form";
-import PreviewForm from "../components/CreateEventForm/previewevent";
-import { createEvent } from "../reducers/event_reducer";
+import PreviewForm from "./CreateEventForm/previewevent";
 
-const mapDispatchToProps = dispatch => {
-  return {
-    createEvent: eventData => {
-      dispatch(createEvent(eventData));
-    }
-  };
-};
 
 class CreateEventWizardForm extends Component {
   constructor(props) {
@@ -41,20 +32,8 @@ class CreateEventWizardForm extends Component {
     this.setState({ page: this.state.page + 1 });
   }
 
-  handleSubmit = data => {
-    let presentersID = [];
-    data.selectedPresenters.map(presenter => {
-      presentersID.push(presenter.id);
-    });
-    data.presenters = presentersID;
-    console.log(data);
-    this.props.createEvent(data);
-    this.setState({
-      display_message: "Your event has been created."
-    });
-  };
-
   render() {
+
     const { page } = this.state;
     return (
       <div>
@@ -75,7 +54,7 @@ class CreateEventWizardForm extends Component {
           <PreviewForm
             eventData={this.state.event}
             previousPage={this.previousPage}
-            onSubmit={this.handleSubmit}
+            onSubmit={this.props.handleSubmit}
           />
         )}
       </div>
@@ -85,4 +64,4 @@ class CreateEventWizardForm extends Component {
 
 export default reduxForm({
   form: "CreateEventForm"
-})(connect(null, mapDispatchToProps)(CreateEventWizardForm));
+})(CreateEventWizardForm);

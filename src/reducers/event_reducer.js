@@ -85,10 +85,8 @@ export const resetNewImage = () => {
 
 export const createEvent = event => {
   return dispatch => {
-    // console.log(`${event.event_date}T${event.event_start_time}`);
-    // console.log(`${event.event_date}T${event.event_end_time}`);
     Axios.post(
-      `http://localhost:8888/events/create`,
+      `${process.env.REACT_APP_BACKEND_DB_URL}/events/create`,
       {
         event_name: event.event_name,
         description: event.description,
@@ -112,7 +110,7 @@ export const createEvent = event => {
         }
       }
     ).then(response => {
-      // console.log(response);
+      console.log(response);
       dispatch(eventCreated(response.data));
     });
   };

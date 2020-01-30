@@ -133,7 +133,7 @@ class EditEventForm extends Component {
     }
   }
 
-  RenderImageField = ({input, label, type, meta: {touched, error, warning}}) =>{
+  RenderImageField = ({input, meta: {touched, error, warning}}) =>{
     
     return <div className="image-file">
        <ImageUploadPreviewer {...input} onChange={input.onChange} type="file" value={input.value? input.value[0] : "" } />

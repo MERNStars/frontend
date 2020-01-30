@@ -32,7 +32,7 @@ const WizardFromSecondPage = props => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_BACKEND_DB_TEST}/presenters/`, {
+      .get(`${process.env.REACT_APP_BACKEND_DB_URL}/presenters/`, {
         headers: {
           authorization: `${localStorage.weexplore_token}`
         }

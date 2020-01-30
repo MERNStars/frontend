@@ -1,13 +1,14 @@
-// PAGE NOT IN USE... DELETE LATER
-
-import React, { Component } from "react";
-import CreateEventForm from "../components/CreateEventForm";
-import { createEvent } from "../reducers/event_reducer";
+import React from "react";
+import CreateEventWizardForm from "../components/CreateEventWizardForm";
 import { connect } from "react-redux";
+import { createEvent, resetNewImage } from "../reducers/event_reducer";
+import S3 from "react-aws-s3";
+const { uuid } = require("uuidv4");
+require("dotenv").config();
 
 function mapStateToProps(state) {
   return {
-    selectedPresenters: state.presenterReducer.selectedPresenters
+    newImage: state.eventReducer.newImage
   };
 }
 
@@ -15,24 +16,53 @@ const mapDispatchToProps = dispatch => {
   return {
     createEvent: eventData => {
       dispatch(createEvent(eventData));
+    },
+    resetNewImage: () => {
+      dispatch(resetNewImage());
     }
   };
 };
 
-class CreateEvent extends Component {
-  state = {
-    display_message: "Create Event",
-    event: null,
-    previewEventDetail: ""
-  };
+const config = {
+  bucketName: "weexplore2020",
+  dirName: "images",
+  region: "ap-southeast-2",
+  accessKeyId: process.env.REACT_APP_AWS_EXPLORER_ID,
+  secretAccessKey: process.env.REACT_APP_AWS_EXPLORER_SKEY
+};
 
-  submit = data => {
+class CreateEvent extends React.Component {
+  handleSubmit = event => {
     let presentersID = [];
-    data.selectedPresenters.map(presenter => {
-      presentersID.push(presenter.id)
-    })
-    data.presenters = presentersID
-    console.log(data);
+    event.selectedPresenters.map(presenter => {
+      presentersID.push(presenter.id);
+    });
+    event.presenters = presentersID;
+    console.log(event);
+
+    const ReactS3Client = new S3(config);
+    const newFileName = `${uuid()}`;
+    if (this.props.newImage) {
+      ReactS3Client.uploadFile(this.props.newImage, newFileName)
+        .then(data => {
+          console.log("Uploaded file...response");
+          event.images = [data.location];
+          console.log(event);
+          this.props.createEvent(event);
+          this.setState({
+            display_message: "Your event has been created."
+          });
+          this.props.resetNewImage();
+        })
+        .catch(err => console.error(err));
+    } else {
+      this.props.createEvent(event);
+      this.setState({
+        display_message: "Your event has been created."
+      });
+    }
+
+    // console.log(data);
     // this.props.createEvent(data);
     // this.setState({
     //   display_message: "Your event has been created."
@@ -42,7 +72,7 @@ class CreateEvent extends Component {
   render() {
     return (
       <div>
-        <CreateEventForm onSubmit={this.submit} />
+        <CreateEventWizardForm handleSubmit={this.handleSubmit} />
       </div>
     );
   }

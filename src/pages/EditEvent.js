@@ -4,6 +4,7 @@ import { editEvent, resetNewImage } from "../reducers/event_reducer";
 import { connect } from "react-redux";
 import S3 from 'react-aws-s3';
 const { uuid } = require('uuidv4');
+
 require("dotenv").config();
 
 // import {loadPresenters} from '../reducers/presenter_reducer';
