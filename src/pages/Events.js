@@ -1,11 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-<<<<<<< HEAD
-import styles from "../styles/events.module.scss";
-import EventCard from "../components/eventCard";
-import SearchBar from "../components/searchBar";
-import { Card, Placeholder } from "semantic-ui-react";
-=======
 
 
 import EventCard from "../components/eventCard";
@@ -13,7 +7,6 @@ import SearchBar from "../components/searchBar";
 
 import { Card, Placeholder } from 'semantic-ui-react';
 import styles from "../styles/events.module.scss";
->>>>>>> master
 
 const RESET = "reset";
 
@@ -26,25 +19,12 @@ export default class Events extends Component {
   };
 
   async componentDidMount() {
-<<<<<<< HEAD
-    this.setState({ events: newData, resetEvents: newData });
-=======
->>>>>>> master
     const response = await axios
       .get(`${process.env.REACT_APP_BACKEND_DB_URL}/events`)
       .catch(error => {
         console.log(`ERROR: ${error}`);
       });
     const data = await response.data;
-<<<<<<< HEAD
-    let newData = data.filter(d => {
-      return d.published === true && d.status !== "completed";
-    });
-  }
-  categorySearch = events => {
-    if (events === RESET) {
-      this.setState({ events: this.state.resetEvents });
-=======
     let newData = data.filter( (d) => {
       return d.published === true && d.status !== "completed"
     })
@@ -54,7 +34,6 @@ export default class Events extends Component {
   categorySearch = (events) => {
     if( events === RESET){
       this.setState( { events: this.state.resetEvents})
->>>>>>> master
     } else {
       this.setState({ events: events });
     }
