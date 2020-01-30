@@ -24,6 +24,7 @@ export default class Events extends Component {
       .catch(error => {
         console.log(`ERROR: ${error}`);
       });
+      console.log( response.data )
     const data = await response.data;
     let newData = data.filter( (d) => {
       return d.published === true && d.status !== "completed"
@@ -85,15 +86,15 @@ export default class Events extends Component {
         </header>
         <SearchBar categorySearch={this.categorySearch} />
         <>
-          {events && events.length > 0 ? (
-            <Card.Group itemsPerRow={4} centered>
-              {events.map((event, i) => {
-                return <EventCard {...event} index={i} />;
-              })}
-            </Card.Group>
-          ) : (
-            this.placeHolderCards()
-          )}
+          {events && events.length > 0 ? 
+          <Card.Group itemsPerRow={4} centered>
+          {events.map( (event, i) => {
+              return(< EventCard 
+                { ...event} 
+                index={i}
+                key={i}/>)
+            } )}
+            </Card.Group> : this.placeHolderCards()}
         </>
       </div>
     );

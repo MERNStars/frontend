@@ -7,7 +7,7 @@ class Presenters extends React.Component {
   adminDisplay = event => {
     console.log(event)
     return(
-      event.presenters_detail.map( (presenter) => {
+      event.presenters.map( (presenter) => {
         return(
           <p>{presenter.title} {presenter.first_name} {presenter.last_name}</p>
         )
@@ -15,9 +15,9 @@ class Presenters extends React.Component {
   }
 
   eventDisplay = event => {
-    const { presenter_detail } = event;
-      return presenter_detail
-        ? presenter_detail.map(presenter => {
+    const { presenters } = event;
+      return presenters
+        ? presenters.map(presenter => {
             return (
               <div className={styles.presenterBox}>
                 <div>
@@ -40,8 +40,6 @@ class Presenters extends React.Component {
   }
 
   render() {
-    console.log( `HELLO PRESENTERS`)
-    console.log( this.props)
     if( this.props.location.pathname === "/admin")
     return (  
       this.adminDisplay(this.props)

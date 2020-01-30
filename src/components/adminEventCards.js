@@ -127,6 +127,8 @@ componentDidMount() {
  
   render() {
     const event = this.props 
+    console.log( `CHECK PRESENTERS:`)
+    console.log( event )
     return(
       <Card fluid>
         <Card.Content>
