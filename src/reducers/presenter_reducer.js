@@ -17,7 +17,7 @@ export const loadPresenters = () => {
     return dispatch => {
         // console.log("Loading presenter's data...");
         axios
-        .get( `${ process.env.REACT_APP_BASE_URL}/presenters` )
+        .get( `${ process.env.REACT_APP_BACKEND_DB_URL}/presenters` )
         .then(result => {
             const data = result.data;
             // console.log("Presenters loaded..." + data.length);

@@ -1,13 +1,9 @@
 import React, { Component } from "react";
 import AdminEventCard from "../components/adminEventCards";
-import EditEvent from "../components/editEvent";
 import styles from "../styles/admin.module.scss";
 require("dotenv").config();
 
 export default class AdminEvents extends Component {
-  editEvent = event => {
-    return <EditEvent {...event} />;
-  };
 
   render() {
     return (

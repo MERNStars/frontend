@@ -27,7 +27,7 @@ const mapDispatchToProps = {
 function AdminDisplay(props) {
   const pageStatus = props.pageStatus;
   if (pageStatus === "events") {
-    return <AdminEvent events={props.events} />;
+    return <AdminEvent events={props.events} presenters={props.presenters} />;
   }
   return <AdminMembers />;
 }
