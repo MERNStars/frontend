@@ -7,11 +7,13 @@ import SearchBar from '../components/searchBar';
 
 import { Card, Placeholder } from 'semantic-ui-react';
 
+const RESET = "reset"
 
 export default class Events extends Component {
 
   state = {
-    events: null
+    events: null,
+    resetEvents: null
   }
 
   async componentDidMount() {
@@ -19,13 +21,18 @@ export default class Events extends Component {
       console.log( `ERROR: ${error}` )
     })
     const data = await response.data 
-
-    this.setState( {events: data })
+    let newData = data.filter( (d) => {
+      return d.published === true && d.status !== "completed"
+    })
+    this.setState( {events: newData, resetEvents: newData})
   }
 
   categorySearch = (events) => {
-    console.log( events )
+    if( events === RESET){
+      this.setState( { events: this.state.resetEvents})
+    } else {
       this.setState( {events: events});
+    }
   }
 
   placeHolderCards() {
@@ -55,7 +62,6 @@ export default class Events extends Component {
         </Card.Content>
       </Card>
       )} else {
-        console.log( `Hello NO EVENTS`)
         return (
           <div className={styles.errorContainer}>
             <h1> Oops! No events found</h1>
@@ -73,15 +79,10 @@ export default class Events extends Component {
           {events && events.length > 0 ? 
           <Card.Group itemsPerRow={4} centered>
           {events.map( (event, i) => {
-            if( event.published && event.status !== "completed" ){
-              console.log( `Hello Events Here`)
               return(< EventCard 
                 { ...event} 
                 index={i}/>)
-            } else {
-              this.placeHolderCards()
-            }
-          })}
+            } )}
             </Card.Group> : this.placeHolderCards()}
         </>
       </div>

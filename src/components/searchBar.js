@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useRef, useEffect} from 'react';
 import Axios from 'axios';
 import { Input, Dropdown } from 'semantic-ui-react';
 import {connect} from 'react-redux';
+
 
 import styles from '../styles/searchBar.module.scss';
 
@@ -11,6 +12,8 @@ function mapStateToProps(state){
 
   return {categories: state.eventReducer.event_categories}
 }
+
+const RESET = "reset"
 
 class SearchBar extends React.Component {
   
@@ -35,7 +38,11 @@ class SearchBar extends React.Component {
   searchEventByKeyword = async() => {
     const response = await Axios.get(`${process.env.REACT_APP_BACKEND_DB_URL}/events/${this.state.keyword}`).catch( console.log(`Error`))
     const data = response.data
-    this.props.categorySearch( data )
+    console.log( response )
+    let newData = data.filter( (d) => {
+      return d.published === true && d.status !== "completed"
+    })
+    this.props.categorySearch( newData )
   }
 
   updateKeyword = e => {
@@ -47,28 +54,43 @@ class SearchBar extends React.Component {
     const response = await Axios.get(`${process.env.REACT_APP_BACKEND_DB_URL}/events/category/${category}`).catch( (error) => {
       console.log( `Error: ${error}`)
     })
-    this.props.categorySearch( response.data )
+    let newData = response.data.filter( (d) => {
+      return d.published === true && d.status !== "completed"
+    })
+    this.props.categorySearch( newData )
   }
 
   findCategory = (e, {value}) => {
-    let category = this.props.categories[value]
-    this.searchEventByCategory(category)
+      let category = this.props.categories[value]
+      if( category !== undefined){
+        this.searchEventByCategory(category)
+      } else {
+      console.log( `RESETING`)
+      this.props.categorySearch( RESET )
+    }
+  }
+
+  resetCards = e => {
+    e.target.value = ''
+    this.props.categorySearch( RESET )
   }
 
   render() {
     return(
       <div className={styles.searchContainer}>
-      <Input
+      <Input 
           icon={{ name: 'search', circular: true, link: true }}
           size='small'
           placeholder='Search...'
           onChange={this.updateKeyword}
-        />
+          onBlur={this.resetCards}>
+          </Input>
        <Dropdown
           placeholder='Select Category'
           selection
           options={this.state.categoryOptions}
           onChange={this.findCategory}
+          clearable
         />
       </div>
     )
