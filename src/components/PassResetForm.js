@@ -37,7 +37,7 @@ class PassResetForm extends Component{
             // console.log(urlParts);
             const uniqueKey = urlParts[urlParts.length - 1];
         
-            axios.post(`${process.env.REACT_APP_BASE_URL}/password/reset`, {password: this.state.password, uniqueKey: uniqueKey})
+            axios.post(`${process.env.REACT_APP_BACKEND_DB_URL}/password/reset`, {password: this.state.password, uniqueKey: uniqueKey})
             .then(result=>{
                 console.log(result);
                 if(result.success){

@@ -12,7 +12,7 @@ class RequestPasswordForm extends Component{
 
     submit = () =>{
 
-        axios.post(`${process.env.REACT_APP_BASE_URL}/password/request`, { email: this.state.email })
+        axios.post(`${process.env.REACT_APP_BACKEND_DB_URL}/password/request`, { email: this.state.email })
         .then(result => {
             this.setState({message: result.message, submitted: true});
         })
