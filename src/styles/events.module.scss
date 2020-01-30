@@ -1,11 +1,15 @@
-.eventContainer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-.Main {
+
+.mainContainer {
   margin: 2em;
+  header {
+    padding: 10px 0px;
+  }
+  // .cardDisplay {
+  //   display: flex;
+  //   flex-wrap: wrap;
+  //   justify-content: flex-start;
+  //   align-items: flex-start;
+  // }
   .errorContainer {
     margin-top: 100px;
     width: 100vw;

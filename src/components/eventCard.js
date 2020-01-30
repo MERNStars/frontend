@@ -7,7 +7,8 @@ import { Link } from 'react-router-dom';
 class EventCard extends React.Component {
 
   CardExampleCard = () => (
-    <Card>
+    <Card
+      href={`/events/${this.props._id}`}>
       <Image src={ require('../assets/placeholder.jpg')} wrapped ui={false} />
       <Card.Content>
         <Card.Header>{this.props.event_name}</Card.Header>
@@ -31,9 +32,7 @@ class EventCard extends React.Component {
   render() {
     const {_id} = this.props
     return(
-      <Link to={{ pathname:`/events/${_id}`}}><div className={styles.eventCard}>
-        {this.CardExampleCard()}
-      </div></Link>
+       this.CardExampleCard()
     )
   }
 
