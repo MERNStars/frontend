@@ -72,6 +72,7 @@ export default class Events extends Component {
 
   render() {
     const {events} = this.state
+    console.log( events)
     return(
       <div className={styles.mainContainer}>
         <header><h1>weExplore Events</h1></header>

@@ -41,8 +41,8 @@ class SearchBar extends React.Component {
   }
 
   updateKeyword = e => {
-    this.setState( { keyword: e.target.value})
-    this.searchEventByKeyword()
+      this.setState( { keyword: e.target.value})
+      this.searchEventByKeyword() 
   }
 
   searchEventByCategory = async(category) => {
@@ -77,8 +77,7 @@ class SearchBar extends React.Component {
           icon={{ name: 'search', circular: true, link: true }}
           size='small'
           placeholder='Search...'
-          onChange={this.updateKeyword}
-          onBlur={this.resetCards}>
+          onChange={this.updateKeyword}>
           </Input>
        <Dropdown
           placeholder='Select Category'
