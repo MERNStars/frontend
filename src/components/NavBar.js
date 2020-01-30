@@ -23,7 +23,6 @@ class Navbar extends React.Component {
             Events
           </NavLink>
         </Menu.Item>
-
         {localStorage.username ? (
           <Dropdown text="Account" simple item>
             <Dropdown.Menu>
@@ -40,9 +39,11 @@ class Navbar extends React.Component {
             </Dropdown.Menu>
           </Dropdown>
         ) : (
-          <NavLink exact to="/login">
-            Log In
-          </NavLink>
+          <Menu.Item>
+            <NavLink exact to="/login">
+              Log In
+            </NavLink>
+          </Menu.Item>
         )}
         <Menu.Item>
           <NavLink exact to="/about-us">
