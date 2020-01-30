@@ -25,25 +25,32 @@ export default class Events extends Component {
     this.setState( {events: events});
   }
 
-
+  eventsError() {
+    return(
+      <div className={styles.errorContainer}>
+        <h1> Oops! No events found</h1>
+      </div>
+    )
+  }
 
   render() {
     const {events} = this.state
     return(
       <div className={styles.Main}>
       <h1>All Events</h1>
-      <SearchBar 
-        categorySearch={this.categorySearch}/>
-      
-      <div className={styles.eventContainer}>
-        {events && events.map( (event, i) => {
-          if( event.published && event.status !== "completed" ){
-            return(< EventCard 
-              { ...event} 
-              index={i}/>)
-          }
-        })}
-        </div>
+      <SearchBar categorySearch={this.categorySearch}/>
+      <>
+        {events.length > 0 ? 
+         <div className={styles.eventContainer}>
+         {events && events.map( (event, i) => {
+           if( event.published && event.status !== "completed" ){
+             return(< EventCard 
+               { ...event} 
+               index={i}/>)
+           }
+         })}
+          </div> : this.eventsError()}
+      </>
       </div>
     )
   }
