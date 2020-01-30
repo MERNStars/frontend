@@ -7,6 +7,8 @@ import { withRouter } from 'react-router-dom';
 import {deleteEvents, updateEvents} from '../reducers/event_reducer';
 import { connect } from 'react-redux';
 
+import Presenter from './PresenterDetails';
+
 const mapDispatchToProps = {
   deleteEvents,
   updateEvents
@@ -39,75 +41,10 @@ componentDidMount() {
 
   handleClose = () => this.setState({ modalOpen: false })
 
-  renderEvents(){
-    return( 
-        this.displayCard( this.props )
-      )  
-  }
 
   onClickEdit = () => {
     console.log("Click Edit " + this.props.index);
     this.props.history.push(`/edit-event/${this.props.index}`);
-  }
-
-  renderPresenters = event => {
-    console.log( `hello world`)
-    this.props.presenters.map( (presenter) => {
-      return (
-      event.presenters.map( (pres) => {
-        if( presenter._id === pres._id ) {
-          return(
-            presenter.first_name
-          )
-        }
-      })
-    )})
-  }
-
-  displayCard = event => {
-    console.log( event )
-    return(
-      <Card fluid>
-        <Card.Content>
-          <Card.Header>{event.event_name}</Card.Header>
-          <Card.Meta>
-            <span className='date'><Moment format="D MMM">{event.event_date.begin}</Moment></span>
-          </Card.Meta>
-          <Modal trigger={<Button basic><Icon name="user"/>Attending: {event.attendee_count}</Button>}>
-              <Modal.Header>Attendees</Modal.Header>
-              <Modal.Content>
-                <Modal.Description>
-                  <AttendeeList  {...event}/>
-                </Modal.Description>
-              </Modal.Content>
-            </Modal>
-        </Card.Content>
-        <Card.Content extra>
-          <Button size="small" onClick={ this.onClickEdit }>Edit</Button>
-          <Modal open={this.state.modalOpen}
-                onClose={this.handleClose}
-                basic
-                size='small'
-                trigger={<Button size="small"onClick={this.handleOpen}>Delete</Button>}>
-            <Modal.Header>Are you sure you want to delete?</Modal.Header>
-              <Modal.Content>
-                <Modal.Description>
-                  <Button size="small" onClick={this.handleDelete}>Confirm Delete</Button>
-                </Modal.Description>
-              </Modal.Content>
-          </Modal>
-          {event.published && event.status !== "completed" ? <span>
-              Status{' '}
-              <Dropdown
-                inline
-                options={this.state.status_options}
-                onChange={this.updateEventStatus}
-                placeholder={event.status}
-              />
-            </span> : <Button size="small" onClick={this.publishEvent}>Publish</Button>}
-        </Card.Content>
-      </Card>
-    )
   }
 
   // Delete Event Functions
@@ -189,9 +126,50 @@ componentDidMount() {
 
  
   render() {
+    const event = this.props 
     return(
-       this.renderEvents() 
-      )  
+      <Card fluid>
+        <Card.Content>
+          <Card.Header>{event.event_name}</Card.Header>
+          <Card.Meta><Presenter {...event}/></Card.Meta>
+          <Card.Meta>
+            <span className='date'><Moment format="D MMM">{event.event_date.begin}</Moment></span>
+          </Card.Meta>
+          <Modal trigger={<Button basic><Icon name="user"/>Attending: {event.attendee_count}</Button>}>
+              <Modal.Header>Attendees</Modal.Header>
+              <Modal.Content>
+                <Modal.Description>
+                  <AttendeeList  {...event}/>
+                </Modal.Description>
+              </Modal.Content>
+            </Modal>
+        </Card.Content>
+        <Card.Content extra>
+          <Button size="small" onClick={ this.onClickEdit }>Edit</Button>
+          <Modal open={this.state.modalOpen}
+                onClose={this.handleClose}
+                basic
+                size='small'
+                trigger={<Button size="small"onClick={this.handleOpen}>Delete</Button>}>
+            <Modal.Header>Are you sure you want to delete?</Modal.Header>
+              <Modal.Content>
+                <Modal.Description>
+                  <Button size="small" onClick={this.handleDelete}>Confirm Delete</Button>
+                </Modal.Description>
+              </Modal.Content>
+          </Modal>
+          {event.published && event.status !== "completed" ? <span>
+              Status{' '}
+              <Dropdown
+                inline
+                options={this.state.status_options}
+                onChange={this.updateEventStatus}
+                placeholder={event.status}
+              />
+            </span> : <Button size="small" onClick={this.publishEvent}>Publish</Button>}
+        </Card.Content>
+      </Card>
+    ) 
   }
 }
 
