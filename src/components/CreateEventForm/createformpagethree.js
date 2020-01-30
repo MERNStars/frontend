@@ -44,7 +44,7 @@ const RenderImageField = ({input, meta: {touched, error, warning}}) =>{
 
 class WizardFormThirdPage extends React.Component{
   state = {
-    image_file: ""
+    image_file: null
   }
 
   onChange = (e) => {
@@ -70,7 +70,7 @@ class WizardFormThirdPage extends React.Component{
             Previous
           </button>
           <button type="submit" disabled={pristine || submitting}>
-            Preview
+            Create Event
           </button>
         </div>
       </form>

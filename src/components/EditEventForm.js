@@ -27,8 +27,7 @@ class EditEventForm extends Component {
 
     componentDidMount(){
         const {index, events} = this.props;
-        this.setState({event: {...events[index], image_file: events[index].images[0]}});  
-
+        this.setState({event: {...events[index], image_file: events[index].images[0]}});
     }
 
   RenderCategoriesField = ({
@@ -118,12 +117,6 @@ class EditEventForm extends Component {
       </div>
       )
   }
-
-  // onChange = (e) => {
-  //   console.log(e.target.files[0]);
-  //   if(e.target.files[0])
-  //       this.setState({file: URL.createObjectURL(e.target.files[0])});
-  // }
 
   onChange = (e) => {
     //   console.log(e.target.files[0]);

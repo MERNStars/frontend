@@ -5,7 +5,7 @@ import styles from '../styles/event.module.scss';
 class Presenters extends React.Component {
 
   adminDisplay = event => {
-    
+    console.log(event)
     return(
       event.presenters_detail.map( (presenter) => {
         return(

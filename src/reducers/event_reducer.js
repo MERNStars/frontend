@@ -150,6 +150,7 @@ const eventReducer = (state=initialState, action) => {
     switch(action.type){
         case "EVENT_CREATED":
             newState = { ...state, message: "Your event has been created." };
+
             break;
         case "EVENT_DELETED":
             newState = { ...state, message: "Your event has been deleted.", events: action.data };

@@ -3,8 +3,6 @@ import WizardFormFirstPage from "./CreateEventForm/createformpageone";
 import WizardFormThirdPage from "./CreateEventForm/createformpagethree";
 import WizardFromSecondPage from "./CreateEventForm/createformpagetwo";
 import { reduxForm } from "redux-form";
-import PreviewForm from "./CreateEventForm/previewevent";
-
 
 class CreateEventWizardForm extends Component {
   constructor(props) {
@@ -33,7 +31,6 @@ class CreateEventWizardForm extends Component {
   }
 
   render() {
-
     const { page } = this.state;
     return (
       <div>
@@ -46,13 +43,6 @@ class CreateEventWizardForm extends Component {
         )}
         {page === 3 && (
           <WizardFormThirdPage
-            previousPage={this.previousPage}
-            onSubmit={this.previewEvent}
-          />
-        )}
-        {page === 4 && (
-          <PreviewForm
-            eventData={this.state.event}
             previousPage={this.previousPage}
             onSubmit={this.props.handleSubmit}
           />
