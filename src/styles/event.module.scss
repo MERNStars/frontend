@@ -2,8 +2,129 @@
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: flex-start;
+  width: 100%;
+  #shadedBox{
+    background-color: lightgray;
+  }
+  .eventBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 500px;
+    .outerContainer {
+      width: 100%;
+      height: 100%;
+
+      .extraContainer {
+        display: grid;
+        grid-template-areas: 
+          'header header'
+          'start end'
+          'map address'
+          'map address';
+        text-align: center;
+        
+        #datetitle {
+          grid-area: header;
+          margin: 5px;
+        }
+        #startTime {
+          grid-area: start;
+        }
+        #endTime {
+          grid-area: end;
+        }
+        .address {
+          grid-area: address;
+        }
+        .googleMap {
+          grid-area: map;
+        }
+      }
+    }
+    
+    .innerContainer {
+      width: calc( 100vw - 100px);
+      height: calc( 100% - 100px);
+      display: flex;
+      .insideContainer {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        h2 {
+          font-size: 40px;
+        }
+        .presenterBox {
+          border-radius: 15px;
+          margin: 10px;
+          border: 1px black solid;
+          min-width: 1000px;
+          display: flex;
+          justify-content: space-between;
+          padding: 5px 20px;
+          #profileImg {
+            border-radius: 50px;
+            height: 80px;
+          }
+        }
+      }
+      
+      .description {
+        width: 50%;
+        height: 100%;
+        display: grid;
+        grid-template-rows: 0.2fr 0.6fr 0.2fr;
+        .endContainer {
+          text-align: center;
+          font-size: 38px;
+          margin: auto 0px;
+          #dateContainer{
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            h2 {
+              margin: 0px;
+            }
+          }
+          h1 {
+            font-size: 40px
+          }
+          #button {
+            box-shadow: 0px 10px 11px -1px rgba(168,168,168,0.48);
+            margin-bottom: 10px;
+          }
+        }
+        .mainContainer {
+          margin-left: 20px;
+          h1 {
+            font-size: 48px;
+          }
+        }
+      }
+
+      #about {
+        width: 100%;
+        p {
+          text-align: center;
+          font-size: 28px;
+          letter-spacing: 2px;
+        }
+      }
+      .eventImage{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        #image {
+          box-shadow: 35px -35px 0px -1px rgba(168,168,168,0.75);
+        }
+      }
+      
+     
+    }
+  }
 
   h4 {
     margin-bottom: 0px;
@@ -22,7 +143,11 @@
   width: 100%;
   background-color: red;
   color: white;
-  text-align: center;
+  text-align: right;
   padding: 5px 100px;
+  opacity: 0.8;
+  #button {
+    background-color: white;
+  }
 }
 

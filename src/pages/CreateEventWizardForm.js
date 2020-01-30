@@ -4,18 +4,15 @@ import WizardFormThirdPage from "../components/CreateEventForm/createformpagethr
 import WizardFromSecondPage from "../components/CreateEventForm/createformpagetwo";
 import { connect } from "react-redux";
 import { reduxForm } from "redux-form";
+import PreviewForm from "../components/CreateEventForm/previewevent";
+import { createEvent } from "../reducers/event_reducer";
 
-import axios from "axios";
-import { populatePresenters } from "../reducers/presenter_reducer";
-
-function mapStateToProps(state) {
+const mapDispatchToProps = dispatch => {
   return {
-    presenters: state.presenterReducer.presenters
+    createEvent: eventData => {
+      dispatch(createEvent(eventData));
+    }
   };
-}
-
-const mapDispatchToProps = {
-  populatePresenters
 };
 
 class CreateEventWizardForm extends Component {
@@ -23,10 +20,14 @@ class CreateEventWizardForm extends Component {
     super(props);
     this.nextPage = this.nextPage.bind(this);
     this.previousPage = this.previousPage.bind(this);
+    this.previewEvent = this.previewEvent.bind(this);
     this.state = {
-      page: 1
+      page: 1,
+      event: "",
+      display_message: ""
     };
   }
+
   nextPage() {
     this.setState({ page: this.state.page + 1 });
   }
@@ -35,41 +36,44 @@ class CreateEventWizardForm extends Component {
     this.setState({ page: this.state.page - 1 });
   }
 
-  async componentDidMount() {
-    const response = await axios
-      .get(`${process.env.REACT_APP_BACKEND_DB_TEST}/presenters/`, {
-        headers: {
-          authorization: `${localStorage.weexplore_token}`
-        }
-      })
-      .catch(error => {
-        console.log(`ERROR: ${error}`);
-      });
-
-    const data = await response.data;
-    this.props.populatePresenters(data);
+  previewEvent(data) {
+    this.setState({ event: data });
+    this.setState({ page: this.state.page + 1 });
   }
 
   handleSubmit = data => {
+    let presentersID = [];
+    data.selectedPresenters.map(presenter => {
+      presentersID.push(presenter.id);
+    });
+    data.presenters = presentersID;
     console.log(data);
+    this.props.createEvent(data);
+    this.setState({
+      display_message: "Your event has been created."
+    });
   };
 
   render() {
-    const { handleSubmit, presenters } = this.props;
-    console.log(presenters);
     const { page } = this.state;
     return (
       <div>
         {page === 1 && <WizardFormFirstPage onSubmit={this.nextPage} />}
         {page === 2 && (
           <WizardFromSecondPage
-            presenters={presenters}
             previousPage={this.previousPage}
             onSubmit={this.nextPage}
           />
         )}
         {page === 3 && (
           <WizardFormThirdPage
+            previousPage={this.previousPage}
+            onSubmit={this.previewEvent}
+          />
+        )}
+        {page === 4 && (
+          <PreviewForm
+            eventData={this.state.event}
             previousPage={this.previousPage}
             onSubmit={this.handleSubmit}
           />
@@ -81,4 +85,4 @@ class CreateEventWizardForm extends Component {
 
 export default reduxForm({
   form: "CreateEventForm"
-})(connect(mapStateToProps, mapDispatchToProps)(CreateEventWizardForm));
+})(connect(null, mapDispatchToProps)(CreateEventWizardForm));

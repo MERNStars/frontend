@@ -1,10 +1,10 @@
-import React from 'react';
-import './App.css';
-import Router from './routes/index';
+import React from "react";
+import "./App.css";
+import Router from "./routes/index";
 
-import {Provider} from 'react-redux';
+import { Provider } from "react-redux";
 
-import store from './store';
+import store from "./store";
 
 class App extends React.Component {
   render() {
@@ -13,11 +13,9 @@ class App extends React.Component {
         <div>
           <Router />
         </div>
-    </Provider>
-      
-    )
+      </Provider>
+    );
   }
 }
-
 
 export default App;
