@@ -4,6 +4,7 @@ import { NumberPicker, DropdownList, Multiselect } from "react-widgets";
 import { Field, reduxForm } from "redux-form";
 import "react-widgets/dist/css/react-widgets.css";
 import { connect } from "react-redux";
+import Axios from "axios";
 
 simpleNumberLocalizer();
 
@@ -58,11 +59,26 @@ function validate(values) {
   return errors;
 }
 
+function asyncValidate(values) {
+  return Axios.post(`${process.env.REACT_APP_BACKEND_DB_URL}/users/exists`, {
+    username: values.username
+  }).then(response => {
+    if (response.data.exists) {
+      throw { username: "That username is taken" }
+    }
+  }) 
+}
+
 class SignUpForm extends Component {
-  renderTextField({ input, label, type, meta: { touched, error, warning } }) {
-    // console.log(input)
+
+  renderTextField({
+    input,
+    label,
+    type,
+    meta: { asyncValidating, touched, error, warning }
+  }) {
     return (
-      <div className="Small-Text">
+      <div className={asyncValidating ? "async-validating" : ""}>
         <label>{label}</label> <br />
         <input
           {...input}
@@ -162,6 +178,7 @@ class SignUpForm extends Component {
           type="email"
           label="Email"
           value={localStorage.username}
+          onChange={this.onChange}
         />
         <Field
           name="password"
@@ -213,6 +230,9 @@ class SignUpForm extends Component {
   }
 }
 
-export default reduxForm({ form: "SignUpForm", validate })(
-  connect(mapStateToProps)(SignUpForm)
-);
+export default reduxForm({
+  form: "SignUpForm",
+  validate,
+  asyncValidate,
+  asyncBlurFields: ["username"]
+})(connect(mapStateToProps)(SignUpForm));
