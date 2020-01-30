@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {userLogin} from '../reducers/user_reducer';
 import {connect} from 'react-redux';
+import { Link } from "react-router-dom";
 // import axios from 'axios';
 
 function mapStateToProps(state){
@@ -31,6 +32,7 @@ class LoginForm extends Component{
             <input type="text" placeholder="Your username or email" onChange={this.updateUsername} />
             <input type="password" placeholder="Your password" onChange={this.updatePassword} />
             <button onClick={this.login}>Login</button>
+            <Link to="/passrequest">forgot password</Link>
         </div>
     }
 }
