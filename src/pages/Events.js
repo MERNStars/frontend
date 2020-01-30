@@ -1,18 +1,16 @@
 import React, { Component } from "react";
 import axios from "axios";
 import styles from "../styles/events.module.scss";
-
 import EventCard from "../components/eventCard";
 import SearchBar from "../components/searchBar";
 import { Card, Placeholder } from 'semantic-ui-react';
-
-
 require("dotenv").config();
+
 export default class Events extends Component {
   state = {
     events: null
   }
-
+  
   async componentDidMount() {
     const response = await axios
       .get(`${process.env.REACT_APP_BACKEND_DB_URL}/events`)
@@ -20,7 +18,6 @@ export default class Events extends Component {
         console.log(`ERROR: ${error}`);
       });
     const data = await response.data;
-
     this.setState({ events: data });
   }
 
