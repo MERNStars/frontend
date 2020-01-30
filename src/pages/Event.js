@@ -1,14 +1,19 @@
 import React from "react";
 import axios from "axios";
 import Moment from "react-moment";
+import {connect} from 'react-redux';
 import styles from "../styles/event.module.scss";
 import AttendForm from "../components/attendform";
 
 import { Link } from "react-router-dom";
 
-import { Button, Segment, Image, Label, Modal } from "semantic-ui-react";
+import { Button, Image, Label, Modal } from "semantic-ui-react";
 
 require("dotenv").config();
+
+function mapStateToProps(state){
+  return {userLoggedIn: state.userReducer.userLoggedIn}
+}
 
 class Event extends React.Component {
   state = {
@@ -27,6 +32,7 @@ class Event extends React.Component {
     this.checkAttendStatus();
   };
 
+  // Setting the attend status for button display
   checkAttendStatus() {
     const { event } = this.state;
     return event
@@ -97,6 +103,7 @@ class Event extends React.Component {
       description,
       event_category
     } = this.state.event;
+
     return (
     <>
       <div className={styles.eventBox}>
@@ -177,28 +184,37 @@ class Event extends React.Component {
   }
 
   renderButton() {
-    return (
-      <Modal trigger={ this.state.event ? this.attendButton() : null}>
-        <Modal.Header>{this.state.attend}</Modal.Header>
-        <Modal.Content>
-          <Modal.Description>
-            {this.state.attending ? (
-              <>
-                Are you sure you want to unattend?
-                <Button onClick={this.unattendEvent}>Yes</Button>
-              </>
-            ) : (
-              <AttendForm
-                onSubmit={this.attendEvent}
-                event={this.state.event}
-                initialValues={{ username: localStorage.username }}
-              />
-            )}
-          </Modal.Description>
-        </Modal.Content>
-      </Modal>
-    );
+    const {userLoggedIn} = this.props;
+    if(userLoggedIn)
+      return (
+        <Modal trigger={ this.state.event ? this.attendButton() : null}>
+          <Modal.Header>{this.state.attend}</Modal.Header>
+          <Modal.Content>
+            <Modal.Description>
+              {this.state.attending ? (
+                <>
+                  Are you sure you want to unattend?
+                  <Button onClick={this.unattendEvent}>Yes</Button>
+                </>
+              ) : (
+                <AttendForm
+                  onSubmit={this.attendEvent}
+                  event={this.state.event}
+                  initialValues={{ username: localStorage.username }}
+                />
+              )}
+            </Modal.Description>
+          </Modal.Content>
+        </Modal>
+      );
+     else 
+      return(
+      <Link to={{
+        pathname: "/login",
+      }}><Button size="massive" basic id={styles.button}>Attend</Button></Link>)
   }
+
+
 
   renderIcons() {
     const { is_family_friendly } = this.state.event;
@@ -242,4 +258,4 @@ class Event extends React.Component {
   }
 }
 
-export default Event;
+export default connect(mapStateToProps)(Event);

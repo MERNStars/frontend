@@ -1,14 +1,17 @@
 import React, { Component } from "react";
 import axios from "axios";
-import styles from "../styles/events.module.scss";
+
 
 import EventCard from "../components/eventCard";
 import SearchBar from "../components/searchBar";
+
 import { Card, Placeholder } from 'semantic-ui-react';
+import styles from "../styles/events.module.scss";
 
 const RESET = "reset"
 
 require("dotenv").config();
+
 export default class Events extends Component {
   state = {
     events: null,
