@@ -1,5 +1,4 @@
 import axios from "axios";
-import { BASE_URL } from "./config";
 require("dotenv").config();
 
 const initialState = {
@@ -85,6 +84,8 @@ export const userLogin = user => {
   };
 };
 
+
+
 export const logUserOut = () => {
   return dispatch => {
     dispatch(userLoggedOut("You've been logged out."));
@@ -96,7 +97,7 @@ export const logout = () => {};
 export const createUser = user => {
   return dispatch => {
     axios
-      .post(`${BASE_URL}/users/create`, {
+      .post(`${process.env.REACT_APP_BACKEND_DB_URL}/users/create`, {
         username: user.username,
         password: user.password,
         first_name: user.first_name,

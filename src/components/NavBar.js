@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { Menu } from "semantic-ui-react";
-import AdminAccount from '../components/adminAccount'
+import { Menu, Dropdown } from "semantic-ui-react";
+import AdminAccount from "../components/adminAccount";
 
 function mapStateToProps(state) {
   return { userLoggedIn: state.userReducer.userLoggedIn };
@@ -10,7 +10,7 @@ function mapStateToProps(state) {
 
 class Navbar extends React.Component {
   render() {
-    let result = AdminAccount()
+    let result = AdminAccount();
     return (
       <Menu>
         <Menu.Item>
@@ -23,17 +23,28 @@ class Navbar extends React.Component {
             Events
           </NavLink>
         </Menu.Item>
-        <Menu.Item>
-          {this.props.userLoggedIn ? (
-            <NavLink exact to="/login">
-              Log Out
-            </NavLink>
-          ) : (
-            <NavLink exact to="/login">
-              Log In
-            </NavLink>
-          )}
-        </Menu.Item>
+
+        {localStorage.username ? (
+          <Dropdown text="Account" simple item>
+            <Dropdown.Menu>
+              <Dropdown.Item>
+                <NavLink exact to="/edit-account">
+                  Edit Account
+                </NavLink>
+              </Dropdown.Item>
+              <Dropdown.Item>
+                <NavLink exact to="/login">
+                  Log Out
+                </NavLink>
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        ) : (
+          <NavLink exact to="/login">
+            Log In
+          </NavLink>
+        )}
+
         <Menu.Item>
           <NavLink exact to="/about-us">
             About Us
