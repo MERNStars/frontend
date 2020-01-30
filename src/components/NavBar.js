@@ -29,7 +29,7 @@ class Navbar extends React.Component {
             <Dropdown.Menu>
               <Dropdown.Item>
                 <NavLink exact to="/edit-account">
-                  Edit Account
+                  Edit Account Details
                 </NavLink>
               </Dropdown.Item>
               <Dropdown.Item>
@@ -44,7 +44,6 @@ class Navbar extends React.Component {
             Log In
           </NavLink>
         )}
-
         <Menu.Item>
           <NavLink exact to="/about-us">
             About Us
