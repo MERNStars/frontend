@@ -14,6 +14,8 @@ import NewEvent from "../pages/NewEvent";
 import CreateEventWizardForm from "../pages/CreateEventWizardForm";
 import NewPresenter from '../pages/NewPresenter';
 import EditEvent from "../pages/EditEvent";
+import PassRequest from "../pages/PassRequest";
+import PassReset from "../pages/PassReset";
 
 const Router = () => {
   return (
@@ -34,6 +36,8 @@ const Router = () => {
           <Route exact path="/contact" component={Contact} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/create-presenter" component={NewPresenter} />
+          <Route exact path="/passrequest" component={PassRequest} />
+          <Route exact path="/passreset/:uniqueKey" component={PassReset} />
         </Switch>
       </BrowserRouter>
     </div>
