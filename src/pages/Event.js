@@ -8,6 +8,7 @@ import AttendForm from "../components/attendform";
 import { Link } from "react-router-dom";
 
 import { Button, Image, Label, Modal } from "semantic-ui-react";
+import Presenters from "../components/PresenterDetails";
 
 require("dotenv").config();
 
@@ -163,7 +164,7 @@ class Event extends React.Component {
         <div className={styles.innerContainer}>
           <div className={styles.insideContainer}>
             <div className={styles.Heading}><h2>Presenters</h2></div>
-            {this.renderPresenters()}
+            <Presenters {...this.state.event} {...this.props}/>
         </div>
         </div>
       </div>
@@ -219,31 +220,6 @@ class Event extends React.Component {
   renderIcons() {
     const { is_family_friendly } = this.state.event;
     return is_family_friendly ? "Child Friendly" : "18+";
-  }
-
-  renderPresenters() {
-    const { presenter_detail } = this.state.event;
-    return presenter_detail
-      ? presenter_detail.map(presenter => {
-          return (
-            <div className={styles.presenterBox}>
-              <div>
-              <span>
-                {presenter.title} {presenter.first_name} {presenter.last_name}
-              </span>
-              <br></br>
-              <span>
-                <sub>{presenter.qualification}</sub>
-              </span>
-              <span>
-                <p>{presenter.short_description}</p>
-              </span>
-              </div>
-              <img id={styles.profileImg} src={require("../assets/profile-photo.jpg")} alt="profile of presenter"/>
-            </div>
-          );
-        })
-      : null;
   }
 
   render() {

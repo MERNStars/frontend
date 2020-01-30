@@ -7,6 +7,8 @@ import { withRouter } from 'react-router-dom';
 import {deleteEvents, updateEvents} from '../reducers/event_reducer';
 import { connect } from 'react-redux';
 
+import Presenter from './PresenterDetails';
+
 const mapDispatchToProps = {
   deleteEvents,
   updateEvents
@@ -65,11 +67,11 @@ componentDidMount() {
   }
 
   displayCard = event => {
-    console.log( event )
     return(
       <Card fluid>
         <Card.Content>
           <Card.Header>{event.event_name}</Card.Header>
+          <Card.Meta><Presenter {...event}/></Card.Meta>
           <Card.Meta>
             <span className='date'><Moment format="D MMM">{event.event_date.begin}</Moment></span>
           </Card.Meta>
