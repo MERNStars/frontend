@@ -16,7 +16,6 @@ export default class Events extends Component {
   }
 
   async componentDidMount() {
-    this.setState( {events: newData, resetEvents: newData})
     const response = await axios
       .get(`${process.env.REACT_APP_BACKEND_DB_URL}/events`)
       .catch(error => {
@@ -26,6 +25,8 @@ export default class Events extends Component {
     let newData = data.filter( (d) => {
       return d.published === true && d.status !== "completed"
     })
+    this.setState( {events: newData, resetEvents: newData})
+  }
 
   categorySearch = (events) => {
     if( events === RESET){
