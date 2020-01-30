@@ -5,6 +5,7 @@ import { Field, reduxForm } from "redux-form";
 import "react-widgets/dist/css/react-widgets.css";
 import { connect } from "react-redux";
 
+
 simpleNumberLocalizer();
 
 function mapStateToProps(state) {
@@ -59,6 +60,8 @@ function validate(values) {
 }
 
 class EditUserForm extends Component {
+
+
   renderTextField({ input, label, type, meta: { touched, error, warning } }) {
     return (
       <div className="Small-Text">
@@ -192,6 +195,7 @@ class EditUserForm extends Component {
           component={this.renderTextField}
           type="text"
           label="First Name"
+
         />
         <Field
           name="last_name"

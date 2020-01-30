@@ -3,21 +3,16 @@ import Axios from 'axios';
 import { Input, Dropdown } from 'semantic-ui-react';
 import {connect} from 'react-redux';
 
-
 import styles from '../styles/searchBar.module.scss';
-
 require("dotenv").config();
 
 function mapStateToProps(state){
-
   return {categories: state.eventReducer.event_categories}
 }
 
 const RESET = "reset"
 
 class SearchBar extends React.Component {
-  
-
   state = {
     keyword: '',
     categoryOptions: []
