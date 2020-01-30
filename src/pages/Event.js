@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import Moment from "react-moment";
+import {connect} from 'react-redux';
 import styles from "../styles/event.module.scss";
 import AttendForm from "../components/attendform";
 
@@ -8,9 +9,14 @@ import AttendForm from "../components/attendform";
 
 import { Link } from "react-router-dom";
 
-import { Button, Segment, Image, Label, Modal } from "semantic-ui-react";
+import { Button, Image, Label, Modal } from "semantic-ui-react";
+import Presenters from "../components/PresenterDetails";
 
 require("dotenv").config();
+
+function mapStateToProps(state){
+  return {userLoggedIn: state.userReducer.userLoggedIn}
+}
 
 class Event extends React.Component {
   state = {
@@ -29,6 +35,7 @@ class Event extends React.Component {
     this.checkAttendStatus();
   };
 
+  // Setting the attend status for button display
   checkAttendStatus() {
     const { event } = this.state;
     return event
@@ -99,6 +106,7 @@ class Event extends React.Component {
       description,
       event_category
     } = this.state.event;
+
     return (
     <>
       <div className={styles.eventBox}>
@@ -158,7 +166,7 @@ class Event extends React.Component {
         <div className={styles.innerContainer}>
           <div className={styles.insideContainer}>
             <div className={styles.Heading}><h2>Presenters</h2></div>
-            {this.renderPresenters()}
+            <Presenters {...this.state.event} {...this.props}/>
         </div>
         </div>
       </div>
@@ -179,57 +187,41 @@ class Event extends React.Component {
   }
 
   renderButton() {
-    return (
-      <Modal trigger={ this.state.event ? this.attendButton() : null}>
-        <Modal.Header>{this.state.attend}</Modal.Header>
-        <Modal.Content>
-          <Modal.Description>
-            {this.state.attending ? (
-              <>
-                Are you sure you want to unattend?
-                <Button onClick={this.unattendEvent}>Yes</Button>
-              </>
-            ) : (
-              <AttendForm
-                onSubmit={this.attendEvent}
-                event={this.state.event}
-                initialValues={{ username: localStorage.username }}
-              />
-            )}
-          </Modal.Description>
-        </Modal.Content>
-      </Modal>
-    );
+    const {userLoggedIn} = this.props;
+    if(userLoggedIn)
+      return (
+        <Modal trigger={ this.state.event ? this.attendButton() : null}>
+          <Modal.Header>{this.state.attend}</Modal.Header>
+          <Modal.Content>
+            <Modal.Description>
+              {this.state.attending ? (
+                <>
+                  Are you sure you want to unattend?
+                  <Button onClick={this.unattendEvent}>Yes</Button>
+                </>
+              ) : (
+                <AttendForm
+                  onSubmit={this.attendEvent}
+                  event={this.state.event}
+                  initialValues={{ username: localStorage.username }}
+                />
+              )}
+            </Modal.Description>
+          </Modal.Content>
+        </Modal>
+      );
+     else 
+      return(
+      <Link to={{
+        pathname: "/login",
+      }}><Button size="massive" basic id={styles.button}>Attend</Button></Link>)
   }
+
+
 
   renderIcons() {
     const { is_family_friendly } = this.state.event;
     return is_family_friendly ? "Child Friendly" : "18+";
-  }
-
-  renderPresenters() {
-    const { presenter_detail } = this.state.event;
-    return presenter_detail
-      ? presenter_detail.map(presenter => {
-          return (
-            <div className={styles.presenterBox}>
-              <div>
-              <span>
-                {presenter.title} {presenter.first_name} {presenter.last_name}
-              </span>
-              <br></br>
-              <span>
-                <sub>{presenter.qualification}</sub>
-              </span>
-              <span>
-                <p>{presenter.short_description}</p>
-              </span>
-              </div>
-              <img id={styles.profileImg} src={require("../assets/profile-photo.jpg")} alt="profile of presenter"/>
-            </div>
-          );
-        })
-      : null;
   }
 
   render() {
@@ -244,4 +236,4 @@ class Event extends React.Component {
   }
 }
 
-export default Event;
+export default connect(mapStateToProps)(Event);
