@@ -1,15 +1,16 @@
 import React from 'react';
-import styles from '../styles/event.module.scss';
+
 import Moment from 'react-moment';
 import { Card, Icon, Image, Label } from 'semantic-ui-react'
-import { Link } from 'react-router-dom';
+import styles from '../styles/card.module.scss';
 
 class EventCard extends React.Component {
 
-  CardExampleCard = () => (
+  displayEventCard = () => (
     <Card
       href={`/events/${this.props._id}`}>
-      <Image src={ require('../assets/placeholder.jpg')} wrapped ui={false} />
+        <Image src={ 
+          this.props.images ? this.props.images[0] : require('../assets/placeholder.jpg')} wrapped ui={false} size="small"/>
       <Card.Content>
         <Card.Header>{this.props.event_name}</Card.Header>
         <Card.Meta>
@@ -30,9 +31,8 @@ class EventCard extends React.Component {
 
 
   render() {
-    const {_id} = this.props
     return(
-       this.CardExampleCard()
+       this.displayEventCard()
     )
   }
 

@@ -63,7 +63,6 @@ class Event extends React.Component {
           }
         )
         .then(response => {
-          console.log(response.data);
           this.props.history.push("/events");
         });
     } catch (error) {
@@ -72,7 +71,6 @@ class Event extends React.Component {
   };
 
   unattendEvent = async event => {
-    console.log(this.state.event);
     try {
       await axios
         .patch(
@@ -88,7 +86,6 @@ class Event extends React.Component {
           }
         )
         .then(response => {
-          console.log(response.data);
           this.props.history.push(`/events/${this.state.event._id}`);
         });
     } catch (error) {
@@ -102,7 +99,8 @@ class Event extends React.Component {
       event_name,
       event_date,
       description,
-      event_category
+      event_category,
+      images
     } = this.state.event;
 
     return (
@@ -123,7 +121,9 @@ class Event extends React.Component {
           </div>
         <div className={styles.eventImage}>
             <Image
-              src={require("../assets/placeholder.jpg")}
+              src={
+                images ? images[0] :
+                require("../assets/placeholder.jpg")}
               size="big"
               rounded
               id={styles.image}

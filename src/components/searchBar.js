@@ -1,4 +1,4 @@
-import React, {useRef, useEffect} from 'react';
+import React from 'react';
 import Axios from 'axios';
 import { Input, Dropdown } from 'semantic-ui-react';
 import {connect} from 'react-redux';
@@ -22,7 +22,7 @@ class SearchBar extends React.Component {
    let categoryArray = []
    this.props.categories.map( (category, index) => {
      return categoryArray.push( {
-      key: category.substring(0,1),
+      key: category.substring(0,1) + index,
       text: category,
       value: index
       } )
