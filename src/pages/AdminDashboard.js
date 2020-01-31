@@ -50,7 +50,7 @@ class AdminDashboard extends Component {
   async componentDidMount() {
     this.props.loadPresenters();
     const response = await axios
-      .get("https://weexplorebackend.herokuapp.com/events")
+      .get(`${process.env.REACT_APP_BACKEND_DB_URL}/events`)
       .catch(error => {
         console.log(`ERROR: ${error}`);
       });
