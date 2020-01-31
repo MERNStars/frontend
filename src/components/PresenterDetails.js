@@ -15,9 +15,10 @@ class Presenters extends React.Component {
   }
 
   eventDisplay = event => {
-    const { presenters } = event;
-      return presenters
-        ? presenters.map(presenter => {
+    console.log( event )
+    const { presenter_detail } = event;
+      return presenter_detail
+        ? presenter_detail.map(presenter => {
             return (
               <div className={styles.presenterBox}>
                 <div>
