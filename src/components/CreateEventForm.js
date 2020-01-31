@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import RenderTextField from "./RenderTextField";
 import { connect } from "react-redux";
-import { DropdownList } from "react-widgets";
 import RenderCategoriesField from "./FormFields/CategoriesFormField";
 import RenderStatusField from "../components/FormFields/StatusFormField";
 
@@ -30,7 +29,7 @@ class CreateEventForm extends Component {
   // Brings in presenters data
   async componentDidMount() {
     const response = await axios
-      .get(`${process.env.REACT_APP_BACKEND_DB_TEST}/presenters/`, {
+      .get(`${process.env.REACT_APP_BACKEND_DB_URL}/presenters/`, {
         headers: {
           authorization: `${localStorage.weexplore_token}`
         }

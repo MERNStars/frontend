@@ -27,8 +27,7 @@ class EditEventForm extends Component {
 
     componentDidMount(){
         const {index, events} = this.props;
-        this.setState({event: {...events[index], image_file: events[index].images[0]}});  
-
+        this.setState({event: {...events[index], image_file: events[index].images[0]}});
     }
 
   RenderCategoriesField = ({
@@ -119,12 +118,6 @@ class EditEventForm extends Component {
       )
   }
 
-  // onChange = (e) => {
-  //   console.log(e.target.files[0]);
-  //   if(e.target.files[0])
-  //       this.setState({file: URL.createObjectURL(e.target.files[0])});
-  // }
-
   onChange = (e) => {
     //   console.log(e.target.files[0]);
     if(e.target.files[0]){
@@ -133,7 +126,7 @@ class EditEventForm extends Component {
     }
   }
 
-  RenderImageField = ({input, label, type, meta: {touched, error, warning}}) =>{
+  RenderImageField = ({input, meta: {touched, error, warning}}) =>{
     
     return <div className="image-file">
        <ImageUploadPreviewer {...input} onChange={input.onChange} type="file" value={input.value? input.value[0] : "" } />

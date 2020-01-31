@@ -5,6 +5,8 @@ import {connect} from 'react-redux';
 import styles from "../styles/event.module.scss";
 import AttendForm from "../components/attendform";
 
+
+
 import { Link } from "react-router-dom";
 
 import { Button, Image, Label, Modal } from "semantic-ui-react";
@@ -26,7 +28,7 @@ class Event extends React.Component {
   componentDidMount = async () => {
     const { id } = this.props.match.params;
     const response = await axios.get(
-      `https://weexplorebackend.herokuapp.com/events/${id}/id`
+      `${process.env.REACT_APP_BACKEND_DB_URL}/events/${id}/id`
     );
     const data = response.data;
     this.setState({ event: data });

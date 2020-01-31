@@ -107,5 +107,5 @@ export default reduxForm({
   form: "wizard",
   destroyOnUnmount: false,
   forceUnregisterOnUnmount: true,
-  validate
+  // validate
 })(connect(mapStateToProps)(WizardFormFirstPage));
