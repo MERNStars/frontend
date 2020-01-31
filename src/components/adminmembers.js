@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+require("dotenv").config();
 
 class AdminMembers extends Component {
   state = {
@@ -13,7 +14,7 @@ class AdminMembers extends Component {
         "content-type": "application/x-www-form-urlencoded",
         authorization: `${localStorage.weexplore_token}`
       },
-      url: "https://weexplorebackend.herokuapp.com/users"
+      url: `${process.env.REACT_APP_BACKEND_DB_URL}/users`
     };
     const response = await axios(options).catch(error => {
       console.log(`ERROR: ${error}`);
