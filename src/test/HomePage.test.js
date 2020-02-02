@@ -5,17 +5,17 @@ import CreateEventForm from "../components/CreateEventForm";
 import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 
-beforeEach(() => {
-  let mock = new MockAdapter(axios);
-  const data = {
-    name: "test",
-    age: 100
-  };
+// beforeEach(() => {
+//   let mock = new MockAdapter(axios);
+//   const data = {
+//     name: "test",
+//     age: 100
+//   };
 
-  console.log(data);
+//   console.log(data);
 
-  mock.onGet("url").reply(200, data);
-});
+//   mock.onGet("url").reply(200, data);
+// });
 
 
 
