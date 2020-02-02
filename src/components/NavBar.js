@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { Menu, Dropdown } from "semantic-ui-react";
+import { Menu, Dropdown, Button } from "semantic-ui-react";
 import AdminAccount from "../components/adminAccount";
 import Logout from '../components/Logout';
 
@@ -13,15 +13,28 @@ class Navbar extends React.Component {
   render() {
     let result = AdminAccount();
     return (
-      <Menu>
+      <Menu borderless size="huge">
+        <Menu.Menu position="left">
         <Menu.Item>
           <NavLink exact to="/">
-            Home
+            weExplore
+          </NavLink>
+        </Menu.Item>
+        </Menu.Menu>
+        <Menu.Menu position="right">
+        <Menu.Item>
+          <NavLink exact to="/events">
+            <Button color='green'>Events</Button>
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item >
+          <NavLink exact to="/about-us">
+            About Us
           </NavLink>
         </Menu.Item>
         <Menu.Item>
-          <NavLink exact to="/events">
-            Events
+          <NavLink exact to="/contact">
+            Contact
           </NavLink>
         </Menu.Item>
         {localStorage.username ? (
@@ -46,16 +59,6 @@ class Navbar extends React.Component {
             </NavLink>
           </Menu.Item>
         )}
-        <Menu.Item>
-          <NavLink exact to="/about-us">
-            About Us
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item>
-          <NavLink exact to="/contact">
-            Contact
-          </NavLink>
-        </Menu.Item>
         {result ? (
           <Menu.Item>
             <NavLink exact to="/admin">
@@ -63,6 +66,7 @@ class Navbar extends React.Component {
             </NavLink>
           </Menu.Item>
         ) : null}
+        </Menu.Menu>
       </Menu>
     );
   }
