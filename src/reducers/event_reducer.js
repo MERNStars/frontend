@@ -1,6 +1,7 @@
 import Axios from "axios";
-require("dotenv").config();
+import {NotificationManager} from 'react-notifications';
 
+require("dotenv").config();
 const initialState = {
   event_categories: [
     "bible seminar",
@@ -99,7 +100,7 @@ export const createEvent = event => {
         is_family_friendly: event.is_family_friendly,
         minimum_age: event.minimum_age,
         event_category: event.event_category,
-        status: event.status,
+        status: "scheduled",
         images: event.images,
         event_capacity: event.event_capacity,
         published: event.published
@@ -113,7 +114,8 @@ export const createEvent = event => {
       console.log(response.statusText);
       if (response.statusText === "Created") {
         dispatch(eventCreated(response.data));
-        window.location.href = "/admin";
+        localStorage.message = "Event Successfully Created"
+        window.location.href = "/admin"
       }
       
     });
@@ -134,9 +136,13 @@ export const editEvent = event => {
     }
     ).then(response => {
         console.log("Data from response...");
-        
-        console.log(response.data);
+        console.log(response);
         dispatch(eventUpdated(response.data));
+        
+        if (response.statusText === "OK") {
+          localStorage.message = "Event Edited"
+          window.location.href = "/admin"
+        }
     })
     .catch(err => {
       console.error("Ooops...there is a problem.");
@@ -154,7 +160,6 @@ const eventReducer = (state=initialState, action) => {
     switch(action.type){
         case "EVENT_CREATED":
             newState = { ...state, message: "Your event has been created." };
-
             break;
         case "EVENT_DELETED":
             newState = { ...state, message: "Your event has been deleted.", events: action.data };
@@ -192,4 +197,4 @@ const eventReducer = (state=initialState, action) => {
     return newState;
 }
 
-export default eventReducer;
+export default (eventReducer)

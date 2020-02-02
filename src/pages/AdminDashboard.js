@@ -6,6 +6,7 @@ import { Grid, Card } from "semantic-ui-react";
 import { connect } from "react-redux";
 import Moment from 'moment';
 import { populateEvents } from '../reducers/event_reducer'
+import { NotificationManager } from "react-notifications";
 import {loadPresenters} from '../reducers/presenter_reducer';
 require("dotenv").config();
 
@@ -13,7 +14,8 @@ function mapStateToProps(state) {
   return {
     isAdmin: state.userReducer.isAdmin,
     events: state.eventReducer.events,
-    presenters: state.presenterReducer.presenters
+    presenters: state.presenterReducer.presenters,
+    message: state.eventReducer.message
   };
 }
 
@@ -46,6 +48,7 @@ class AdminDashboard extends Component {
   };
 
   async componentDidMount() {
+    
     this.props.loadPresenters();
     const response = await axios
       .get(`${process.env.REACT_APP_BACKEND_DB_URL}/events`)
@@ -56,6 +59,12 @@ class AdminDashboard extends Component {
 
     const sortedArray  = data.sort((a,b) => new Moment(a.event_date.begin).format('YYYYMMDD') - new Moment(b.event_date.begin).format('YYYYMMDD'))
     this.props.populateEvents(data);
+    
+
+    if (localStorage.message) {
+      NotificationManager.success(null,localStorage.message);
+      localStorage.removeItem("message");
+    } 
   }
 
   renderAdminPage() {

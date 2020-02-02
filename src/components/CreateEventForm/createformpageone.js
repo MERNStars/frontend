@@ -23,7 +23,7 @@ function mapStateToProps(state) {
 }
 
 const WizardFormFirstPage = props => {
-  const { categories, status, handleSubmit } = props;
+  const { categories, status, handleSubmit, initialValues } = props;
   return (
     <form onSubmit={handleSubmit}>
       <Field
@@ -87,13 +87,14 @@ const WizardFormFirstPage = props => {
         type="text"
         label="Event Category"
       />
-      <Field
+      {initialValues && initialValues.status ? <Field
         name="status"
         component={RenderStatusField}
         status={status}
         type="text"
         label="Status"
-      />
+      /> : null}
+      
       <div>
         <button type="submit" className="next">
           Next

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ContactForm from "../components/contactform";
 import axios from "axios";
+import createNotification from '../components/notifications'
 require('dotenv').config()
 
 export default class Contact extends Component {
