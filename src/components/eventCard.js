@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Moment from 'react-moment';
-import { Card, Icon, Image, Label } from 'semantic-ui-react'
+import { Card, Icon, Image, Segment } from 'semantic-ui-react'
 import styles from '../styles/card.module.scss';
 
 class EventCard extends React.Component {
@@ -24,7 +24,7 @@ class EventCard extends React.Component {
       <Card.Content extra>
           <Icon name='user' />
           {this.props.event_capacity}
-          <Label basic color='red' pointing>{this.props.status}</Label>
+          <Segment floated='right'>{this.props.status}</Segment>
       </Card.Content>
     </Card>
   )
