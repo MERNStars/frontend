@@ -1,11 +1,9 @@
 import React from "react";
 import axios from "axios";
 import Moment from "react-moment";
-import {connect} from 'react-redux';
+import { connect } from "react-redux";
 import styles from "../styles/event.module.scss";
 import AttendForm from "../components/attendform";
-
-
 
 import { Link } from "react-router-dom";
 
@@ -14,8 +12,8 @@ import Presenters from "../components/PresenterDetails";
 
 require("dotenv").config();
 
-function mapStateToProps(state){
-  return {userLoggedIn: state.userReducer.userLoggedIn}
+function mapStateToProps(state) {
+  return { userLoggedIn: state.userReducer.userLoggedIn };
 }
 
 class Event extends React.Component {
@@ -65,10 +63,11 @@ class Event extends React.Component {
           }
         )
         .then(response => {
-          console.log(response.data.success)
+          console.log(response.data.success);
           if (response.data.success === true) {
-            localStorage.message = "Thank you for Clicking Attend. Look forward to seeing you there!"
-            window.location.href = "/events"
+            localStorage.message =
+              "Thank you for Clicking Attend. Look forward to seeing you there!";
+            window.location.href = "/events";
           }
         });
     } catch (error) {
@@ -110,90 +109,110 @@ class Event extends React.Component {
     } = this.state.event;
 
     return (
-    <>
-      <div className={styles.eventBox}>
-        <div className={styles.innerContainer}>
-          <div className={styles.description}>
-            <div className={styles.endContainer}>
-              <Moment format="D MMM YYYY">{event_date.begin}</Moment>
+      <>
+        <div className={styles.eventBox}>
+          <div className={styles.innerContainer}>
+            <div className={styles.description}>
+              <div className={styles.endContainer}>
+                <Moment format="D MMM YYYY">{event_date.begin}</Moment>
+              </div>
+              <div className={styles.mainContainer}>
+                <h1>{event_name}</h1>
+                <p>{description}</p>
+              </div>
+              <div className={styles.endContainer}>{this.renderButton()}</div>
             </div>
-            <div className={styles.mainContainer}>
-              <h1>{event_name}</h1>
+            <div className={styles.eventImage}>
+              <Image
+                src={images ? images[0] : require("../assets/placeholder.jpg")}
+                size="big"
+                rounded
+                id={styles.image}
+              ></Image>
+            </div>
+          </div>
+        </div>
+        <div className={styles.eventBox} id={styles.shadedBox}>
+          <div className={styles.innerContainer}>
+            <div className={styles.description} id={styles.about}>
+              <div className={styles.endContainer}>
+                <h1>About</h1>
+              </div>
               <p>{description}</p>
-            </div>
-            <div className={styles.endContainer}>
-              {this.renderButton()}
-            </div>
-          </div>
-        <div className={styles.eventImage}>
-            <Image
-              src={
-                images ? images[0] :
-                require("../assets/placeholder.jpg")}
-              size="big"
-              rounded
-              id={styles.image}
-            ></Image>
-          </div>
-        </div>
-      </div>
-      <div className={styles.eventBox} id={styles.shadedBox}>
-        <div className={styles.innerContainer}>
-          <div className={styles.description} id={styles.about}>
-            <div className={styles.endContainer}><h1>About</h1></div>
-            <p>{description}</p>
-            <div className={styles.endContainer}>
-              <Label>{this.renderIcons()}</Label>
-              <Label>{event_category}</Label>
+              <div className={styles.endContainer}>
+                <Label>{this.renderIcons()}</Label>
+                <Label>{event_category}</Label>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className={styles.eventBox}>
-        <div className={styles.outerContainer}>
-          <div className={styles.extraContainer}>
-            <h1 id={styles.datetitle}>Date</h1>
-            <h2 id={styles.startTime}>Start <Moment format="D MMM HH:MM a">{event_date.begin}</Moment></h2>
-            <h2 id={styles.endTime}>End <Moment format="D MMM HH:MM a">{event_date.end}</Moment></h2>
-            <div className={styles.googleMap}></div>
-            <div className={styles.address}>
-              <h2>Address</h2>
-              <p>51 Morton St</p>
-              <p>Clayton, VIC 3168</p>
-              <sub>Start Time: <Moment format="HH:MM a">{event_date.begin}</Moment></sub>
-              <sub>Event Duration:{" "}<Moment to={event_date.begin} ago> {event_date.end}</Moment>{" "}</sub>
-            </div>  
+        <div className={styles.eventBox}>
+          <div className={styles.outerContainer}>
+            <div className={styles.extraContainer}>
+              <h1 id={styles.datetitle}>Date</h1>
+              <h2 id={styles.startTime}>
+                Start <Moment format="D MMM HH:MM a">{event_date.begin}</Moment>
+              </h2>
+              <h2 id={styles.endTime}>
+                End <Moment format="D MMM HH:MM a">{event_date.end}</Moment>
+              </h2>
+              <div className={styles.googleMap}></div>
+              <div className={styles.address}>
+                <h2>Address</h2>
+                <p>51 Morton St</p>
+                <p>Clayton, VIC 3168</p>
+                <sub>
+                  Start Time:{" "}
+                  <Moment format="HH:MM a">{event_date.begin}</Moment>
+                </sub>
+                <sub>
+                  Event Duration:{" "}
+                  <Moment to={event_date.begin} ago>
+                    {" "}
+                    {event_date.end}
+                  </Moment>{" "}
+                </sub>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div className={styles.eventBox} id={styles.shadedBox}>
-        <div className={styles.innerContainer}>
-          <div className={styles.insideContainer}>
-            <div className={styles.Heading}><h2>Presenters</h2></div>
-            <Presenters {...this.state.event} {...this.props}/>
+        <div className={styles.eventBox} id={styles.shadedBox}>
+          <div className={styles.innerContainer}>
+            <div className={styles.insideContainer}>
+              <div className={styles.Heading}>
+                <h2>Presenters</h2>
+              </div>
+              <Presenters {...this.state.event} {...this.props} />
+            </div>
+          </div>
         </div>
-        </div>
-      </div>
         <div className={styles.containerFooter}>
           <div className={styles.Footer}>{this.renderButton()}</div>
         </div>
-     </>
+      </>
     );
-   
   };
 
   attendButton() {
-    if( this.state.event.status === "scheduled"){
-      return <Button size="massive" basic id={styles.button}>{this.state.attend}</Button>
+    if (this.state.event.status === "scheduled") {
+      return (
+        <Button size="massive" basic id={styles.button}>
+          {this.state.attend}
+        </Button>
+      );
     } else {
-      return <Button size="massive" id={styles.button} disabled>{this.state.event.status}</Button>
-    }  
+      return (
+        <Button size="massive" id={styles.button} disabled>
+          {this.state.event.status}
+        </Button>
+      );
+    }
   }
 
   renderButton() {
-    if(localStorage.weexplore_token)
+    if (localStorage.weexplore_token)
       return (
-        <Modal trigger={ this.state.event ? this.attendButton() : null}>
+        <Modal trigger={this.state.event ? this.attendButton() : null}>
           <Modal.Header>{this.state.attend}</Modal.Header>
           <Modal.Content>
             <Modal.Description>
@@ -213,14 +232,21 @@ class Event extends React.Component {
           </Modal.Content>
         </Modal>
       );
-     else 
-      return(
-      <Link to={{
-        pathname: "/login",
-      }}><Button size="massive" basic id={styles.button}>Attend</Button></Link>)
+    else {
+      localStorage.message = "Please sign in to attend event";
+    }
+    return (
+      <Link
+        to={{
+          pathname: "/login"
+        }}
+      >
+        <Button size="massive" basic id={styles.button}>
+          Attend
+        </Button>
+      </Link>
+    );
   }
-
-
 
   renderIcons() {
     const { is_family_friendly } = this.state.event;

@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux';
 import { Link } from "react-router-dom";
 import LoginForm from '../components/LoginForm';
-import { NotificationManager } from "react-notifications";
 import Logout from '../components/Logout';
+import storageClear from '../components/storageclear'
 
 function mapStateToProps(state){
     return {message: state.userReducer.message, userLoggedIn: state.userReducer.userLoggedIn}
@@ -11,12 +11,8 @@ function mapStateToProps(state){
 
 class Login extends Component {
   componentDidMount() {
-    if(localStorage.message) {
-      NotificationManager.info(null, localStorage.message);
-      localStorage.removeItem("message");
-    }
+    storageClear()
   }
-
     renderForm(){
         const {userLoggedIn} = this.props;
         if(userLoggedIn || localStorage.weexplore_token)
