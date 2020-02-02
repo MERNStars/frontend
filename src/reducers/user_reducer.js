@@ -54,6 +54,11 @@ const userLoggedIn = (username, data) => ({
   data: data
 });
 
+const userEdited = data => ({
+  type: "USER_EDITED",
+  data: data
+});
+
 const userLoggedOut = message => ({
   type: "USER_LOGGED_OUT",
   message: message
@@ -66,8 +71,26 @@ function storeToken(username, token) {
   }
 }
 
-export const userLogin = user => {
+export const editUser = user => {
+  return dispatch => {
+    axios
+      .patch(`${process.env.REACT_APP_BACKEND_DB_URL}/users/update`, user, {
+        headers: {
+          authorization: `${localStorage.weexplore_token}`
+        }
+      })
+      .then(response => {
+        dispatch(userEdited(response.data));
+        if (response) {
+          console.log(response)
+          // window.location.reload(true);
+        }
+      })
+      .catch(error => console.log("error:" + error));
+  };
+};
 
+export const userLogin = user => {
   return dispatch => {
     axios
       .post(`${process.env.REACT_APP_BACKEND_DB_URL}/users/login`, {
@@ -76,15 +99,12 @@ export const userLogin = user => {
       })
       .then(response => {
         dispatch(userLoggedIn(user.username, response.data));
-        // console.log(response.data.isAdmin)
         storeToken(user.username, response.data.token);
         window.location.reload(true);
       })
       .catch(err => console.error("Error xxxx: " + err));
   };
 };
-
-
 
 export const logUserOut = () => {
   return dispatch => {
@@ -116,10 +136,14 @@ export const createUser = user => {
 
 const userReducer = (state = initialState, action) => {
   let newState = {};
- 
+
   switch (action.type) {
     case "USER_CREATED":
       newState = { ...state, message: "Your account has been created." };
+      break;
+
+    case "USER_EDITED":
+      newState = { ...state, message: "Account updated" };
       break;
     case "USER_LOGGED_IN":
       newState = {
@@ -136,10 +160,10 @@ const userReducer = (state = initialState, action) => {
         ...state,
         token: null,
         userLoggedIn: false,
-        username: '',
+        username: "",
         message: "You have been logged out."
       };
-      
+
       break;
     default:
       newState = { ...state };

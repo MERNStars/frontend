@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import RenderTextField from "./RenderTextField";
-// import RenderPresentersField from "./RenderPresentersField";
+import RenderStatusField from "./FormFields/StatusFormField";
+import RenderCategoriesField from './FormFields/CategoriesFormField'
 import { connect } from "react-redux";
-import { DropdownList, Multiselect } from "react-widgets";
-import ImageUploadPreviewer from './ImageUploadPreviewer';
+import { Multiselect } from "react-widgets";
+import ImageUploadPreviewer from "./ImageUploadPreviewer";
 import { setNewImage } from "../reducers/event_reducer";
 
 function mapStateToProps(state) {
@@ -18,77 +19,51 @@ function mapStateToProps(state) {
 }
 
 class EditEventForm extends Component {
+  state = {
+    //loading the detail of the event from the store
+    event: {},
+    image_file: null
+  };
 
-    state = {
-        //loading the detail of the event from the store
-        event: {},
-        image_file: null
-    }
+  componentDidMount() {
+    const { index, events } = this.props;
+    this.setState({
+      event: { ...events[index], image_file: events[index].images[0] }
+    });
+  }
 
-    componentDidMount(){
-        const {index, events} = this.props;
-        this.setState({event: {...events[index], image_file: events[index].images[0]}});
-    }
+  renderEventName = ({
+    input,
+    label,
+    meta: { touched, error, warning }
+  }) => {
+    return (
+      <>
+        <label>{label}</label> <br />
+        <input
+          {...input}
+          className="text-field"
+          onChange={input.onChange}
+          placeholder={label}
+        />
+        {touched &&
+          ((error && <span>{error}</span>) ||
+            (warning && <span>{warning}</span>))}
+      </>
+    );
+  };
 
-  RenderCategoriesField = ({
+  renderPresenterDropdown = ({
     input,
     name,
     label,
     meta: { touched, error, warning }
   }) => {
-    const { categories } = this.props;
-    return (
-      <div className="My-Radio">
-        {label}:
-        <DropdownList
-          {...input}
-          name={name}
-          data={categories}
-          value={input.value}
-        />
-        {touched &&
-          ((error && <span>{error}</span>) ||
-            (warning && <span>{warning}</span>))}
-      </div>
-    );
-  };
-
-  RenderStatusField = ({
-    input,
-    name,
-    label,
-    meta: { touched, error, warning }
-  }) => {
-    const { status } = this.props;
-    return (
-      <div className="My-Radio">
-        {label}:
-        <DropdownList
-          {...input}
-          name={name}
-          data={status}
-          value={input.value}
-        />
-        {touched &&
-          ((error && <span>{error}</span>) ||
-            (warning && <span>{warning}</span>))}
-      </div>
-    );
-  };
-
-  renderEventName = ({input, name, label, meta: {touched, error, warning}
-  }) => {
-      return (<><label>{label}</label> <br/>
-          <input {...input} className="text-field" onChange={input.onChange} placeholder={label} />
-          {touched &&
-                ((error && <span>{error}</span>) ||
-                    (warning && <span>{warning}</span>))}</>);
-  };
-
-  renderPresenterDropdown = ({input, name, label, meta: {touched, error, warning}}) => {
-    
-    const presentereData = this.props.presenters.map( (presenter) => {
-        return { "id": presenter['_id'], "name": `${presenter.first_name} ${presenter.last_name}`}
+    const presentereData = this.props.presenters.map(presenter => {
+      return {
+        id: presenter["_id"],
+        name: `${presenter.first_name} ${presenter.last_name}`
+      };
     });
 
     return (
@@ -104,37 +79,55 @@ class EditEventForm extends Component {
         />
       </div>
     );
-  }
+  };
 
-  RenderUneditableTextField = ({input, label, type,  meta: { touched, error, warning }}) => {
+  RenderUneditableTextField = ({
+    input,
+    label,
+    type,
+    meta: { touched, error, warning }
+  }) => {
     return (
       <div className="Small-Text">
-          <label>{label}</label> <br/>
-          <input {...input} className="text-field" onChange={input.onChange} placeholder={label} type={type} disabled={true} />
-          {touched &&
-      ((error && <span>{error}</span>) ||
-        (warning && <span>{warning}</span>))}
+        <label>{label}</label> <br />
+        <input
+          {...input}
+          className="text-field"
+          onChange={input.onChange}
+          placeholder={label}
+          type={type}
+          disabled={true}
+        />
+        {touched &&
+          ((error && <span>{error}</span>) ||
+            (warning && <span>{warning}</span>))}
       </div>
-      )
-  }
+    );
+  };
 
-  onChange = (e) => {
+  onChange = e => {
     //   console.log(e.target.files[0]);
-    if(e.target.files[0]){
-        this.setState({image_file: URL.createObjectURL(e.target.files[0])});
-        this.props.newImage(e.target.files[0]);
+    if (e.target.files[0]) {
+      this.setState({ image_file: URL.createObjectURL(e.target.files[0]) });
+      this.props.newImage(e.target.files[0]);
     }
-  }
+  };
 
-  RenderImageField = ({input, meta: {touched, error, warning}}) =>{
-    
-    return <div className="image-file">
-       <ImageUploadPreviewer {...input} onChange={input.onChange} type="file" value={input.value? input.value[0] : "" } />
-      {touched &&
-      ((error && <span>{error}</span>) ||
-        (warning && <span>{warning}</span>))}
-    </div>
-  }
+  RenderImageField = ({ input, meta: { touched, error, warning } }) => {
+    return (
+      <div className="image-file">
+        <ImageUploadPreviewer
+          {...input}
+          onChange={input.onChange}
+          type="file"
+          value={input.value ? input.value[0] : ""}
+        />
+        {touched &&
+          ((error && <span>{error}</span>) ||
+            (warning && <span>{warning}</span>))}
+      </div>
+    );
+  };
 
   render() {
     return (
@@ -147,8 +140,8 @@ class EditEventForm extends Component {
             type="text"
             label="Event ID"
             props={{
-                disabled: true, // like this
-              }}
+              disabled: true // like this
+            }}
           />
           <Field
             name="event_name"
@@ -160,7 +153,7 @@ class EditEventForm extends Component {
             name="description"
             component={RenderTextField}
             type="textarea"
-            label="Description" 
+            label="Description"
           />
           <Field
             name="event_date"
@@ -206,18 +199,23 @@ class EditEventForm extends Component {
           />
           <Field
             name="event_category"
-            component={this.RenderCategoriesField}
+            component={RenderCategoriesField}
             type="text"
             label="Event Category"
           />
           <Field
             name="status"
-            component={this.RenderStatusField}
+            component={RenderStatusField}
             type="text"
             label="Status"
           />
-          
-         <Field name="images" component={this.RenderImageField} onChange={this.onChange} type="file" />
+
+          <Field
+            name="images"
+            component={this.RenderImageField}
+            onChange={this.onChange}
+            type="file"
+          />
 
           <Field
             name="event_capacity"

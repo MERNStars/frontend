@@ -1,12 +1,13 @@
 import React from "react";
-import CreateEventWizardForm from "../components/CreateEventWizardForm";
+import CreateEventForm from "../components/CreateEventForm";
 import { connect } from "react-redux";
 import { createEvent, resetNewImage } from "../reducers/event_reducer";
-import { withRouter, Redirect } from "react-router-dom";
+import config from "../components/CreateEventForm/awsconfig";
+import { withRouter } from "react-router-dom";
 import S3 from "react-aws-s3";
 const { uuid } = require("uuidv4");
-require("dotenv").config();
 
+require("dotenv").config();
 
 // Brings in the state newImage
 function mapStateToProps(state) {
@@ -14,8 +15,6 @@ function mapStateToProps(state) {
     newImage: state.eventReducer.newImage
   };
 }
-
-
 
 // Sends off data to the reducer
 const mapDispatchToProps = dispatch => {
@@ -30,15 +29,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 
-const config = {
-  bucketName: "weexplore2020",
-  dirName: "images",
-  region: "ap-southeast-2",
-  accessKeyId: process.env.REACT_APP_AWS_EXPLORER_ID,
-  secretAccessKey: process.env.REACT_APP_AWS_EXPLORER_SKEY
-};
-
-class CreateEvent extends React.Component {
+export class CreateEvent extends React.Component {
   handleSubmit = event => {
     let presentersID = [];
     if (event.selectedPresenters) {
@@ -61,7 +52,7 @@ class CreateEvent extends React.Component {
             display_message: "Your event has been created."
           });
           this.props.resetNewImage();
-          window.location.href = "/admin"
+          window.location.href = "/admin";
         })
         .catch(err => console.error(err));
     } else {
@@ -70,15 +61,15 @@ class CreateEvent extends React.Component {
       this.setState({
         display_message: "Your event has been created."
       });
-      console.log("test")
-      window.location.href = "/admin"
+      console.log("test");
+      window.location.href = "/admin";
     }
   };
 
   render() {
     return (
       <div>
-        <CreateEventWizardForm handleSubmit={this.handleSubmit}/>
+        <CreateEventForm handleSubmit={this.handleSubmit} />
       </div>
     );
   }
