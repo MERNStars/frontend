@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-
+import { NotificationManager } from "react-notifications";
 
 import EventCard from "../components/eventCard";
 import SearchBar from "../components/searchBar";
@@ -30,6 +30,10 @@ export default class Events extends Component {
       return d.published === true && d.status !== "completed"
     })
     this.setState( {events: newData, resetEvents: newData})
+    if(localStorage.message) {
+      NotificationManager.success(null, localStorage.message);
+      localStorage.removeItem("message");
+    }
   }
 
   categorySearch = (events) => {

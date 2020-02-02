@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { logUserOut } from "../reducers/user_reducer";
-import { Button } from 'semantic-ui-react'
+import { Button } from "semantic-ui-react";
 
 function mapStateToProps(state) {
   return {
@@ -18,7 +18,9 @@ class Logout extends Component {
     if (typeof Storage !== "undefined") {
       localStorage.removeItem("weexplore_token");
       localStorage.removeItem("username");
+      window.location.href = "/";
     }
+
   };
 
   render() {

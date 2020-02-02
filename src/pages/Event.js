@@ -65,7 +65,11 @@ class Event extends React.Component {
           }
         )
         .then(response => {
-          this.props.history.push("/events");
+          console.log(response.data.success)
+          if (response.data.success === true) {
+            localStorage.message = "Thank you for Clicking Attend. Look forward to seeing you there!"
+            window.location.href = "/events"
+          }
         });
     } catch (error) {
       console.log(error);
