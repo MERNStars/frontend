@@ -109,6 +109,7 @@ export const userLogin = user => {
 export const logUserOut = () => {
   return dispatch => {
     dispatch(userLoggedOut("You've been logged out."));
+    window.location.href = "/"
   };
 };
 

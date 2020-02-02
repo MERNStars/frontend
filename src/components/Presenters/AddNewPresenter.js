@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
-import RenderTextField from "./FormFields/RenderTextField";
+// import RenderTextField from "../FormFields/RenderTextField";
+import {RenderTextField} from '../FormFields/FormFields'
 
 class AddNewPresenter extends Component {
   render() {

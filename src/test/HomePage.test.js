@@ -17,14 +17,18 @@ beforeEach(() => {
   mock.onGet("url").reply(200, data);
 });
 
-test("test if navbar renders on home page", () => {
-  const { getByText, queryByText, querySelector, container } = render(<App />);
-  expect(getByText("Events")).toBeInTheDocument();
-  expect(queryByText("Login")).toBeNull();
-  fireEvent.click(getByText("Log In"));
-  expect(getByText("Sign Up")).toBeInTheDocument();
-});
 
-// test("test if create form component renders", () => {
-//   const { getByText } = render(<CreateEventForm />);
-// });
+
+describe("User can navigate to different links from the home page", () => {
+  it("Tests if the home page renders", () => {
+    const { queryByText } = render(<App />);
+    expect(queryByText("Hello World")).toBeInTheDocument();
+  });
+
+  it("Loads the home page and stimulates the click to login page", () => {
+    const { queryByText } = render(<App />);
+    expect(queryByText("Sign Up")).toBeNull();
+    fireEvent.click(queryByText("Log In"));
+    expect(queryByText("Sign Up")).toBeInTheDocument();
+  })
+})

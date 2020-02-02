@@ -12,6 +12,7 @@ const presentersLoaded = (presenters) => ({
         data: presenters
 });
 
+
 export const loadPresenters = () => {
    
     return dispatch => {
@@ -28,7 +29,7 @@ export const loadPresenters = () => {
         });
     }
 }
-     
+
 
 
 

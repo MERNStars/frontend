@@ -110,8 +110,12 @@ export const createEvent = event => {
         }
       }
     ).then(response => {
-      console.log(response);
-      dispatch(eventCreated(response.data));
+      console.log(response.statusText);
+      if (response.statusText === "Created") {
+        dispatch(eventCreated(response.data));
+        window.location.href = "/admin";
+      }
+      
     });
   };
 };

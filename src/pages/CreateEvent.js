@@ -28,7 +28,6 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-
 export class CreateEvent extends React.Component {
   handleSubmit = event => {
     let presentersID = [];
@@ -38,7 +37,6 @@ export class CreateEvent extends React.Component {
       });
       event.presenters = presentersID;
     }
-    console.log(event);
     const ReactS3Client = new S3(config);
     const newFileName = `${uuid()}`;
     if (this.props.newImage) {
@@ -48,21 +46,19 @@ export class CreateEvent extends React.Component {
           event.images = [data.location];
           console.log(event);
           this.props.createEvent(event);
+          this.props.resetNewImage();
           this.setState({
             display_message: "Your event has been created."
           });
-          this.props.resetNewImage();
-          window.location.href = "/admin";
+
         })
         .catch(err => console.error(err));
     } else {
       event.image = [];
-      this.props.createEvent(event);
       this.setState({
         display_message: "Your event has been created."
       });
-      console.log("test");
-      window.location.href = "/admin";
+      this.props.createEvent(event);
     }
   };
 
