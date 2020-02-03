@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import AdminEventCard from "../components/adminEventCards";
 import styles from "../styles/admin.module.scss";
-import { Menu, Segment, Card } from "semantic-ui-react";
+import { Menu, Segment, Card, Icon, Header } from "semantic-ui-react";
 require("dotenv").config();
 
 export default class AdminEvents extends Component {
@@ -12,25 +12,38 @@ export default class AdminEvents extends Component {
     const { activeItem } = this.state
     return(
       <>
-      <Menu attached='top' tabular>
+      <Menu secondary>
       <Menu.Item
         name='Published Events'
         active={activeItem === 'Published Events'}
         onClick={this.handleItemClick}
+        color="green"
       />
       <Menu.Item
         name='Unpublished Events'
         active={activeItem === 'Unpublished Events'}
         onClick={this.handleItemClick}
+        color="green"
       />
       <Menu.Item
         name='Past Events'
         active={activeItem === 'Past Events'}
         onClick={this.handleItemClick}
+        color="green"
         />
     </Menu>
         <Segment attached='bottom'>
         <Card.Group itemsPerRow={2}>
+            <Card
+                href="/create-event"
+              >
+                <Segment placeholder>
+                <Header icon>
+                    <Icon name='compose' />
+                    Create New Event
+                  </Header>
+                </Segment>
+              </Card>
           {this.state.activeItem === "Published Events" ? this.renderPublishedEvents() : this.state.activeItem === "Unpublished Events" ? this.renderUnpublishedEvents() : this.renderPastEvents()}
         </Card.Group>
         </Segment>

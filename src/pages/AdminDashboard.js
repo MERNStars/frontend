@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import AdminEvent from "../components/adminevents";
 import AdminMembers from "../components/adminmembers";
-import { Grid, Card } from "semantic-ui-react";
+import { Grid, Card, Menu, Icon } from "semantic-ui-react";
 import { connect } from "react-redux";
 import Moment from 'moment';
 import { populateEvents } from '../reducers/event_reducer'
@@ -64,20 +64,20 @@ class AdminDashboard extends Component {
     return (
       <>
         <Grid columns={2} divided>
-          <Grid.Row></Grid.Row>
           <Grid.Row>
-            <Grid.Column width={2}></Grid.Column>
-            <div>
-              <button onClick={this.handleClick2}>Events</button>
-              <br />
-              <button onClick={this.handleClick}>Members</button>
-            </div>
+            <Grid.Column width={1}></Grid.Column>
+            <Menu pointing secondary vertical size='huge'>
+              <Menu.Item
+                name="Events"
+                active = {pageStatus === "events"}
+                onClick={this.handleClick2}/>
+              <Menu.Item
+                name="Members"
+                active = {pageStatus === "members"}
+                onClick={this.handleClick}/>
+            </Menu>
             <Grid.Column width={10}>
-              <Card
-                href="/create-event"
-                header="+"
-                description="Add New Event"
-              />
+              
               <AdminDisplay
                 page={true}
                 events={events}
