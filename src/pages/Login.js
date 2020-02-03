@@ -11,7 +11,6 @@ function mapStateToProps(state){
 class Login extends Component {
     renderForm(){
         const {userLoggedIn} = this.props;
-        // console.log(userLoggedIn, localStorage.weexplore_token);
         
         if(userLoggedIn || localStorage.weexplore_token)
             return <Logout />;
@@ -21,9 +20,7 @@ class Login extends Component {
   render() {
   return <>
     <div>{this.renderForm()}</div>
-    <div><Link to="/signup"><button>Sign Up</button></Link></div>
-  
-  
+    {localStorage.weexplore_token ? null : <div><Link to="/signup"><button>Sign Up</button></Link></div>}
   </>;
   }
 }

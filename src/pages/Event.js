@@ -187,8 +187,7 @@ class Event extends React.Component {
   }
 
   renderButton() {
-    const {userLoggedIn} = this.props;
-    if(userLoggedIn)
+    if(localStorage.weexplore_token)
       return (
         <Modal trigger={ this.state.event ? this.attendButton() : null}>
           <Modal.Header>{this.state.attend}</Modal.Header>

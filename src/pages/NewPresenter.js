@@ -1,10 +1,14 @@
 import React, { Component } from "react";
-import AddNewPresenter from "../components/AddNewPresenter";
+import AddNewPresenter from "../components/Presenters/AddNewPresenter";
 import Axios from "axios";
 
 require("dotenv").config();
 
-export default class NewPresenter extends Component {
+const token = {
+  authorization: `${localStorage.weexplore_token}`
+}
+
+class NewPresenter extends Component {
   handleSubmit = data => {
     console.log(data);
     try {
@@ -12,14 +16,14 @@ export default class NewPresenter extends Component {
         `${process.env.REACT_APP_BACKEND_DB_URL}/presenters/create`,
         data,
         {
-          headers: {
-            authorization: `${localStorage.weexplore_token}`
-          }
+          headers: token
         }
       )
         .then(response => {
-          console.log(response.data);
-          this.props.history.goBack()
+          console.log(response);
+          if (response.statusText === "Created") {
+            this.props.history.goBack()
+          }
         })
     } catch (error) {
       console.log(`You have an error: ${error}`);
@@ -34,3 +38,6 @@ export default class NewPresenter extends Component {
     );
   }
 }
+
+
+export default NewPresenter

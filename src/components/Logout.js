@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { logUserOut } from "../reducers/user_reducer";
+import { Button } from 'semantic-ui-react'
 
 function mapStateToProps(state) {
   return {
@@ -23,9 +24,7 @@ class Logout extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.logout}>Logout</button>
-        <div>{this.props.message}</div>
-        <div>{this.props.isAdmin ? "You are an admin." : "You are not an admin."}</div>
+        <Button onClick={this.logout}>Logout</Button>
       </div>
     );
   }

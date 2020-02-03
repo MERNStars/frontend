@@ -6,7 +6,6 @@ import Axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import {deleteEvents, updateEvents} from '../reducers/event_reducer';
 import { connect } from 'react-redux';
-
 import Presenter from './PresenterDetails';
 
 const mapDispatchToProps = {
@@ -19,7 +18,6 @@ function mapStateToProps(state) {
 }
 
 class AdminEventCard extends React.Component { 
-
   state = { 
     modalOpen: false,
     status_options: []

@@ -24,4 +24,5 @@ const RenderCategoriesField = ({
   );
 };
 
+
 export default RenderCategoriesField;

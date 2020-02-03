@@ -9,7 +9,6 @@ import Navbar from "../components/NavBar";
 import AboutUs from "../pages/about";
 import Contact from "../pages/contact";
 import Login from "../pages/Login";
-import NewEvent from "../pages/NewEvent";
 import CreateEvent from "../pages/CreateEvent";
 import NewPresenter from "../pages/NewPresenter";
 import EditEvent from "../pages/EditEvent";
@@ -31,7 +30,6 @@ const Router = () => {
           <Route exact path="/about-us" component={AboutUs} />
           <PrivateRoute exact path="/create-event" component={CreateEvent} />
           <PrivateRoute exact path="/edit-event/:index" component={EditEvent} />
-          <Route exact path="/new-event" component={NewEvent} />
           <PrivateRoute exact path="/admin" component={AdminDashboard} />
           <Route exact path="/contact" component={Contact} />
           <Route exact path="/login" component={Login} />

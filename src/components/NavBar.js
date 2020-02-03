@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { Menu, Dropdown, Button } from "semantic-ui-react";
 import AdminAccount from "../components/adminAccount";
+import Logout from '../components/Logout';
 
 function mapStateToProps(state) {
   return { userLoggedIn: state.userReducer.userLoggedIn };
@@ -46,7 +47,7 @@ class Navbar extends React.Component {
               </Dropdown.Item>
               <Dropdown.Item>
                 <NavLink exact to="/login">
-                  Log Out
+                <Logout />
                 </NavLink>
               </Dropdown.Item>
             </Dropdown.Menu>

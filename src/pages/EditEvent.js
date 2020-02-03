@@ -1,11 +1,11 @@
-// ****NEW CODE****
 import React from "react";
-import CreateEventWizardForm from "../components/CreateEventWizardForm";
+import CreateEventForm from "../components/CreateEventForm";
 import { connect } from "react-redux";
 import {
   editEvent,
   resetNewImage
 } from "../reducers/event_reducer";
+import config from "../components/CreateEventForm/awsconfig";
 import { withRouter } from "react-router-dom";
 import S3 from "react-aws-s3";
 const { uuid } = require("uuidv4");
@@ -33,14 +33,6 @@ const mapDispatchToProps = dispatch => {
       dispatch(resetNewImage());
     }
   };
-};
-
-const config = {
-  bucketName: "weexplore2020",
-  dirName: "images",
-  region: "ap-southeast-2",
-  accessKeyId: process.env.REACT_APP_AWS_EXPLORER_ID,
-  secretAccessKey: process.env.REACT_APP_AWS_EXPLORER_SKEY
 };
 
 class EditEvent extends React.Component {
@@ -124,7 +116,7 @@ class EditEvent extends React.Component {
   render() {
     return (
       <div>
-        <CreateEventWizardForm
+        <CreateEventForm
           handleSubmit={this.handleSubmit}
           populatedValue={this.state.event}
         />

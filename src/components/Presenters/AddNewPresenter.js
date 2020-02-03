@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
-import RenderTextField from "./RenderTextField";
+// import RenderTextField from "../FormFields/RenderTextField";
+import {RenderTextField} from '../FormFields/FormFields'
 
 class AddNewPresenter extends Component {
   render() {
@@ -50,7 +51,6 @@ class AddNewPresenter extends Component {
             type="textarea"
             label="Upload Avatar"
           />
-
           <button type="submit" disabled={submitting}>
             Submit
           </button>
