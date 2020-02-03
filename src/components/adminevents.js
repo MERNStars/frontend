@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import AdminEventCard from "../components/adminEventCards";
 import styles from "../styles/admin.module.scss";
-import { Menu, Segment, Card } from "semantic-ui-react";
+import { Menu, Segment, Card, Icon, Header } from "semantic-ui-react";
 require("dotenv").config();
 
 export default class AdminEvents extends Component {
@@ -34,6 +34,16 @@ export default class AdminEvents extends Component {
     </Menu>
         <Segment attached='bottom'>
         <Card.Group itemsPerRow={2}>
+            <Card
+                href="/create-event"
+              >
+                <Segment placeholder>
+                <Header icon>
+                    <Icon name='compose' />
+                    Create New Event
+                  </Header>
+                </Segment>
+              </Card>
           {this.state.activeItem === "Published Events" ? this.renderPublishedEvents() : this.state.activeItem === "Unpublished Events" ? this.renderUnpublishedEvents() : this.renderPastEvents()}
         </Card.Group>
         </Segment>

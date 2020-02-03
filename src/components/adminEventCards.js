@@ -126,7 +126,7 @@ componentDidMount() {
   render() {
     const event = this.props 
     return(
-      <Card color='green'>
+      <Card color={event.published && event.status !== "completed" ? 'green' : null }>
         <Card.Content>
           <Card.Header>{event.event_name}</Card.Header>
           <Card.Description><Presenter {...event}/></Card.Description>
@@ -174,9 +174,10 @@ componentDidMount() {
                 onChange={this.updateEventStatus}
                 placeholder={event.status}
               />
-            </span> : <Button color="green" fluid onClick={this.publishEvent}>Publish</Button>}
-        </Card.Content>
+            </span>  : event.status !== "completed" ? <Button color="green" basic fluid onClick={this.publishEvent}>Publish</Button> : <Button color="green" basic fluid onClick={this.onClickEdit}>Republish</Button> }
+          </Card.Content>
       </Card>
+      
     ) 
   }
 }
