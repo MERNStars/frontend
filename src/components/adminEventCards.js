@@ -138,7 +138,7 @@ componentDidMount() {
           <Card.Header>{event.event_name}</Card.Header>
           <Card.Description><Presenter {...event}/></Card.Description>
           <Card.Meta>
-            <Icon name="time"/><Moment format="D MMM">{event.event_date.begin}</Moment>
+            <Icon name="time"/><Moment format="D MMM h:mm a">{event.event_date.begin}</Moment>
           </Card.Meta>
         </Card.Content>
         <Card.Content>

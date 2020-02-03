@@ -5,6 +5,7 @@ import styles from '../styles/event.module.scss';
 class Presenters extends React.Component {
 
   adminDisplay = event => {
+    console.log( this.props )
     return(
       event.presenters.map( (presenter) => {
         return(
@@ -41,6 +42,7 @@ class Presenters extends React.Component {
   render() {
     if( this.props.location.pathname === "/admin")
     return (  
+      
       this.adminDisplay(this.props)
     ); else 
     return( 

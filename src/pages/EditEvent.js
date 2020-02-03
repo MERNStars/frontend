@@ -3,6 +3,7 @@ import CreateEventForm from "../components/CreateEventForm";
 import { connect } from "react-redux";
 import {
   editEvent,
+  createEvent,
   resetNewImage
 } from "../reducers/event_reducer";
 import config from "../components/CreateEventForm/awsconfig";
@@ -28,6 +29,9 @@ const mapDispatchToProps = dispatch => {
   return {
     editEvent: eventData => {
       dispatch(editEvent(eventData));
+    },
+    createEvent: eventData => {
+      dispatch(createEvent(eventData));
     },
     resetNewImage: () => {
       dispatch(resetNewImage());
@@ -96,14 +100,14 @@ class EditEvent extends React.Component {
         .then(data => {
           console.log("Uploaded file...response");
           event.images = [data.location];
-          this.props.editEvent(event);
+          event.status !== "completed" ? this.props.editEvent(event) : this.props.createEvent(event);
           this.props.resetNewImage();
         })
         .catch(err => console.error(err));
       this.props.editEvent(event);
       console.log("Submit end...");
     } else {
-      this.props.editEvent(event);
+      event.status !== "completed" ? this.props.editEvent(event) : this.props.createEvent(event);
     }
 
     this.setState({
