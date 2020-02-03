@@ -17,6 +17,12 @@ import PassReset from "../pages/PassReset";
 import AdminAccount from "../components/adminAccount";
 import EditAccountDetails from "../pages/EditAccount";
 
+const NoMatch = ({ location }) => (
+  <div>
+    <h2>404 ERROR..BEEP..BOOP...BEEP! No Routes Matching <code>{location.pathname}</code></h2>
+  </div>
+)
+
 const Router = () => {
   return (
     <div>
@@ -42,6 +48,7 @@ const Router = () => {
             component={NewPresenter}
           />
           <Route exact path="/edit-account" component={EditAccountDetails} />
+          <Route component={NoMatch} />
         </Switch>
       </BrowserRouter>
     </div>

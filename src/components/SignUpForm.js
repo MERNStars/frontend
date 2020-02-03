@@ -35,13 +35,17 @@ function validate(values) {
     errors.username = "Invalid email address";
   }
 
-  if (
-    !/^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/i.test(
-      values.password
-    )
-  ) {
-    errors.password =
-      "Password must be 8 characters or longer, including at a number, a symbol and a capital letter";
+  // if (
+  //   !/^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/i.test(
+  //     values.password
+  //   )
+  // ) {
+  //   errors.password =
+  //     "Password must be 8 characters or longer, including at a number, a symbol and a capital letter";
+  // }
+
+  if (!values.password) {
+    errors.password = "required"
   }
 
   if (values.password !== values.confirmPassword) {

@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
-import { NotificationManager } from "react-notifications";
+import storageClear from '../components/storageclear'
 
 export default class Home extends Component {
   async componentDidMount() {
-    if(localStorage.message) {
-      NotificationManager.success(null, localStorage.message);
-      localStorage.removeItem("message");
-    }
+    storageClear()
   }
+  
 
   render() {
     return (
