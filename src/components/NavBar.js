@@ -10,6 +10,9 @@ function mapStateToProps(state) {
 }
 
 class Navbar extends React.Component {
+  
+  
+
   render() {
     let result = AdminAccount();
     return (

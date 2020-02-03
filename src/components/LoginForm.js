@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import {userLogin} from '../reducers/user_reducer';
 import {connect} from 'react-redux';
+import { NotificationManager } from "react-notifications";
 import { Link } from "react-router-dom";
-// import axios from 'axios';
 
 function mapStateToProps(state){
     return {message: state.userReducer.message, userLoggedIn: state.userReducer.userLoggedIn}
@@ -26,6 +26,7 @@ class LoginForm extends Component{
     login = () => {
         // console.log(this.state.username, this.state.password);
         this.props.login({username: this.state.username, password: this.state.password});
+        
     };
     render(){
         return <div>

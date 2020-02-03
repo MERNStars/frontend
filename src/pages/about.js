@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Segment, Container, Card, Button } from "semantic-ui-react";
 import styles from "../styles/aboutus.module.scss";
+import createNotification from "../components/notifications";
 
 const items = [
   {
@@ -27,7 +28,11 @@ const items = [
   }
 ];
 
-export default class AboutUs extends Component {
+class AboutUs extends Component {
+  change = () => {
+    return createNotification("success")
+  }
+
   render() {
     return (
       <div className="About-us">
@@ -52,7 +57,7 @@ export default class AboutUs extends Component {
           <h2>Want To Know More?</h2>
           <Container>
             <Link exact to="/contact">
-              <Button fluid negative>
+              <Button fluid negative onClick={this.change()}>
                 Contact Us
               </Button>
             </Link>
@@ -62,3 +67,7 @@ export default class AboutUs extends Component {
     );
   }
 }
+
+// export default connect(null,mapDispatchToProps)(AboutUs)
+
+export default AboutUs;

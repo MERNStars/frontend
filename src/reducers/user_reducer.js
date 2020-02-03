@@ -1,4 +1,5 @@
 import axios from "axios";
+import { NotificationManager } from "react-notifications";
 require("dotenv").config();
 
 const initialState = {
@@ -82,8 +83,11 @@ export const editUser = user => {
       .then(response => {
         dispatch(userEdited(response.data));
         if (response) {
-          console.log(response)
-          // window.location.reload(true);
+          console.log(response);
+          if (response.statusText === "OK") {
+            localStorage.message = "Successfully Updated Account"
+            window.location.href = "/"
+          }
         }
       })
       .catch(error => console.log("error:" + error));
@@ -100,7 +104,10 @@ export const userLogin = user => {
       .then(response => {
         dispatch(userLoggedIn(user.username, response.data));
         storeToken(user.username, response.data.token);
-        window.location.reload(true);
+        if (response.statusText === "OK") {
+          localStorage.message = "You Have Successfully Logged In"
+          window.location.href = "/"
+        }
       })
       .catch(err => console.error("Error xxxx: " + err));
   };
@@ -109,7 +116,8 @@ export const userLogin = user => {
 export const logUserOut = () => {
   return dispatch => {
     dispatch(userLoggedOut("You've been logged out."));
-    window.location.href = "/"
+      localStorage.message = "Successfully Logged Out"
+      window.location.href = "/"
   };
 };
 
@@ -164,7 +172,6 @@ const userReducer = (state = initialState, action) => {
         username: "",
         message: "You have been logged out."
       };
-
       break;
     default:
       newState = { ...state };
@@ -173,4 +180,4 @@ const userReducer = (state = initialState, action) => {
   return newState;
 };
 
-export default userReducer;
+export default userReducer

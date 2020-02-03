@@ -109,8 +109,8 @@ class EditEvent extends React.Component {
     this.setState({
       display_message: "Your event has been updated."
     });
-
-    window.location.href = "/admin";
+    
+    
   };
 
   render() {

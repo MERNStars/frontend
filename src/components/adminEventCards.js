@@ -7,6 +7,8 @@ import { withRouter } from 'react-router-dom';
 import {deleteEvents, updateEvents} from '../reducers/event_reducer';
 import { connect } from 'react-redux';
 import Presenter from './PresenterDetails';
+import { NotificationManager } from "react-notifications";
+
 
 const mapDispatchToProps = {
   deleteEvents,
@@ -60,6 +62,8 @@ componentDidMount() {
       })
     this.handleClose()
     this.dispatchDelete()
+    NotificationManager.error(null, "Event Deleted");
+
   }
 
   dispatchDelete() {
@@ -87,6 +91,9 @@ componentDidMount() {
       console.log( `Error: ${err}`)
     })
     this.dispatchEvent(response.data)
+    NotificationManager.info(null, "Event Published");
+    
+
   }
 
   // Update Status Functions
