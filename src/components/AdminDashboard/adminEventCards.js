@@ -1,12 +1,12 @@
 import React from 'react';
 import { Card, Icon, Button, Modal, Dropdown, Divider} from 'semantic-ui-react'
 import Moment from 'react-moment';
-import AttendeeList from './eventAttendeesList';
+import AttendeeList from '../eventAttendeesList';
 import Axios from 'axios';
 import { withRouter } from 'react-router-dom';
-import {deleteEvents, updateEvents} from '../reducers/event_reducer';
+import {deleteEvents, updateEvents} from '../../reducers/event_reducer';
 import { connect } from 'react-redux';
-import Presenter from './PresenterDetails';
+import Presenter from '../PresenterDetails';
 import { NotificationManager } from "react-notifications";
 
 

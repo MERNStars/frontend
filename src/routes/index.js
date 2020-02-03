@@ -14,7 +14,7 @@ import NewPresenter from "../pages/NewPresenter";
 import EditEvent from "../pages/EditEvent";
 import PassRequest from "../pages/PassRequest";
 import PassReset from "../pages/PassReset";
-import AdminAccount from "../components/adminAccount";
+import AdminAccount from "../components/AdminDashboard/adminAccount";
 import EditAccountDetails from "../pages/EditAccount";
 
 const NoMatch = ({ location }) => (

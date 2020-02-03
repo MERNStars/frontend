@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { Menu, Dropdown, Button } from "semantic-ui-react";
-import AdminAccount from "../components/adminAccount";
+import AdminAccount from "../components/AdminDashboard/adminAccount";
 import Logout from '../components/Logout';
 
 function mapStateToProps(state) {
