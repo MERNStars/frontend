@@ -126,7 +126,7 @@ componentDidMount() {
   render() {
     const event = this.props 
     return(
-      <Card>
+      <Card color='green'>
         <Card.Content>
           <Card.Header>{event.event_name}</Card.Header>
           <Card.Description><Presenter {...event}/></Card.Description>
@@ -135,7 +135,13 @@ componentDidMount() {
           </Card.Meta>
         </Card.Content>
         <Card.Content>
-          <Modal trigger={<Button basic><Icon name="user"/>Attending: {event.attendee_count}</Button>}>
+          <Modal trigger={<Button 
+            fluid 
+            content= {event.status !== "completed" ? "Attending" : "Attended"}
+            icon="user"
+            label={{ as: 'a', basic: true, content: event.attendee_count }}
+            labelPosition='right'
+            ></Button>}>
               <Modal.Header>Attendees</Modal.Header>
               <Modal.Content>
                 <Modal.Description>
@@ -145,12 +151,12 @@ componentDidMount() {
             </Modal>
         </Card.Content>
         <Card.Content extra>
-          <Button size="small" onClick={ this.onClickEdit }>Edit</Button>
+          <Button size="small" basic onClick={ this.onClickEdit }icon labelPosition='left'><Icon name='setting'/>Edit</Button>
           <Modal open={this.state.modalOpen}
                 onClose={this.handleClose}
                 basic
                 size='small'
-                trigger={<Button size="small"onClick={this.handleOpen}>Delete</Button>}>
+                trigger={<Button basic size="small"onClick={this.handleOpen} icon labelPosition='left'><Icon name='trash alternate outline'/>Delete</Button>}>
             <Modal.Header>Are you sure you want to delete?</Modal.Header>
               <Modal.Content>
                 <Modal.Description>
@@ -158,6 +164,8 @@ componentDidMount() {
                 </Modal.Description>
               </Modal.Content>
           </Modal>
+        </Card.Content>
+        <Card.Content extra>
           {event.published && event.status !== "completed" ? <span>
               Status{' '}
               <Dropdown
@@ -166,7 +174,7 @@ componentDidMount() {
                 onChange={this.updateEventStatus}
                 placeholder={event.status}
               />
-            </span> : <Button size="small" onClick={this.publishEvent}>Publish</Button>}
+            </span> : <Button color="green" fluid onClick={this.publishEvent}>Publish</Button>}
         </Card.Content>
       </Card>
     ) 

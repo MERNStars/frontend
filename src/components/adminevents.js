@@ -12,21 +12,24 @@ export default class AdminEvents extends Component {
     const { activeItem } = this.state
     return(
       <>
-      <Menu attached='top' tabular>
+      <Menu secondary>
       <Menu.Item
         name='Published Events'
         active={activeItem === 'Published Events'}
         onClick={this.handleItemClick}
+        color="green"
       />
       <Menu.Item
         name='Unpublished Events'
         active={activeItem === 'Unpublished Events'}
         onClick={this.handleItemClick}
+        color="green"
       />
       <Menu.Item
         name='Past Events'
         active={activeItem === 'Past Events'}
         onClick={this.handleItemClick}
+        color="green"
         />
     </Menu>
         <Segment attached='bottom'>
