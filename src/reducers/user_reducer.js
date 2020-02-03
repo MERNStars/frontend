@@ -85,8 +85,8 @@ export const editUser = user => {
         if (response) {
           console.log(response);
           if (response.statusText === "OK") {
-            localStorage.message = "Successfully Updated Account"
-            window.location.href = "/"
+            localStorage.message = "Successfully Updated Account";
+            window.location.href = "/";
           }
         }
       })
@@ -105,25 +105,30 @@ export const userLogin = user => {
         dispatch(userLoggedIn(user.username, response.data));
         storeToken(user.username, response.data.token);
         if (response.statusText === "OK") {
-          localStorage.message = "You Have Successfully Logged In"
-          window.location.href = "/"
+          localStorage.message = "You Have Successfully Logged In";
+          window.location.href = "/";
         }
       })
-      .catch(err => console.error("Error xxxx: " + err));
+      .catch(err => {
+        console.error("Error xxxx: " + err);
+        NotificationManager.warning(
+          null,
+          "Incorrect Email or Password, Please try again"
+        );
+      });
   };
 };
 
 export const logUserOut = () => {
   return dispatch => {
     dispatch(userLoggedOut("You've been logged out."));
-      localStorage.message = "Successfully Logged Out"
-      window.location.href = "/"
   };
 };
 
 export const logout = () => {};
 
 export const createUser = user => {
+  console.log(user);
   return dispatch => {
     axios
       .post(`${process.env.REACT_APP_BACKEND_DB_URL}/users/create`, {
@@ -139,6 +144,12 @@ export const createUser = user => {
       })
       .then(response => {
         dispatch(userCreated(response.data));
+        console.log(response.data.success);
+        if (response.data.success) {
+          localStorage.message =
+            "Account Successfully Created, Please Log In Again";
+          window.location.href = "/login";
+        }
       });
   };
 };
@@ -180,4 +191,4 @@ const userReducer = (state = initialState, action) => {
   return newState;
 };
 
-export default userReducer
+export default userReducer;

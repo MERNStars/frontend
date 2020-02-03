@@ -47,7 +47,7 @@ class EditEvent extends React.Component {
   };
 
   componentDidMount() {
-    const { index } = this.props.match.params;
+    try {const { index } = this.props.match.params;
     let event = JSON.parse(JSON.stringify({ ...this.props.events[index] }));
     let event_dates = event.event_date;
     const event_date = event_dates.begin.split("T")[0];
@@ -72,10 +72,13 @@ class EditEvent extends React.Component {
       });
     });
     event.selectedPresenters = presentereData;
-    this.setState({ index: index, event: event });
+    this.setState({ index: index, event: event });}
+    catch(error) {window.location.href = '/admin'}
+    
   }
 
   handleSubmit = data => {
+    try {
     const event = JSON.parse(JSON.stringify(data));
     console.log(event);
     const presenters = event.selectedPresenters.map(presenter => presenter.id);
@@ -113,6 +116,7 @@ class EditEvent extends React.Component {
     this.setState({
       display_message: "Your event has been updated."
     });
+  } catch(error) {console.log(error)}
     
     
   };
