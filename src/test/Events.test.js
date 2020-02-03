@@ -17,9 +17,17 @@ describe("Create Event Component", () => {
       wrapper(<CreateEvent />)
     );
 
-    console.log(render(
+    queryByText("Next").click()
+    // console.log(render(
+    //   wrapper(<CreateEvent />)
+    // ).debug())
+
+    // expect(queryByText("Next").click())
+
+        console.log(render(
       wrapper(<CreateEvent />)
     ).debug())
+
 
     // expect(queryByText(/Event Name/)).toBeInTheDocument();
     // fireEvent.click(queryByText(`type="submit"`));
