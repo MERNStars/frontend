@@ -75,7 +75,7 @@ class SearchBar extends React.Component {
       <div className={styles.searchContainer}>
       <Input 
           icon={{ name: 'search', circular: true, link: true }}
-          size='small'
+          size='large'
           placeholder='Search...'
           onChange={this.updateKeyword}>
           </Input>
