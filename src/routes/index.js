@@ -5,7 +5,7 @@ import Events from "../pages/Events";
 import Event from "../pages/Event";
 import SignUp from "../pages/SignUp";
 import AdminDashboard from "../pages/AdminDashboard";
-import Navbar from "../components/NavBar";
+import Navbar from "../components/NavBar/NavBar";
 import AboutUs from "../pages/about";
 import Contact from "../pages/contact";
 import Login from "../pages/Login";

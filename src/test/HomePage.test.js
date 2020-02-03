@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import App from "../App";
-import CreateEventForm from "../components/CreateEventForm";
+import CreateEventForm from "../components/Events/EventForm/CreateEventForm";
 import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 

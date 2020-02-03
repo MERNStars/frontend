@@ -1,5 +1,5 @@
 import { CreateEvent } from "../pages/CreateEvent";
-import CreateEventForm from "../components/CreateEventForm";
+import CreateEventForm from "../components/Events/EventForm/CreateEventForm";
 import WizardFormFirstPage from '../components/CreateEventForm/createformpageone'
 import { render, screen, fireEvent } from "@testing-library/react";
 import { Provider } from "react-redux";

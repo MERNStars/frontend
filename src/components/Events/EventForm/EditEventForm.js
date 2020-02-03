@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import RenderTextField from "./RenderTextField";
-import RenderStatusField from "./FormFields/StatusFormField";
-import RenderCategoriesField from './FormFields/CategoriesFormField'
+import RenderStatusField from "../FormFields/StatusFormField";
+import RenderCategoriesField from '../FormFields/CategoriesFormField'
 import { connect } from "react-redux";
 import { Multiselect } from "react-widgets";
-import ImageUploadPreviewer from "./ImageUploadPreviewer";
-import { setNewImage } from "../reducers/event_reducer";
+import ImageUploadPreviewer from "../FormFields/ImageUploadPreviewer";
+import { setNewImage } from "../../reducers/event_reducer";
 
 function mapStateToProps(state) {
   return {

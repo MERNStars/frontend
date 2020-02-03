@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {userLogin} from '../reducers/user_reducer';
+import {userLogin} from '../../reducers/user_reducer';
 import {connect} from 'react-redux';
 import { NotificationManager } from "react-notifications";
 import { Link } from "react-router-dom";

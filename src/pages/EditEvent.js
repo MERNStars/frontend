@@ -1,5 +1,5 @@
 import React from "react";
-import CreateEventForm from "../components/CreateEventForm";
+import CreateEventForm from "../components/Events/EventForm/CreateEventForm";
 import { connect } from "react-redux";
 import {
   editEvent,

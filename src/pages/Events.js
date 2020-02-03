@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
-import storageClear from "../components/storageclear";
+import storageClear from "../components/Common/storageclear";
 
-import EventCard from "../components/eventCard";
-import SearchBar from "../components/searchBar";
+import EventCard from "../components/Events/eventCard";
+import SearchBar from "../components/Events/searchBar";
 
 import { Card, Placeholder } from "semantic-ui-react";
 import styles from "../styles/events.module.scss";

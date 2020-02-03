@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux';
 import { Link } from "react-router-dom";
-import LoginForm from '../components/LoginForm';
-import Logout from '../components/Logout';
-import storageClear from '../components/storageclear'
+import LoginForm from '../components/Users/LoginForm';
+import Logout from '../components/Users/Logout';
+import storageClear from "../components/Common/storageclear";
 
 function mapStateToProps(state){
     return {message: state.userReducer.message, userLoggedIn: state.userReducer.userLoggedIn}
