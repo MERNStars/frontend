@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Icon, Button, Modal, Dropdown} from 'semantic-ui-react'
+import { Card, Icon, Button, Modal, Dropdown, Divider} from 'semantic-ui-react'
 import Moment from 'react-moment';
 import AttendeeList from './eventAttendeesList';
 import Axios from 'axios';
@@ -127,16 +127,16 @@ componentDidMount() {
  
   render() {
     const event = this.props 
-    console.log( `CHECK PRESENTERS:`)
-    console.log( event )
     return(
-      <Card fluid>
+      <Card>
         <Card.Content>
           <Card.Header>{event.event_name}</Card.Header>
-          <Card.Meta><Presenter {...event}/></Card.Meta>
+          <Card.Description><Presenter {...event}/></Card.Description>
           <Card.Meta>
-            <span className='date'><Moment format="D MMM">{event.event_date.begin}</Moment></span>
+            <Icon name="time"/><Moment format="D MMM">{event.event_date.begin}</Moment>
           </Card.Meta>
+        </Card.Content>
+        <Card.Content>
           <Modal trigger={<Button basic><Icon name="user"/>Attending: {event.attendee_count}</Button>}>
               <Modal.Header>Attendees</Modal.Header>
               <Modal.Content>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { Table } from "semantic-ui-react";
 require("dotenv").config();
 
 class AdminMembers extends Component {
@@ -30,20 +31,28 @@ class AdminMembers extends Component {
     return (
       <div>
         <h1>Members</h1>
-        {this.state.members
+        <Table>
+          <Table.Header>
+            <Table.HeaderCell>Member</Table.HeaderCell>
+            <Table.HeaderCell>Age</Table.HeaderCell>
+            <Table.HeaderCell>Gender</Table.HeaderCell>
+            <Table.HeaderCell>Interests</Table.HeaderCell>
+            <Table.HeaderCell>Email</Table.HeaderCell>
+          </Table.Header>
+          <Table.Body>
+          {this.state.members
           ? this.state.members.map((member, i) => {
               return (
-                <div index={i}>
-                  <ul>
-                    <li>{member.username}</li>
-                    <li>{member.first_name}</li>
-                    <li>{member.last_name}</li>
-                    <li>{member.age}</li>
-                  </ul>
-                </div>
-              );
-            })
-          : <div> No Data </div>}
+                <Table.Row>
+                  <Table.Cell>{member.first_name} {member.last_name}</Table.Cell>
+                  <Table.Cell>{member.age}</Table.Cell>
+                  <Table.Cell>{member.sex}</Table.Cell>
+                  <Table.Cell>{member.interests.map( (interest) => {
+                    return (<li>{interest}</li>)})}</Table.Cell>
+                  <Table.Cell>{member.username}</Table.Cell>
+                </Table.Row>)}):null}
+          </Table.Body>
+        </Table>
       </div>
     );
   }
