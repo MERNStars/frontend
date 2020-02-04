@@ -1,7 +1,7 @@
 import {AttendForm} from "./attendform";
 import React from "react";
 import { reduxForm } from 'redux-form';
-import { render, screen, fireEvent,cleanup } from "@testing-library/react";
+import { render, fireEvent,cleanup } from "@testing-library/react";
 import wrapper from "../../test/Wrapper";
 const Decorated = reduxForm({form: 'testForm'})(AttendForm)
 

@@ -41,13 +41,14 @@ export function RenderTextField({
 }) {
   return (
     <div className="Small-Text">
-      <label>{label}</label> <br />
+      <label htmlFor={label}>{label}</label> <br />
       <input
         {...input}
         className="text-field"
         onChange={input.onChange}
         placeholder={label}
         type={type}
+        id={label}
       />
       {touched &&
         ((error && <span>{error}</span>) ||
