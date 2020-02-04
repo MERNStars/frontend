@@ -1,9 +1,8 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
-import UploadImageForm from "./UploadImageForm";
-import validate from '../../FormFields/validate'
+import validate from "../../FormFields/validate";
 import { connect } from "react-redux";
-import ImageUploadPreviewer from '../../FormFields/ImageUploadPreviewer';
+import ImageUploadPreviewer from "../../FormFields/ImageUploadPreviewer";
 import { setNewImage } from "../../../reducers/event_reducer";
 
 function mapStateToProps(state) {
@@ -12,7 +11,6 @@ function mapStateToProps(state) {
   };
 }
 
-
 const mapDispatchToProps = dispatch => {
   return {
     newImage: fileData => {
@@ -20,7 +18,6 @@ const mapDispatchToProps = dispatch => {
     }
   };
 };
-
 
 const RenderTextField = ({ input, label, type, meta: { touched, error } }) => (
   <div>
@@ -32,33 +29,44 @@ const RenderTextField = ({ input, label, type, meta: { touched, error } }) => (
   </div>
 );
 
-const RenderImageField = ({input, meta: {touched, error, warning}}) =>{
-    
-  return <div className="image-file">
-     <ImageUploadPreviewer {...input} onChange={input.onChange} type="file" value={input.value? input.value[0] : "" } />
-    {touched &&
-    ((error && <span>{error}</span>) ||
-      (warning && <span>{warning}</span>))}
-  </div>
-}
+const RenderImageField = ({ input, meta: { touched, error, warning } }) => {
+  return (
+    <div className="image-file">
+      <ImageUploadPreviewer
+        {...input}
+        onChange={input.onChange}
+        type="file"
+        value={input.value ? input.value[0] : ""}
+      />
+      {touched &&
+        ((error && <span>{error}</span>) ||
+          (warning && <span>{warning}</span>))}
+    </div>
+  );
+};
 
-class WizardFormThirdPage extends React.Component{
+class WizardFormThirdPage extends React.Component {
   state = {
     image_file: null
-  }
+  };
 
-  onChange = (e) => {
-    if(e.target.files[0]){
-        this.setState({image_file: URL.createObjectURL(e.target.files[0])});
-        this.props.newImage(e.target.files[0]);
+  onChange = e => {
+    if (e.target.files[0]) {
+      this.setState({ image_file: URL.createObjectURL(e.target.files[0]) });
+      this.props.newImage(e.target.files[0]);
     }
-  }
+  };
 
-  render(){
+  render() {
     const { handleSubmit, pristine, previousPage, submitting } = this.props;
     return (
       <form onSubmit={handleSubmit}>
-        <Field name="images" component={RenderImageField} onChange={this.onChange} type="file" />
+        <Field
+          name="images"
+          component={RenderImageField}
+          onChange={this.onChange}
+          type="file"
+        />
         <Field
           name="published"
           component={RenderTextField}
@@ -76,7 +84,7 @@ class WizardFormThirdPage extends React.Component{
       </form>
     );
   }
-};
+}
 export default reduxForm({
   form: "wizard",
   destroyOnUnmount: false,

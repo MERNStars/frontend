@@ -1,5 +1,6 @@
 const validate = values => {
   const errors = {};
+
   if (!values.event_name) {
     errors.event_name = "Required";
   }
@@ -9,7 +10,9 @@ const validate = values => {
   if (!values.event_date) {
     errors.event_date = "Required";
   }
-
+  if (!values.name) {
+    errors.name = "Required";
+  }
   if (!values.event_date) {
     errors.event_date = "Required";
   }

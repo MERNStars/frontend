@@ -3,24 +3,7 @@ import { Field, reduxForm, FieldArray } from "redux-form";
 import { withRouter } from "react-router-dom";
 
 class AttendForm extends Component {
-  submit = data => {
-    console.log(data);
-  };
-
-  renderField({ input, label, type, meta: { touched, error, warning } }) {
-    return (
-      <div>
-        <label>{label}</label>
-        <div>
-          <input {...input} placeholder={label} type={type} />
-          {touched &&
-            ((error && <span>{error}</span>) ||
-              (warning && <span>{warning}</span>))}
-        </div>
-      </div>
-    );
-  }
-
+  // Form Field To Render Input For Adding Friends
   renderFriends = ({ fields, meta: { error } }) => (
     <ul>
       {fields.map((friends, index) => (
@@ -49,6 +32,7 @@ class AttendForm extends Component {
     </ul>
   );
 
+  // Form Field To Render Input For Adding Dependents
   renderDependents = ({ fields, meta: { error } }) => (
     <ul>
       {fields.map((dependents, index) => (

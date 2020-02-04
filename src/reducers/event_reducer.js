@@ -1,5 +1,4 @@
 import Axios from "axios";
-import {NotificationManager} from 'react-notifications';
 
 require("dotenv").config();
 const initialState = {

@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import { Link } from "react-router-dom";
 import LoginForm from '../components/Users/LoginForm';
 import Logout from '../components/Users/Logout';
-import storageClear from "../components/Common/storageclear";
+import ClearMessageLocalStorage from "../components/Common/ClearMessageLocalStorage";
 
 function mapStateToProps(state){
     return {message: state.userReducer.message, userLoggedIn: state.userReducer.userLoggedIn}
@@ -11,7 +11,7 @@ function mapStateToProps(state){
 
 class Login extends Component {
   componentDidMount() {
-    storageClear()
+    ClearMessageLocalStorage()
   }
     renderForm(){
         const {userLoggedIn} = this.props;
