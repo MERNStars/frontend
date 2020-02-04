@@ -5,7 +5,7 @@ import {
   editEvent,
   resetNewImage
 } from "../reducers/event_reducer";
-import config from "../components/CreateEventForm/awsconfig";
+import config from "../components/Events/EventForm/awsconfig";
 import { withRouter } from "react-router-dom";
 import S3 from "react-aws-s3";
 const { uuid } = require("uuidv4");
