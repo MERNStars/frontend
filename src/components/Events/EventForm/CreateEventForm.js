@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import WizardFormFirstPage from "./CreateEventForm/createformpageone";
-import WizardFormThirdPage from "./CreateEventForm/createformpagethree";
-import WizardFromSecondPage from "./CreateEventForm/createformpagetwo";
+import WizardFormFirstPage from "./createformpageone";
+import WizardFormThirdPage from "./createformpagethree";
+import WizardFromSecondPage from "./createformpagetwo";
 import { reduxForm } from "redux-form";
 
 class CreateEventForm extends Component {

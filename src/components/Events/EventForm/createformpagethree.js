@@ -1,10 +1,10 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
-import UploadImageForm from "../UploadImageForm";
-import validate from '../FormFields/validate'
+import UploadImageForm from "./UploadImageForm";
+import validate from '../../FormFields/validate'
 import { connect } from "react-redux";
-import ImageUploadPreviewer from '../ImageUploadPreviewer';
-import { setNewImage } from "../../reducers/event_reducer";
+import ImageUploadPreviewer from '../../FormFields/ImageUploadPreviewer';
+import { setNewImage } from "../../../reducers/event_reducer";
 
 function mapStateToProps(state) {
   return {

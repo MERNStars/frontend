@@ -1,8 +1,8 @@
 import React from "react";
-import CreateEventForm from "../components/CreateEventForm";
+import CreateEventForm from "../components/Events/EventForm/CreateEventForm";
 import { connect } from "react-redux";
 import { createEvent, resetNewImage } from "../reducers/event_reducer";
-import config from "../components/CreateEventForm/awsconfig";
+import config from "../components/Events/EventForm/awsconfig";
 import { withRouter } from "react-router-dom";
 import S3 from "react-aws-s3";
 const { uuid } = require("uuidv4");

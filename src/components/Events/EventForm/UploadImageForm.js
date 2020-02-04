@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import axios from 'axios';
-import { BASE_URL } from "../reducers/config";
+import { BASE_URL } from "../../../reducers/config";
 import S3 from 'react-aws-s3';
 const { uuid } = require('uuidv4');
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from '../styles/event.module.scss';
+import styles from '../../styles/event.module.scss';
 
 class Presenters extends React.Component {
 
@@ -32,7 +32,7 @@ class Presenters extends React.Component {
                   <p>{presenter.short_description}</p>
                 </span>
                 </div>
-                <img id={styles.profileImg} src={require("../assets/profile-photo.jpg")} alt="profile of presenter"/>
+                <img id={styles.profileImg} src={require("../../assets/profile-photo.jpg")} alt="profile of presenter"/>
               </div>
             );
           })

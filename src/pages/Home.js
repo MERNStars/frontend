@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import storageClear from '../components/storageclear'
+import storageClear from "../components/Common/storageclear";
 
 export default class Home extends Component {
   async componentDidMount() {
