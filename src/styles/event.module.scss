@@ -2,9 +2,23 @@
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  width: 100%;
+  // width: 100%;
+  margin: 2rem;
   #shadedBox{
     background-color: lightgray;
+  }
+  header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    padding: 10px 20px;
+    height: 300px;
+    background-color: #D0CFEC;
+    border-radius: 15px;
+    h1 {
+      font-size: 60px;
+      color: #40434E;
+    }
   }
   .eventBox {
     display: flex;
@@ -138,17 +152,31 @@
 
 .Footer {
   position: fixed;
-  margin-bottom: 10px;
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: red;
-  color: white;
-  text-align: right;
-  padding: 5px 100px;
-  opacity: 0.8;
-  #button {
-    background-color: white;
+  border-top: #53C948 2px solid;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 100px;
+  .FooterDescription {
+    margin: 20px;
+  }
+  h3 {
+    margin: 0px;
+    font-size: 30px;
+  }
+  .FooterDate {
+    font-size: 18px;
+  }
+  .FooterButton {
+    display: flex;
+    align-items: center;
+    p {
+      margin-right: 10px;
+    }
   }
 }
 

@@ -105,11 +105,15 @@ class Event extends React.Component {
       event_date,
       description,
       event_category,
-      images
+      images, 
+      event_capacity
     } = this.state.event;
 
     return (
       <>
+        <header>
+          <h1>{event_name}</h1>
+        </header>
         <div className={styles.eventBox}>
           <div className={styles.innerContainer}>
             <div className={styles.description}>
@@ -187,7 +191,16 @@ class Event extends React.Component {
           </div>
         </div>
         <div className={styles.containerFooter}>
-          <div className={styles.Footer}>{this.renderButton()}</div>
+          <div className={styles.Footer}>
+            <div clasName={styles.FooterDescription}>
+              <Moment format="ddd, D MMM, h:mm a" className={styles.FooterDate}>{event_date.begin}</Moment>
+              <h3>{event_name}</h3>
+            </div>
+            <div className={styles.FooterButton}>
+            <p>Only {event_capacity} spots left! </p>
+            {this.renderButton()}
+            </div>
+            </div>
         </div>
       </>
     );
@@ -196,7 +209,7 @@ class Event extends React.Component {
   attendButton() {
     if (this.state.event.status === "scheduled") {
       return (
-        <Button size="massive" basic id={styles.button}>
+        <Button size="massive" color='green' id={styles.button}>
           {this.state.attend}
         </Button>
       );
@@ -241,7 +254,7 @@ class Event extends React.Component {
           pathname: "/login"
         }}
       >
-        <Button size="massive" basic id={styles.button}>
+        <Button size="massive" color='green' id={styles.button}>
           Attend
         </Button>
       </Link>
@@ -256,7 +269,7 @@ class Event extends React.Component {
   render() {
     return (
       <div>
-        <Link to={{ pathname: `/events` }}>Back to events</Link>
+          <Link to={{ pathname: `/events` }}>Back to events</Link>
         <div className={styles.eventContainer}>
           {this.state.event ? this.renderEvent() : null}
         </div>
