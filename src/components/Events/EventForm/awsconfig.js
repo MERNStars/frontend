@@ -1,3 +1,4 @@
+// Configuration for AWS access
 const config = {
   bucketName: "weexplore2020",
   dirName: "images",

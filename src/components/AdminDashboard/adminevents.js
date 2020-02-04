@@ -5,7 +5,10 @@ import { Menu, Segment, Card, Icon, Header } from "semantic-ui-react";
 require("dotenv").config();
 
 export default class AdminEvents extends Component {
-  state = { activeItem: "Published Events" };
+  state = {
+    activeItem: "Published Events"
+  };
+
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
   eventTab() {

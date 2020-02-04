@@ -8,6 +8,7 @@ class AdminMembers extends Component {
     members: []
   };
 
+  // Retrieves users from DB and stores into local state
   componentDidMount() {
     Axios.get(`${process.env.REACT_APP_BACKEND_DB_URL}/users`, {
       headers: {
