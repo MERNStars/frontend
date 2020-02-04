@@ -4,11 +4,14 @@ import Moment from "react-moment";
 import { connect } from "react-redux";
 import styles from "../styles/event.module.scss";
 import AttendForm from "../components/Attendees/attendform";
+import EventCard from "../components/Events/eventCard";
 
 import { Link } from "react-router-dom";
 
 import { Button, Image, Modal, Icon, Card } from "semantic-ui-react";
 import Presenters from "../components/Presenters/PresenterDetails";
+
+import {FacebookShareButton} from 'react-share';
 
 
 
@@ -22,7 +25,8 @@ class Event extends React.Component {
   state = {
     event: null,
     attending: false,
-    attend: "Attend"
+    attend: "Attend",
+    previewEvents: null
   };
 
   componentDidMount = async () => {
@@ -33,6 +37,12 @@ class Event extends React.Component {
     const data = response.data;
     this.setState({ event: data });
     this.checkAttendStatus();
+    const eventsResponse = await axios.get(`${process.env.REACT_APP_BACKEND_DB_URL}/events/category/${response.data.event_category}`)
+    console.log( eventsResponse )
+    let newData = eventsResponse.data.filter(d => {
+      return d.published === true && d.status !== "completed" && d._id !== response.data._id;
+    });
+    this.setState( {previewEvents: newData.slice(0,4)})
   };
 
   // Setting the attend status for button display
@@ -141,40 +151,51 @@ class Event extends React.Component {
             </div>
           </div>
         </div>
-
-        <div className={styles.eventBox} id={styles.shadedBox}>
+        <div className={styles.eventBox}>
           <div className={styles.extraContainer}>
-            <Card>
-              <Image src={require('../assets/staticmap.png')}/>
-              <Card.Content>
-                <Card.Meta>
-                  <Icon name='point'/>
-                  weExplore Centre, Clayton, VIC 
-                </Card.Meta>
-                <br />
-                <Card.Description>
-                  <Icon name='clock outline' size='large'/>
-                  
-                  Duration <Moment to={event_date.begin} ago>
-                  {event_date.end}
-                </Moment><br />
-                  Start <Moment format=" h:mm a">{event_date.begin}</Moment><br />
-                  End <Moment format= "h:mm a">{event_date.end}</Moment><br />
-                  </Card.Description>
-                  </Card.Content>
-                  <Card.Content extra>
-                    {this.renderIcons()}
-                 </Card.Content>
-            </Card>
+            <div className={styles.extraContent}>
+        <Card>
+          <Image src={require('../assets/staticmap.png')} wrapped ui={false} />
+          <Card.Content>
+            <Card.Header><Icon name='point'/>
+                      weExplore Centre, Clayton, VIC</Card.Header>
+            <Card.Meta>
+            
+            </Card.Meta>
+            <Card.Description>
+              <Icon name='clock outline' size='large'/>
+                Duration <Moment to={event_date.begin} ago>
+                {event_date.end}
+              </Moment><br />
+                Start <Moment format=" h:mm a">{event_date.begin}</Moment><br />
+                End <Moment format= "h:mm a">{event_date.end}</Moment><br />
+            </Card.Description>
+          </Card.Content>
+          <Card.Content extra>
+            {this.renderIcons()}
+          </Card.Content>
+          </Card>
+          </div>
+          <div className={styles.extraContent}>
+            
+            <h1>Event Hosts</h1>
+            <Presenters {...this.state.event} {...this.props} />
+       
+          </div>
           </div>
         </div>
 
-        <div className={styles.insideContainer}>
-              <div className={styles.Heading}>
-                <h2>Presenters</h2>
-              </div>
-              <Presenters {...this.state.event} {...this.props} />
-            </div>
+        <div className={styles.extraEventsBox}>
+          <div className={styles.insideContainer}>
+          <h1>Other events we think you might like...</h1>
+          <Card.Group itemsPerRow={4}>
+            { this.state.previewEvents ? this.state.previewEvents.map ( (event)=>{
+             return <EventCard {...event}/>
+            } ) : null}
+            </Card.Group>
+           </div>
+        </div>
+       
 
         <div className={styles.containerFooter}>
           <div className={styles.Footer}>
