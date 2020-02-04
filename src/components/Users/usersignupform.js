@@ -1,22 +1,24 @@
 import React from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
-import {createUser} from '../../reducers/user_reducer';
-import {connect} from 'react-redux';
+import { createUser } from "../../reducers/user_reducer";
+import { connect } from "react-redux";
 
 require("dotenv").config();
 
-function mapStateToProps(state){
-  return {message: state.userReducer.message, userLoggedIn: state.userReducer.userLoggedIn}
+function mapStateToProps(state) {
+  return {
+    message: state.userReducer.message
+  };
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-      create: userData => {
+    create: userData => {
       dispatch(createUser(userData));
-      }
-  }
-}
+    }
+  };
+};
 
 const UserSignUpForm = props => {
   const { register, handleSubmit } = useForm();
@@ -24,7 +26,7 @@ const UserSignUpForm = props => {
   const onSubmit = data => {
     if (data.password === data.confirmPassword) {
       console.log("Hello There");
-      this.props.create(data);//call the reducer's createUser
+      this.props.create(data); //call the reducer's createUser
     } else {
       console.log(
         "Passwords don't match. Please ensure you have typed it in correctly"
@@ -109,7 +111,8 @@ const UserSignUpForm = props => {
 
         <div>
           <label>Interests</label>
-          <input id="" name="interests" type="checkbox" ref={register} /><label for="cooking">Cooking</label>
+          <input id="" name="interests" type="checkbox" ref={register} />
+          <label for="cooking">Cooking</label>
         </div>
         <input type="submit" />
       </form>

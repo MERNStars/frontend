@@ -1,4 +1,5 @@
 import Axios from "axios";
+import { NotificationManager } from "react-notifications";
 
 require("dotenv").config();
 const initialState = {
@@ -23,27 +24,27 @@ const initialState = {
     "completed",
     "sold out"
   ],
-  
-    message: '',
 
-    events: [],
+  message: "",
 
-    newImage: null
-}
+  events: [],
 
-export const populateEvents = (events) => {
-    return {
-        type: "POPULATE_EVENTS",
-        data: events
-    }
-}
+  newImage: null
+};
 
-export const deleteEvents = (events) => {
-    return {
-        type: "EVENT_DELETED",
-        data: events
-    }
-}
+export const populateEvents = events => {
+  return {
+    type: "POPULATE_EVENTS",
+    data: events
+  };
+};
+
+export const deleteEvents = events => {
+  return {
+    type: "EVENT_DELETED",
+    data: events
+  };
+};
 
 const eventCreated = message => ({
   type: "EVENT_CREATED",
@@ -62,26 +63,26 @@ const newImage = data => ({
 
 const noImage = () => ({
   type: "RESET_IMAGE"
-})
+});
 
-export const updateEvents = (events) => {
+export const updateEvents = events => {
   return {
     type: "UPDATE_EVENTS",
     data: events
-  }
-}
+  };
+};
 
 export const setNewImage = fileData => {
   return dispatch => {
     dispatch(newImage(fileData));
-  }
-}
+  };
+};
 
 export const resetNewImage = () => {
   return dispatch => {
     dispatch(noImage());
-  }
-}
+  };
+};
 
 export const createEvent = event => {
   return dispatch => {
@@ -109,15 +110,20 @@ export const createEvent = event => {
           authorization: `${localStorage.weexplore_token}`
         }
       }
-    ).then(response => {
-      console.log(response.statusText);
-      if (response.statusText === "Created") {
-        dispatch(eventCreated(response.data));
-        localStorage.message = "Event Successfully Created"
-        window.location.href = "/admin"
-      }
-      
-    });
+    )
+      .then(response => {
+        console.log(response.status);
+        if (response.status === 201) {
+          dispatch(eventCreated(response.data));
+          localStorage.message = "Event Successfully Created";
+          window.location.href = "/admin";
+        } else {
+          NotificationManager.error(null, "Failed To Create Event");
+        }
+      })
+      .catch(err => {
+        console.error("error: " + err);
+      });
   };
 };
 
@@ -130,70 +136,71 @@ export const editEvent = event => {
       method: "PATCH",
       data: event,
       headers: {
-          authorization: `${localStorage.weexplore_token}`
-        }
-    }
-    ).then(response => {
+        authorization: `${localStorage.weexplore_token}`
+      }
+    })
+      .then(response => {
         console.log("Data from response...");
         console.log(response);
         dispatch(eventUpdated(response.data));
-        
+
         if (response.statusText === "OK") {
-          localStorage.message = "Event Edited"
-          window.location.href = "/admin"
+          localStorage.message = "Event Edited";
+          window.location.href = "/admin";
         }
-    })
-    .catch(err => {
-      console.error("Ooops...there is a problem.");
-      
-      console.error(err);
-    });
+      })
+      .catch(err => {
+        console.error("error: " + err);
+      });
   };
-}
+};
 
+const eventReducer = (state = initialState, action) => {
+  let newState = {};
+  switch (action.type) {
+    case "EVENT_CREATED":
+      newState = { ...state, message: "Your event has been created." };
+      break;
+    case "EVENT_DELETED":
+      newState = {
+        ...state,
+        message: "Your event has been deleted.",
+        events: action.data
+      };
+      break;
+    case "POPULATE_EVENTS":
+      newState = { ...state, events: action.data };
+      break;
+    case "UPDATE_EVENTS":
+      newState = { ...state, events: action.data };
+      break;
+    case "EVENT_EDITED":
+      let updated_events = state.events;
+      console.log("Before data...");
+      console.log(updated_events);
 
+      console.log("Returned data...");
+      console.log(action.data);
 
-const eventReducer = (state=initialState, action) => {
+      const index = updated_events.findIndex(
+        event => event._id === action.data._id
+      );
+      updated_events[index] = action.data;
+      newState = { ...state, events: updated_events };
+      break;
 
-    let newState = {};
-    switch(action.type){
-        case "EVENT_CREATED":
-            newState = { ...state, message: "Your event has been created." };
-            break;
-        case "EVENT_DELETED":
-            newState = { ...state, message: "Your event has been deleted.", events: action.data };
-            break;  
-        case "POPULATE_EVENTS":
-            newState = { ...state, events: action.data };
-            break;
-        case "UPDATE_EVENTS":
-            newState = { ...state, events: action.data };
-            break;
-        case "EVENT_EDITED":
-            let updated_events = state.events;
-            console.log("Before data...");
-            console.log(updated_events);
-                        
-            console.log("Returned data...")
-            console.log(action.data);
-            
-            const index = updated_events.findIndex(event => event._id === action.data._id);
-            updated_events[index] = action.data;
-            newState = { ...state, events: updated_events };
-            break;
+    case "NEW_IMAGE":
+      newState = { ...state, newImage: action.data };
+      break;
 
-        case "NEW_IMAGE":
-            newState = { ...state, newImage: action.data };
-            break;
+    case "RESET_IMAGE":
+      newState = { ...state, newImage: null };
+      break;
+    default:
+      newState = { ...state };
+      break;
+  }
+  return newState;
+};
 
-        case "RESET_IMAGE":
-            newState = { ...state, newImage: null };
-            break;
-        default:
-            newState = { ...state};
-            break;
-    }
-    return newState;
-}
-
-export default (eventReducer)
+export default eventReducer;

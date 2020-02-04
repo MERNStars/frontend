@@ -10,6 +10,14 @@ function mapStateToProps(state) {
   };
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    login: userData => {
+      dispatch(userLogin(userData));
+    }
+  };
+};
+
 class LoginForm extends Component {
   state = {
     username: "",
@@ -24,9 +32,7 @@ class LoginForm extends Component {
     this.setState({ password: e.target.value });
   };
 
-  //things to implement
   login = () => {
-    // console.log(this.state.username, this.state.password);
     this.props.login({
       username: this.state.username,
       password: this.state.password
@@ -52,14 +58,4 @@ class LoginForm extends Component {
   }
 }
 
-//Things to implement
-const mapDispatchToProps = dispatch => {
-  return {
-    login: userData => {
-      dispatch(userLogin(userData));
-    }
-  };
-};
-
-//Things to implement
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

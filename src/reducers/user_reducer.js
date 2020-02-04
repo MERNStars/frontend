@@ -74,6 +74,7 @@ function storeToken(username, token) {
 
 export const editUser = user => {
   return dispatch => {
+    console.log(user);
     axios
       .patch(`${process.env.REACT_APP_BACKEND_DB_URL}/users/update`, user, {
         headers: {
@@ -81,6 +82,7 @@ export const editUser = user => {
         }
       })
       .then(response => {
+        console.log(response);
         dispatch(userEdited(response.data));
         if (response) {
           console.log(response);
@@ -90,7 +92,9 @@ export const editUser = user => {
           }
         }
       })
-      .catch(error => console.log("error:" + error));
+      .catch(err => {
+        console.error("Error: " + err);
+      });
   };
 };
 
@@ -110,7 +114,7 @@ export const userLogin = user => {
         }
       })
       .catch(err => {
-        console.error("Error xxxx: " + err);
+        console.error("Error: " + err);
         NotificationManager.warning(
           null,
           "Incorrect Email or Password, Please try again"
@@ -150,6 +154,9 @@ export const createUser = user => {
             "Account Successfully Created, Please Log In Again";
           window.location.href = "/login";
         }
+      })
+      .catch(err => {
+        console.error("Error: " + err);
       });
   };
 };

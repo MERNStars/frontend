@@ -2,8 +2,8 @@ import React from "react";
 import { Field, reduxForm } from "redux-form";
 import validate from "../../FormFields/validate";
 import { connect } from "react-redux";
-import ImageUploadPreviewer from "../../FormFields/ImageUploadPreviewer";
 import { setNewImage } from "../../../reducers/event_reducer";
+import {RenderTextField, RenderImageField} from '../../FormFields/FormFields'
 
 function mapStateToProps(state) {
   return {
@@ -17,32 +17,6 @@ const mapDispatchToProps = dispatch => {
       dispatch(setNewImage(fileData));
     }
   };
-};
-
-const RenderTextField = ({ input, label, type, meta: { touched, error } }) => (
-  <div>
-    <label>{label}</label>
-    <div>
-      <input {...input} placeholder={label} type={type} />
-      {touched && error && <span>{error}</span>}
-    </div>
-  </div>
-);
-
-const RenderImageField = ({ input, meta: { touched, error, warning } }) => {
-  return (
-    <div className="image-file">
-      <ImageUploadPreviewer
-        {...input}
-        onChange={input.onChange}
-        type="file"
-        value={input.value ? input.value[0] : ""}
-      />
-      {touched &&
-        ((error && <span>{error}</span>) ||
-          (warning && <span>{warning}</span>))}
-    </div>
-  );
 };
 
 class WizardFormThirdPage extends React.Component {

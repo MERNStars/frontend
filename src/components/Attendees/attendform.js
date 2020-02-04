@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Field, reduxForm, FieldArray } from "redux-form";
 import { withRouter } from "react-router-dom";
+import {RenderTextField} from '../FormFields/FormFields'
 
 class AttendForm extends Component {
   // Form Field To Render Input For Adding Friends
@@ -11,7 +12,7 @@ class AttendForm extends Component {
           <Field
             name={friends}
             type="text"
-            component={this.renderField}
+            component={RenderTextField}
             label={`Friend #${index + 1}`}
           />
           <button
@@ -40,13 +41,13 @@ class AttendForm extends Component {
           <Field
             name={`${dependents}.name`}
             type="text"
-            component={this.renderField}
+            component={RenderTextField}
             label={`dependent #${index + 1}`}
           />
           <Field
             name={`${dependents}.age`}
             type="number"
-            component={this.renderField}
+            component={RenderTextField}
             label={`age`}
           />
           <button

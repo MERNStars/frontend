@@ -1,17 +1,10 @@
 import React from "react";
-import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { Menu, Dropdown, Button } from "semantic-ui-react";
 import AdminAccount from "../AdminDashboard/adminAccount";
 import Logout from '../Users/Logout';
 
-function mapStateToProps(state) {
-  return { userLoggedIn: state.userReducer.userLoggedIn };
-}
-
 class Navbar extends React.Component {
-  
-  
 
   render() {
     let result = AdminAccount();
@@ -75,4 +68,4 @@ class Navbar extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(Navbar);
+export default Navbar;

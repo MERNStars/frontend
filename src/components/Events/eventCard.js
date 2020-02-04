@@ -1,5 +1,4 @@
 import React from "react";
-
 import Moment from "react-moment";
 import { Card, Icon, Image, Segment } from "semantic-ui-react";
 

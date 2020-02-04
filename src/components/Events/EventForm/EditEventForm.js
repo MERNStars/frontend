@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
-import RenderTextField from "./RenderTextField";
-import RenderStatusField from "../FormFields/StatusFormField";
-import RenderCategoriesField from '../FormFields/CategoriesFormField'
+import {RenderTextField} from '../FormFields/FormFields'
+import {RenderCategoriesField, RenderStatusField} from '../../FormFields/FormFields'
 import { connect } from "react-redux";
 import { Multiselect } from "react-widgets";
 import ImageUploadPreviewer from "../FormFields/ImageUploadPreviewer";
