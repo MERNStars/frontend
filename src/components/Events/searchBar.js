@@ -1,6 +1,6 @@
 import React from 'react';
 import Axios from 'axios';
-import { Input, Dropdown } from 'semantic-ui-react';
+import { Input, Dropdown, Label } from 'semantic-ui-react';
 import {connect} from 'react-redux';
 
 import styles from '../../styles/searchBar.module.scss';
@@ -75,13 +75,16 @@ class SearchBar extends React.Component {
       <div className={styles.searchContainer}>
       <Input 
           icon={{ name: 'search', circular: true, link: true }}
-          size='small'
+          size='big'
           placeholder='Search...'
+          label={{ color: 'green', basic: true,  content: 'Search by keyword' }}
+          labelPosition='left'
           onChange={this.updateKeyword}>
           </Input>
        <Dropdown
-          placeholder='Select Category'
+          placeholder='Filter By Category'
           selection
+          floating
           options={this.state.categoryOptions}
           onChange={this.findCategory}
           clearable

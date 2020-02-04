@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import AdminEventCard from "../AdminDashboard/adminEventCards";
 import styles from "../../styles/admin.module.scss";
-import { Menu, Segment, Card, Icon, Header } from "semantic-ui-react";
+import { Menu, Segment, Card, Icon, Header, Placeholder } from "semantic-ui-react";
 require("dotenv").config();
 
 export default class AdminEvents extends Component {
@@ -44,7 +44,21 @@ export default class AdminEvents extends Component {
                   </Header>
                 </Segment>
               </Card>
-          {this.state.activeItem === "Published Events" ? this.renderPublishedEvents() : this.state.activeItem === "Unpublished Events" ? this.renderUnpublishedEvents() : this.renderPastEvents()}
+          {this.props.events ?  
+          this.state.activeItem === "Published Events" ? this.renderPublishedEvents() : this.state.activeItem === "Unpublished Events" ? this.renderUnpublishedEvents() : this.renderPastEvents() : 
+          <Card>
+            <Card.Content>
+            <Placeholder>
+              <Placeholder.Header>
+                <Placeholder.Line length="very short" />
+                <Placeholder.Line length="medium" />
+              </Placeholder.Header>
+              <Placeholder.Paragraph>
+                <Placeholder.Line length="short" />
+              </Placeholder.Paragraph>
+            </Placeholder>
+            </Card.Content>
+          </Card>}
         </Card.Group>
         </Segment>
     </>

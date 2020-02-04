@@ -4,11 +4,16 @@ import Moment from "react-moment";
 import { connect } from "react-redux";
 import styles from "../styles/event.module.scss";
 import AttendForm from "../components/Attendees/attendform";
+import EventCard from "../components/Events/eventCard";
 
 import { Link } from "react-router-dom";
 
-import { Button, Image, Label, Modal } from "semantic-ui-react";
+import { Button, Image, Modal, Icon, Card } from "semantic-ui-react";
 import Presenters from "../components/Presenters/PresenterDetails";
+
+import {FacebookShareButton} from 'react-share';
+
+
 
 require("dotenv").config();
 
@@ -20,7 +25,8 @@ class Event extends React.Component {
   state = {
     event: null,
     attending: false,
-    attend: "Attend"
+    attend: "Attend",
+    previewEvents: null
   };
 
   componentDidMount = async () => {
@@ -31,6 +37,12 @@ class Event extends React.Component {
     const data = response.data;
     this.setState({ event: data });
     this.checkAttendStatus();
+    const eventsResponse = await axios.get(`${process.env.REACT_APP_BACKEND_DB_URL}/events/category/${response.data.event_category}`)
+    console.log( eventsResponse )
+    let newData = eventsResponse.data.filter(d => {
+      return d.published === true && d.status !== "completed" && d._id !== response.data._id;
+    });
+    this.setState( {previewEvents: newData.slice(0,4)})
   };
 
   // Setting the attend status for button display
@@ -105,89 +117,97 @@ class Event extends React.Component {
       event_date,
       description,
       event_category,
-      images
+      images, 
+      event_capacity,
+      fee,
+      attendee_count
     } = this.state.event;
 
     return (
       <>
+        <header>
+          <h2><Moment format="D MMM YYYY">{event_date.begin}</Moment></h2>
+          <h1>{event_name}</h1>
+          
+        </header>
         <div className={styles.eventBox}>
           <div className={styles.innerContainer}>
-            <div className={styles.description}>
-              <div className={styles.endContainer}>
-                <Moment format="D MMM YYYY">{event_date.begin}</Moment>
-              </div>
-              <div className={styles.mainContainer}>
-                <h1>{event_name}</h1>
-                <p>{description}</p>
-              </div>
-              <div className={styles.endContainer}>{this.renderButton()}</div>
-            </div>
-            <div className={styles.eventImage}>
+          <div className={styles.eventImage}>
               <Image
                 src={images ? images[0] : require("../assets/placeholder.jpg")}
                 size="big"
                 rounded
                 id={styles.image}
               ></Image>
+            <div className={styles.description}>
+              <div className={styles.endContainer}>
+                <h3>About the event</h3>
+              </div>
+              <div className={styles.mainContainer}>
+                <p>{description}</p>
+              </div>
+              <div className={styles.endContainer}>{this.renderButton()}</div>
             </div>
-          </div>
-        </div>
-        <div className={styles.eventBox} id={styles.shadedBox}>
-          <div className={styles.innerContainer}>
-            <div className={styles.description} id={styles.about}>
-              <div className={styles.endContainer}>
-                <h1>About</h1>
-              </div>
-              <p>{description}</p>
-              <div className={styles.endContainer}>
-                <Label>{this.renderIcons()}</Label>
-                <Label>{event_category}</Label>
-              </div>
             </div>
           </div>
         </div>
         <div className={styles.eventBox}>
-          <div className={styles.outerContainer}>
-            <div className={styles.extraContainer}>
-              <h1 id={styles.datetitle}>Date</h1>
-              <h2 id={styles.startTime}>
-                Start <Moment format="D MMM HH:MM a">{event_date.begin}</Moment>
-              </h2>
-              <h2 id={styles.endTime}>
-                End <Moment format="D MMM HH:MM a">{event_date.end}</Moment>
-              </h2>
-              <div className={styles.googleMap}></div>
-              <div className={styles.address}>
-                <h2>Address</h2>
-                <p>51 Morton St</p>
-                <p>Clayton, VIC 3168</p>
-                <sub>
-                  Start Time:{" "}
-                  <Moment format="HH:MM a">{event_date.begin}</Moment>
-                </sub>
-                <sub>
-                  Event Duration:{" "}
-                  <Moment to={event_date.begin} ago>
-                    {" "}
-                    {event_date.end}
-                  </Moment>{" "}
-                </sub>
-              </div>
-            </div>
+          <div className={styles.extraContainer}>
+            <div className={styles.extraContent}>
+        <Card>
+          <Image src={require('../assets/staticmap.png')} wrapped ui={false} />
+          <Card.Content>
+            <Card.Header><Icon name='point'/>
+                      weExplore Centre, Clayton, VIC</Card.Header>
+            <Card.Meta>
+            
+            </Card.Meta>
+            <Card.Description>
+              <Icon name='clock outline' size='large'/>
+                Duration <Moment to={event_date.begin} ago>
+                {event_date.end}
+              </Moment><br />
+                Start <Moment format=" h:mm a">{event_date.begin}</Moment><br />
+                End <Moment format= "h:mm a">{event_date.end}</Moment><br />
+            </Card.Description>
+          </Card.Content>
+          <Card.Content extra>
+            {this.renderIcons()}
+          </Card.Content>
+          </Card>
+          </div>
+          <div className={styles.extraContent}>
+            
+            <h1>Event Hosts</h1>
+            <Presenters {...this.state.event} {...this.props} />
+       
+          </div>
           </div>
         </div>
-        <div className={styles.eventBox} id={styles.shadedBox}>
-          <div className={styles.innerContainer}>
-            <div className={styles.insideContainer}>
-              <div className={styles.Heading}>
-                <h2>Presenters</h2>
-              </div>
-              <Presenters {...this.state.event} {...this.props} />
-            </div>
-          </div>
+
+        <div className={styles.extraEventsBox}>
+          <div className={styles.insideContainer}>
+          <h1>Other events we think you might like...</h1>
+          <Card.Group itemsPerRow={4}>
+            { this.state.previewEvents ? this.state.previewEvents.map ( (event)=>{
+             return <EventCard {...event}/>
+            } ) : null}
+            </Card.Group>
+           </div>
         </div>
+       
+
         <div className={styles.containerFooter}>
-          <div className={styles.Footer}>{this.renderButton()}</div>
+          <div className={styles.Footer}>
+            <div className={styles.FooterDescription}>
+              <Moment format="ddd, D MMM, h:mm a" className={styles.FooterDate}>{event_date.begin}</Moment>
+              <h3>{event_name}</h3>
+            </div>
+            <div className={styles.FooterButton}>
+            <p>Only {event_capacity - attendee_count} spots left! </p>
+            {this.renderButton()}
+            </div>
+            </div>
         </div>
       </>
     );
@@ -196,7 +216,7 @@ class Event extends React.Component {
   attendButton() {
     if (this.state.event.status === "scheduled") {
       return (
-        <Button size="massive" basic id={styles.button}>
+        <Button size="massive" color='green' id={styles.button}>
           {this.state.attend}
         </Button>
       );
@@ -241,7 +261,7 @@ class Event extends React.Component {
           pathname: "/login"
         }}
       >
-        <Button size="massive" basic id={styles.button}>
+        <Button size="massive" color='green' id={styles.button}>
           Attend
         </Button>
       </Link>
@@ -250,13 +270,15 @@ class Event extends React.Component {
 
   renderIcons() {
     const { is_family_friendly } = this.state.event;
-    return is_family_friendly ? "Child Friendly" : "18+";
+    return is_family_friendly ? <><Icon name='check' />Family Friendly</>: null;
   }
 
   render() {
+    console.log( this.state.event)
     return (
+      
       <div>
-        <Link to={{ pathname: `/events` }}>Back to events</Link>
+          <Link to={{ pathname: `/events` }}>Back to events</Link>
         <div className={styles.eventContainer}>
           {this.state.event ? this.renderEvent() : null}
         </div>

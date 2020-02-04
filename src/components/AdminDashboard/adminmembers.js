@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Table, Statistic } from "semantic-ui-react";
+import { Table, Statistic} from "semantic-ui-react";
 require("dotenv").config();
 
 class AdminMembers extends Component {
@@ -50,7 +50,8 @@ class AdminMembers extends Component {
                   <Table.Cell verticalAlign='top'>{member.interests.map( (interest) => {
                     return (  <>{`${interest} `}<br /></> )})}</Table.Cell>
                   <Table.Cell>{member.username}</Table.Cell>
-                </Table.Row>)}):null}
+                </Table.Row>)}): 
+                null }
           </Table.Body>
         </Table>
         <Statistic size="small" horizontal> 
