@@ -34,7 +34,7 @@ describe("Attend Form", () => {
     expect(queryByText("Remove Friend")).toBeNull()
   })
   it("Adds a form field when Add Dependent is clicked",() => {
-    const { getByText,queryByText } = render(wrapper(<Decorated />));
+    const { getByText } = render(wrapper(<Decorated />));
     fireEvent.click(getByText('Add Dependent'))
     expect(getByText("dependent #1")).toBeInTheDocument()
     expect(getByText("age")).toBeInTheDocument()

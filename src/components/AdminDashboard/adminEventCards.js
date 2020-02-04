@@ -136,6 +136,8 @@ class AdminEventCard extends React.Component {
     this.props.updateEvents(newEvents);
   };
 
+
+
   render() {
     const event = this.props;
     return (
