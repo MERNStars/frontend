@@ -38,18 +38,64 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #CACBCE;
+  background-color: #E5E5E5;
   width: 100%;
-  height: 100vh;
+  height: auto;
+  min-height: calc( 100vh - 100px);
+  #eventFormSegment{
+    margin: 50px;
+  }
   input {
     padding: 10px;
     min-width: 600px;
-    border: 1px solid grey;
+    border: 1px solid rgba(229,229,229,0.8);
+    border-radius: 5px;
+    margin: 10px 0px;
+  }
+  .SmallInput {
+    min-width: 200px;
+    margin: 20px;
   }
   .description {
     min-height: 100px;
     min-width: 600px;
-    border: 1px solid grey;
+    border: 1px solid rgba(229,229,229,0.8);
+    border-radius: 5px;
+    margin: 10px 0px;
+    padding: 10px;
+  }
+  .Categories{
+    min-width: 600px;
+    border-radius: 5px;
+    margin: 10px 0px;
+  }
+  input[type="checkbox"]{
+    margin: 20px;
+  }
+  label {
+    font-size: 16px;
+    margin: 5px;
+  }
+  .NextButton {
+    padding: 10px;
+    width: 100%;
+    background-color: #40434E;
+    margin: 5px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    float: right;
+    font-size: 18px;
+    color: white;
+    font-weight: bolder;
+  }
+  #PreviousButton {
+    background-color: white;
+    border: #40434E 1px solid;
+    color: #40434E;
+  }
+  #presenterButton{
+    margin: 10px 5px;
   }
 }
 

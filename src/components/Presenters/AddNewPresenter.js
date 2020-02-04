@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
-import {RenderTextField} from '../FormFields/FormFields'
+import {RenderTextField, RenderImageField} from '../FormFields/FormFields'
+import styles from '../../styles/form.module.scss';
 
 class AddNewPresenter extends Component {
   render() {
@@ -8,6 +9,7 @@ class AddNewPresenter extends Component {
     return (
       <div>
         <form onSubmit={handleSubmit}>
+          <h2>Add New Presenter</h2>
           <Field
             name="first_name"
             component={RenderTextField}
@@ -46,11 +48,11 @@ class AddNewPresenter extends Component {
           />
           <Field
             name="avatar"
-            component={RenderTextField}
+            component={RenderImageField}
             type="textarea"
             label="Upload Avatar"
           />
-          <button type="submit" disabled={submitting}>
+          <button type="submit" disabled={submitting} className={styles.NextButton}>
             Submit
           </button>
         </form>

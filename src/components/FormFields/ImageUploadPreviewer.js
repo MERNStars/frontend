@@ -5,7 +5,7 @@ class UploadImageForm extends Component {
   constructor(props) {
     super(props);
     this.state ={
-      file:this.props.value[0],
+      file:this.props.value[0] 
     }
     // this.onChange = this.onChange.bind(this)
   }
@@ -18,7 +18,7 @@ class UploadImageForm extends Component {
       
     return (
       <div>
-        <h1>File Upload</h1> {/* URL.createObjectURL */}
+        <h1>Image Upload</h1> {/* URL.createObjectURL */}
         { <p><img src={typeof(this.props.value)==="string"? this.props.value : URL.createObjectURL(this.props.value)} alt="Event Avatar" width="300px" /><br/></p>}
         <input name={this.props.name} type={this.props.type} onChange={this.props.onChange} /*value={this.props.value? this.props.value[0]:""}*/ />
       </div>

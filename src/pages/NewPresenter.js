@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import AddNewPresenter from "../components/Presenters/AddNewPresenter";
 import Axios from "axios";
+import {Segment} from 'semantic-ui-react';
+import styles from '../styles/form.module.scss';
 
 require("dotenv").config();
 
@@ -31,9 +33,9 @@ class NewPresenter extends Component {
 
   render() {
     return (
-      <>
-        <AddNewPresenter onSubmit={this.handleSubmit} />
-      </>
+      <div className={styles.eventFormContainer}>
+        <Segment id={styles.eventFormSegment} raised color='green'><AddNewPresenter onSubmit={this.handleSubmit} /></Segment>
+     </div>
     );
   }
 }
