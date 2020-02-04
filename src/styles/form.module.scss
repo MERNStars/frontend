@@ -1,0 +1,44 @@
+.contactForm {
+  border-radius: 15px;
+  padding: 20px;
+  min-width: 800px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  button {
+    padding: 10px;
+    width: 100%;
+    background-color: #40434E;
+    margin: 5px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    float: right;
+    font-size: 18px;
+    color: white;
+    font-weight: bolder;
+  }
+  #clearButton {
+    background-color: white;
+    border: #40434E 1px solid;
+    color: #40434E;
+  }
+  input {
+    padding: 10px;
+    min-width: 600px;
+    border: none;
+    border-bottom: 1px solid grey;
+  }
+  label {
+    font-size: 16px;
+  }
+}
+
+
+
+
+
+
+
+
+

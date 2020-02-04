@@ -1,5 +1,9 @@
-import React from "react";
-import styles from "../../styles/event.module.scss";
+
+import React from 'react';
+
+import styles from '../../styles/event.module.scss';
+import {Item} from 'semantic-ui-react';
+
 
 class Presenters extends React.Component {
   adminDisplay = event => {
@@ -14,32 +18,20 @@ class Presenters extends React.Component {
 
   eventDisplay = event => {
     const { presenter_detail } = event;
-    return presenter_detail
-      ? presenter_detail.map(presenter => {
-          return (
-            <div className={styles.presenterBox}>
-              <div>
-                <span>
-                  {presenter.title} {presenter.first_name} {presenter.last_name}
-                </span>
-                <br></br>
-                <span>
-                  <sub>{presenter.qualification}</sub>
-                </span>
-                <span>
-                  <p>{presenter.short_description}</p>
-                </span>
-              </div>
-              <img
-                id={styles.profileImg}
-                src={require("../../assets/profile-photo.jpg")}
-                alt="profile of presenter"
-              />
-            </div>
-          );
-        })
-      : null;
-  };
+      return presenter_detail
+        ? <Item.Group divided> {presenter_detail.map(presenter => {
+            return (
+              <Item vertical>
+                <Item.Image  circular size='tiny' src={require('../../assets/user.svg')} />
+                <Item.Content>
+                  <Item.Header>{presenter.title} {presenter.first_name} {presenter.last_name}</Item.Header><br />
+                  <Item.Meta>{presenter.qualification}</Item.Meta><br />
+                {presenter.long_description}
+                </Item.Content>
+              </Item>)})
+     
+             } </Item.Group> : null;
+  }
 
   render() {
     if( this.props.location.pathname === "/admin")

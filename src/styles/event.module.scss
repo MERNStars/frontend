@@ -2,10 +2,30 @@
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  width: 100%;
-  #shadedBox{
-    background-color: lightgray;
+  // width: 100%;
+  margin: 2rem;
+  
+  header {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 10px 20px;
+    height: 200px;
+    border-bottom: #53C948 2px solid;
+    h1 {
+      font-size: 50px;
+      color: #40434E;
+      margin-top: 0px;
+    }
+    h2 {
+      font-size: 30px;
+      font-weight: lighter;
+      color: #40434E;
+      margin: 0px;
+    }
   }
+ 
   .eventBox {
     display: flex;
     justify-content: center;
@@ -15,35 +35,22 @@
     .outerContainer {
       width: 100%;
       height: 100%;
-
+    }
       .extraContainer {
-        display: grid;
-        grid-template-areas: 
-          'header header'
-          'start end'
-          'map address'
-          'map address';
-        text-align: center;
-        
-        #datetitle {
-          grid-area: header;
-          margin: 5px;
-        }
-        #startTime {
-          grid-area: start;
-        }
-        #endTime {
-          grid-area: end;
-        }
-        .address {
-          grid-area: address;
-        }
-        .googleMap {
-          grid-area: map;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: calc( 100vw - 100px);
+        height: calc( 100% - 100px);
+        .extraContent {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: center;
+          width: 50%;
+          height: 100%;
         }
       }
-    }
-    
     .innerContainer {
       width: calc( 100vw - 100px);
       height: calc( 100% - 100px);
@@ -100,8 +107,9 @@
         }
         .mainContainer {
           margin-left: 20px;
-          h1 {
-            font-size: 48px;
+          p {
+            font-size: 20px;
+            letter-spacing: 2px;
           }
         }
       }
@@ -118,9 +126,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        #image {
-          box-shadow: 35px -35px 0px -1px rgba(168,168,168,0.75);
-        }
       }
       
      
@@ -138,17 +143,36 @@
 
 .Footer {
   position: fixed;
-  margin-bottom: 10px;
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: red;
-  color: white;
-  text-align: right;
-  padding: 5px 100px;
-  opacity: 0.8;
-  #button {
-    background-color: white;
+  border-top: #53C948 2px solid;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 100px;
+  h3 {
+    margin: 0px;
+    font-size: 30px;
   }
+  .FooterDate {
+    font-size: 18px;
+  }
+  .FooterButton {
+    display: flex;
+    align-items: center;
+    p {
+      margin: 0px;
+      margin-right: 20px;
+      font-size: 20px;
+    }
+  }
+}
+
+.extraEventsBox {
+  width: 100%;
+  height: 500px;
+  margin-bottom: 100px;
 }
 
