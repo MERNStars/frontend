@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import RequestPasswordForm from '../components/RequestPasswordForm';
+import RequestPasswordForm from '../components/Users/RequestPasswordForm';
 
 class PassRequest extends Component{
 

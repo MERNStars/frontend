@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import PassResetForm from '../components/PassResetForm';
+import PassResetForm from '../components/Users/PassResetForm';
 
 class PassRequest extends Component{
     

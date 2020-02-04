@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { logUserOut } from "../reducers/user_reducer";
+import { logUserOut } from "../../reducers/user_reducer";
 import { Button } from "semantic-ui-react";
 
 function mapStateToProps(state) {

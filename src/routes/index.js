@@ -5,7 +5,7 @@ import Events from "../pages/Events";
 import Event from "../pages/Event";
 import SignUp from "../pages/SignUp";
 import AdminDashboard from "../pages/AdminDashboard";
-import Navbar from "../components/NavBar";
+import Navbar from "../components/NavBar/NavBar";
 import AboutUs from "../pages/about";
 import Contact from "../pages/contact";
 import Login from "../pages/Login";
@@ -14,7 +14,7 @@ import NewPresenter from "../pages/NewPresenter";
 import EditEvent from "../pages/EditEvent";
 import PassRequest from "../pages/PassRequest";
 import PassReset from "../pages/PassReset";
-import AdminAccount from "../components/adminAccount";
+import AdminAccount from "../components/AdminDashboard/adminAccount";
 import EditAccountDetails from "../pages/EditAccount";
 
 const NoMatch = ({ location }) => (
