@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Table, Statistic } from "semantic-ui-react";
 import Axios from "axios";
+import { Table, Statistic} from "semantic-ui-react";
 require("dotenv").config();
 
 class AdminMembers extends Component {
@@ -34,30 +34,18 @@ class AdminMembers extends Component {
             <Table.HeaderCell textAlign="center">Email</Table.HeaderCell>
           </Table.Header>
           <Table.Body>
-            {this.state.members
-              ? this.state.members.map((member, i) => {
-                  return (
-                    <Table.Row textAlign="center">
-                      <Table.Cell>
-                        {member.first_name} {member.last_name}
-                      </Table.Cell>
-                      <Table.Cell>{member.age}</Table.Cell>
-                      <Table.Cell>{member.sex}</Table.Cell>
-                      <Table.Cell verticalAlign="top">
-                        {member.interests.map(interest => {
-                          return (
-                            <>
-                              {`${interest} `}
-                              <br />
-                            </>
-                          );
-                        })}
-                      </Table.Cell>
-                      <Table.Cell>{member.username}</Table.Cell>
-                    </Table.Row>
-                  );
-                })
-              : null}
+          {this.state.members
+          ? this.state.members.map((member, i) => {
+              return (
+                <Table.Row textAlign='center'>
+                  <Table.Cell>{member.first_name} {member.last_name}</Table.Cell>
+                  <Table.Cell>{member.age}</Table.Cell>
+                  <Table.Cell>{member.sex}</Table.Cell>
+                  <Table.Cell verticalAlign='top'>{member.interests.map( (interest) => {
+                    return (  <>{`${interest} `}<br /></> )})}</Table.Cell>
+                  <Table.Cell>{member.username}</Table.Cell>
+                </Table.Row>)}): 
+                null }
           </Table.Body>
         </Table>
         <Statistic size="small" horizontal>

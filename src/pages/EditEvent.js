@@ -1,7 +1,13 @@
 import React from "react";
 import CreateEventForm from "../components/Events/EventForm/CreateEventForm";
 import { connect } from "react-redux";
-import { editEvent, resetNewImage } from "../reducers/event_reducer";
+
+import {
+  editEvent,
+  createEvent,
+  resetNewImage
+} from "../reducers/event_reducer";
+
 import config from "../components/Events/EventForm/awsconfig";
 import { withRouter } from "react-router-dom";
 import S3 from "react-aws-s3";
@@ -25,6 +31,9 @@ const mapDispatchToProps = dispatch => {
   return {
     editEvent: eventData => {
       dispatch(editEvent(eventData));
+    },
+    createEvent: eventData => {
+      dispatch(createEvent(eventData));
     },
     resetNewImage: () => {
       dispatch(resetNewImage());
@@ -74,48 +83,47 @@ class EditEvent extends React.Component {
 
   handleSubmit = data => {
     try {
-      const event = JSON.parse(JSON.stringify(data));
-      console.log(event);
-      const presenters = event.selectedPresenters.map(
-        presenter => presenter.id
-      );
 
-      if (presenters.length > 0) {
-        event.presenters = presenters;
-      }
+    const event = JSON.parse(JSON.stringify(data));
+    console.log(event);
+    const presenters = event.selectedPresenters.map(presenter => presenter.id);
 
-      const event_date = {
-        begin: `${event.event_date}T${event.event_start_time}`,
-        end: `${event.event_date}T${event.event_end_time}`
-      };
-
-      event.event_date = event_date;
-      if (event.registration_closed_date.split("T").length < 1)
-        event.registration_closed_date = `${event.registration_closed_date}T23:55:55`;
-
-      const ReactS3Client = new S3(config);
-      const newFileName = `${uuid()}`;
-      if (this.props.newImage) {
-        ReactS3Client.uploadFile(this.props.newImage, newFileName)
-          .then(data => {
-            console.log("Uploaded file...response");
-            event.images = [data.location];
-            this.props.editEvent(event);
-            this.props.resetNewImage();
-          })
-          .catch(err => console.error(err));
-        this.props.editEvent(event);
-        console.log("Submit end...");
-      } else {
-        this.props.editEvent(event);
-      }
-
-      this.setState({
-        display_message: "Your event has been updated."
-      });
-    } catch (error) {
-      console.log(error);
+    if (presenters.length > 0) {
+      event.presenters = presenters;
     }
+
+    const event_date = {
+      begin: `${event.event_date}T${event.event_start_time}`,
+      end: `${event.event_date}T${event.event_end_time}`
+    };
+
+    event.event_date = event_date;
+    if (event.registration_closed_date.split("T").length < 1)
+      event.registration_closed_date = `${event.registration_closed_date}T23:55:55`;
+
+    const ReactS3Client = new S3(config);
+    const newFileName = `${uuid()}`;
+    if (this.props.newImage) {
+      ReactS3Client.uploadFile(this.props.newImage, newFileName)
+        .then(data => {
+          console.log("Uploaded file...response");
+          event.images = [data.location];
+          event.status !== "completed" ? this.props.editEvent(event) : this.props.createEvent(event);
+          this.props.resetNewImage();
+        })
+        .catch(err => console.error(err));
+      this.props.editEvent(event);
+      console.log("Submit end...");
+    } else {
+      event.status !== "completed" ? this.props.editEvent(event) : this.props.createEvent(event);
+    }
+
+    this.setState({
+      display_message: "Your event has been updated."
+    });
+  } catch(error) {console.log(error)}
+    
+
   };
 
   render() {

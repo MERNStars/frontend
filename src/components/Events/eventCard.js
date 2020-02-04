@@ -1,6 +1,6 @@
 import React from "react";
 import Moment from "react-moment";
-import { Card, Icon, Image, Segment } from "semantic-ui-react";
+import { Card, Icon, Image, Segment, Label } from "semantic-ui-react";
 
 class EventCard extends React.Component {
   displayEventCard = () => (
@@ -17,28 +17,30 @@ class EventCard extends React.Component {
       />
       <Card.Content>
         <Card.Header>{this.props.event_name}</Card.Header>
-        <Card.Meta>
-          <span className="date">
-            <Moment format="D MMM">{this.props.event_date.begin}</Moment>
-          </span>
-        </Card.Meta>
-        <Card.Meta>
-          <span className="time">
-            Start Time{" "}
-            <Moment format="HH:MM">{this.props.event_date.begin}</Moment>
-          </span>
-        </Card.Meta>
-        <Card.Description>{this.props.event_category}</Card.Description>
-      </Card.Content>
-      <Card.Content extra>
-        <Icon name="user" />
-        {this.props.event_capacity}
-        <Segment floated="right">{this.props.status}</Segment>
+        <Card.Description>
+        {this.props.status === "scheduled" ? <><Icon name='time' size='large'/><Moment format="h:mm a">{this.props.event_date.begin}</Moment></>
+           : <Label color='red' size='large' horizontal>
+            {this.props.status}
+          </Label> }
+         <br /> Registration closes on <Moment format="D MMM YYYY">{this.props.registration_closed_date}</Moment>
+        </Card.Description><br />
+        
+        <Card.Description><Label basic color='green'>{this.props.event_category}</Label><Label basic color='green'>{this.props.fee[0].type}</Label>
+        <Label size='massive' attached='top left'><Moment format="D">{this.props.event_date.begin}</Moment><br /><Moment format="MMM">{this.props.event_date.begin}</Moment></Label>
+          
+        </Card.Description>
       </Card.Content>
     </Card>
   );
 
+  eventDate() {
+    return(
+      <Moment format="D MMM">{this.props.event_date.begin}</Moment>
+    )
+  }
+
   render() {
+    console.log( this.props)
     return this.displayEventCard();
   }
 }
