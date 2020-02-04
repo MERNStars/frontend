@@ -1,26 +1,24 @@
-import React from 'react';
-
-import styles from '../../styles/event.module.scss';
+import React from "react";
+import styles from "../../styles/event.module.scss";
 
 class Presenters extends React.Component {
-
   adminDisplay = event => {
-    console.log( this.props )
-    return(
-      event.presenters.map( (presenter) => {
-        return(
-          <p>{presenter.title} {presenter.first_name} {presenter.last_name}</p>
-        )
-      }))
-  }
+    return event.presenters.map(presenter => {
+      return (
+        <p>
+          {presenter.title} {presenter.first_name} {presenter.last_name}
+        </p>
+      );
+    });
+  };
 
   eventDisplay = event => {
     const { presenter_detail } = event;
-      return presenter_detail
-        ? presenter_detail.map(presenter => {
-            return (
-              <div className={styles.presenterBox}>
-                <div>
+    return presenter_detail
+      ? presenter_detail.map(presenter => {
+          return (
+            <div className={styles.presenterBox}>
+              <div>
                 <span>
                   {presenter.title} {presenter.first_name} {presenter.last_name}
                 </span>
@@ -31,13 +29,17 @@ class Presenters extends React.Component {
                 <span>
                   <p>{presenter.short_description}</p>
                 </span>
-                </div>
-                <img id={styles.profileImg} src={require("../../assets/profile-photo.jpg")} alt="profile of presenter"/>
               </div>
-            );
-          })
-        : null;
-  }
+              <img
+                id={styles.profileImg}
+                src={require("../../assets/profile-photo.jpg")}
+                alt="profile of presenter"
+              />
+            </div>
+          );
+        })
+      : null;
+  };
 
   render() {
     if( this.props.location.pathname === "/admin")
@@ -51,4 +53,4 @@ class Presenters extends React.Component {
   } 
 }
 
-export default Presenters
+export default Presenters;

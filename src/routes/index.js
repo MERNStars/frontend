@@ -1,12 +1,12 @@
 import React from "react";
-import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Redirect, Switch, Link } from "react-router-dom";
 import Home from "../pages/Home";
 import Events from "../pages/Events";
 import Event from "../pages/Event";
 import SignUp from "../pages/SignUp";
 import AdminDashboard from "../pages/AdminDashboard";
 import Navbar from "../components/NavBar/NavBar";
-import AboutUs from "../pages/about";
+import AboutUs from "../pages/AboutUs";
 import Contact from "../pages/contact";
 import Login from "../pages/Login";
 import CreateEvent from "../pages/CreateEvent";
@@ -19,9 +19,16 @@ import EditAccountDetails from "../pages/EditAccount";
 
 const NoMatch = ({ location }) => (
   <div>
-    <h2>404 ERROR..BEEP..BOOP...BEEP! No Routes Matching <code>{location.pathname}</code></h2>
+    <h2>
+      404 ERROR..BEEP..BOOP...BEEP! No Routes Matching{" "}
+      <code>{location.pathname}</code>
+    </h2>
+
+    <Link exact to="/">
+      <h3>Return To Home Page</h3>
+    </Link>
   </div>
-)
+);
 
 const Router = () => {
   return (

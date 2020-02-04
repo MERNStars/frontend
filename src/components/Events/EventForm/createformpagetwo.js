@@ -1,31 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Field, reduxForm } from "redux-form";
-import { Multiselect } from "react-widgets";
 import { Link } from "react-router-dom";
 import axios from "axios";
-
-const renderPresentersField = ({ input, name, label, presenters, onBlur }) => {
-  let emptyArray = [];
-  presenters.map(presenter => {
-    emptyArray.push({
-      id: presenter._id,
-      name: `${presenter.first_name} ${presenter.last_name} ${presenter.qualification}`
-    });
-  });
-  return (
-    <>
-      {label}:
-      <Multiselect
-        {...input}
-        name={name}
-        data={emptyArray}
-        textField="name"
-        onBlur={onBlur}
-        value={input.value !== "[]" ? [...input.value] : "[]"}
-      />
-    </>
-  );
-};
+import { renderPresentersField } from "../../FormFields/FormFields";
 
 const WizardFromSecondPage = props => {
   const [presenters, setPresenters] = useState([]);

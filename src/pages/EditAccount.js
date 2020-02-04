@@ -22,7 +22,6 @@ class EditAccountDetails extends React.Component {
   };
 
   submit = data => {
-    console.log(data);
     this.props.editUser(data);
   };
   

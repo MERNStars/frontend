@@ -4,13 +4,13 @@ import { Field, reduxForm } from "redux-form";
 import "react-widgets/dist/css/react-widgets.css";
 import { connect } from "react-redux";
 import validate from "../FormFields/validate";
-import RenderTextField from "../FormFields/RenderTextField";
 import {
   renderAgeNumberPicker,
   renderSexCombobox,
   RenderUneditableTextField,
   renderReligiousCombobox,
-  renderInterestMultiSelects
+  renderInterestMultiSelects,
+  RenderTextField
 } from "../FormFields/FormFields";
 
 simpleNumberLocalizer();

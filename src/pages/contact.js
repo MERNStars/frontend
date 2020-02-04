@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ContactForm from "../components/Contact/contactform";
 import axios from "axios";
-require('dotenv').config()
+require("dotenv").config();
 
 export default class Contact extends Component {
   submit = data => {
