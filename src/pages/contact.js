@@ -28,7 +28,7 @@ export default class Contact extends Component {
           <h1>weExplore Contact</h1>
         </header>
         <div className={styles.mainContent}>
-          {!this.state.submitted ? <Segment id={styles.contactSubmit} color='green' raised>Your query has been submitted<br />We will be in touch soon.</Segment> :
+          {this.state.submitted ? <Segment id={styles.contactSubmit} color='green' raised>Your query has been submitted<br />We will be in touch soon.</Segment> :
           <Segment color='green' raised><ContactForm onSubmit={this.submit} /></Segment>}
         </div>
       </div>

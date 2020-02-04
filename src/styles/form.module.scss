@@ -34,6 +34,25 @@
   }
 }
 
+.eventFormContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #CACBCE;
+  width: 100%;
+  height: 100vh;
+  input {
+    padding: 10px;
+    min-width: 600px;
+    border: 1px solid grey;
+  }
+  .description {
+    min-height: 100px;
+    min-width: 600px;
+    border: 1px solid grey;
+  }
+}
+
 
 
 

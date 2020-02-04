@@ -1,9 +1,12 @@
 import React from "react";
 import { RenderCategoriesField } from "../../FormFields/FormFields";
 import { Field, reduxForm } from "redux-form";
+
 import { connect } from "react-redux";
 import validate from "../../FormFields/validate";
-import {RenderTextField, RenderStatusField} from '../../FormFields/FormFields'
+import {RenderTextField, RenderStatusField, RenderTextArea} from '../../FormFields/FormFields'
+import styles from '../../../styles/form.module.scss';
+
 
 function mapStateToProps(state) {
   return {
@@ -24,9 +27,10 @@ const WizardFormFirstPage = props => {
       />
       <Field
         name="description"
-        component={RenderTextField}
+        component={RenderTextArea}
         type="textarea"
         label="Description"
+        className={styles.description}
       />
       <Field
         name="event_date"

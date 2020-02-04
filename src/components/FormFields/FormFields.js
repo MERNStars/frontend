@@ -6,6 +6,7 @@ import ImageUploadPreviewer from "../FormFields/ImageUploadPreviewer";
 
 export function RenderTextField ({
   input,
+  className,
   label,
   type,
   meta: { touched, error, warning }
@@ -15,7 +16,31 @@ export function RenderTextField ({
       <label>{label}</label> <br />
       <input
         {...input}
-        className="text-field"
+        className={className}
+        onChange={input.onChange}
+        placeholder={label}
+        type={type}
+      />
+      {touched &&
+        ((error && <span>{error}</span>) ||
+          (warning && <span>{warning}</span>))}
+    </div>
+  );
+};
+
+export function RenderTextArea ({
+  input,
+  className,
+  label,
+  type,
+  meta: { touched, error, warning }
+}) {
+  return (
+    <div className="Small-Text">
+      <label>{label}</label> <br />
+      <textarea
+        {...input}
+        className={className}
         onChange={input.onChange}
         placeholder={label}
         type={type}
