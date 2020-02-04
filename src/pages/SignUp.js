@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-// import UserSignUpForm from "../components/usersignupform";
-import UserSignUpForm from "../components/SignUpForm";
+import UserSignUpForm from "../components/Users/SignUpForm";
 import { connect } from "react-redux";
 import { createUser } from "../reducers/user_reducer";
 import { Redirect } from "react-router-dom";

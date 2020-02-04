@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Table, Statistic, Loader, Segment, Placeholder } from "semantic-ui-react";
+import { Table, Statistic} from "semantic-ui-react";
 require("dotenv").config();
 
 class AdminMembers extends Component {

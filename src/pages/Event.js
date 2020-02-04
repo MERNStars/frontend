@@ -3,12 +3,12 @@ import axios from "axios";
 import Moment from "react-moment";
 import { connect } from "react-redux";
 import styles from "../styles/event.module.scss";
-import AttendForm from "../components/attendform";
+import AttendForm from "../components/Attendees/attendform";
 
 import { Link } from "react-router-dom";
 
 import { Button, Image, Label, Modal } from "semantic-ui-react";
-import Presenters from "../components/PresenterDetails";
+import Presenters from "../components/Presenters/PresenterDetails";
 
 require("dotenv").config();
 

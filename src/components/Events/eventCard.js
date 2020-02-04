@@ -10,7 +10,7 @@ class EventCard extends React.Component {
         src={
           this.props.images
             ? this.props.images[0]
-            : require("../assets/placeholder.jpg")
+            : require("../../assets/placeholder.jpg")
         }
         wrapped
         ui={false}

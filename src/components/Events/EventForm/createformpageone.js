@@ -1,9 +1,9 @@
 import React from "react";
-import RenderCategoriesField from "../FormFields/CategoriesFormField";
-import RenderStatusField from "../FormFields/StatusFormField";
+import RenderCategoriesField from "../../FormFields/CategoriesFormField";
+import RenderStatusField from "../../FormFields/StatusFormField";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
-import validate from '../FormFields/validate'
+import validate from '../../FormFields/validate'
 
 const RenderTextField = ({ input, label, type, meta: { touched, error } }) => (
   <div>
