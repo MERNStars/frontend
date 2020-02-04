@@ -6,7 +6,7 @@ require("dotenv").config();
 
 const token = {
   authorization: `${localStorage.weexplore_token}`
-}
+};
 
 class NewPresenter extends Component {
   handleSubmit = data => {
@@ -18,13 +18,12 @@ class NewPresenter extends Component {
         {
           headers: token
         }
-      )
-        .then(response => {
-          console.log(response);
-          if (response.statusText === "Created") {
-            this.props.history.goBack()
-          }
-        })
+      ).then(response => {
+        console.log(response);
+        if (response.statusText === "Created") {
+          this.props.history.goBack();
+        }
+      });
     } catch (error) {
       console.log(`You have an error: ${error}`);
     }
@@ -39,5 +38,4 @@ class NewPresenter extends Component {
   }
 }
 
-
-export default NewPresenter
+export default NewPresenter;

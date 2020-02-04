@@ -1,11 +1,13 @@
 import React from "react";
 import CreateEventForm from "../components/Events/EventForm/CreateEventForm";
 import { connect } from "react-redux";
+
 import {
   editEvent,
   createEvent,
   resetNewImage
 } from "../reducers/event_reducer";
+
 import config from "../components/Events/EventForm/awsconfig";
 import { withRouter } from "react-router-dom";
 import S3 from "react-aws-s3";
@@ -47,38 +49,41 @@ class EditEvent extends React.Component {
   };
 
   componentDidMount() {
-    try {const { index } = this.props.match.params;
-    let event = JSON.parse(JSON.stringify({ ...this.props.events[index] }));
-    let event_dates = event.event_date;
-    const event_date = event_dates.begin.split("T")[0];
-    const event_start_time = event_dates.begin.split("T")[1];
-    const event_end_time = event_dates.end.split("T")[1];
-    event.event_date = event_date;
-    event.event_start_time = event_start_time;
-    event.event_end_time = event_end_time;
-    event.registration_closed_date = event.registration_closed_date.split(
-      "T"
-    )[0];
-    const presentereData = [];
-    console.log(this.props.presenters);
-    this.props.presenters.forEach(presenter => {
-      event.presenters.forEach(presenterID => {
-        if (presenterID._id.includes(presenter._id)) {
-          presentereData.push({
-            id: presenter["_id"],
-            name: `${presenter.first_name} ${presenter.last_name}`
-          });
-        }
+    try {
+      const { index } = this.props.match.params;
+      let event = JSON.parse(JSON.stringify({ ...this.props.events[index] }));
+      let event_dates = event.event_date;
+      const event_date = event_dates.begin.split("T")[0];
+      const event_start_time = event_dates.begin.split("T")[1];
+      const event_end_time = event_dates.end.split("T")[1];
+      event.event_date = event_date;
+      event.event_start_time = event_start_time;
+      event.event_end_time = event_end_time;
+      event.registration_closed_date = event.registration_closed_date.split(
+        "T"
+      )[0];
+      const presentereData = [];
+      console.log(this.props.presenters);
+      this.props.presenters.forEach(presenter => {
+        event.presenters.forEach(presenterID => {
+          if (presenterID._id.includes(presenter._id)) {
+            presentereData.push({
+              id: presenter["_id"],
+              name: `${presenter.first_name} ${presenter.last_name}`
+            });
+          }
+        });
       });
-    });
-    event.selectedPresenters = presentereData;
-    this.setState({ index: index, event: event });}
-    catch(error) {window.location.href = '/admin'}
-    
+      event.selectedPresenters = presentereData;
+      this.setState({ index: index, event: event });
+    } catch (error) {
+      window.location.href = "/admin";
+    }
   }
 
   handleSubmit = data => {
     try {
+
     const event = JSON.parse(JSON.stringify(data));
     console.log(event);
     const presenters = event.selectedPresenters.map(presenter => presenter.id);
@@ -118,7 +123,7 @@ class EditEvent extends React.Component {
     });
   } catch(error) {console.log(error)}
     
-    
+
   };
 
   render() {

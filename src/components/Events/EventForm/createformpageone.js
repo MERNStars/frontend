@@ -1,19 +1,9 @@
 import React from "react";
-import RenderCategoriesField from "../../FormFields/CategoriesFormField";
-import RenderStatusField from "../../FormFields/StatusFormField";
+import { RenderCategoriesField } from "../../FormFields/FormFields";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
-import validate from '../../FormFields/validate'
-
-const RenderTextField = ({ input, label, type, meta: { touched, error } }) => (
-  <div>
-    <label>{label}</label>
-    <div>
-      <input {...input} placeholder={label} type={type} />
-      {touched && error && <span>{error}</span>}
-    </div>
-  </div>
-);
+import validate from "../../FormFields/validate";
+import {RenderTextField, RenderStatusField} from '../../FormFields/FormFields'
 
 function mapStateToProps(state) {
   return {
@@ -87,14 +77,16 @@ const WizardFormFirstPage = props => {
         type="text"
         label="Event Category"
       />
-      {initialValues && initialValues.status ? <Field
-        name="status"
-        component={RenderStatusField}
-        status={status}
-        type="text"
-        label="Status"
-      /> : null}
-      
+      {initialValues && initialValues.status ? (
+        <Field
+          name="status"
+          component={RenderStatusField}
+          status={status}
+          type="text"
+          label="Status"
+        />
+      ) : null}
+
       <div>
         <button type="submit" className="next">
           Next

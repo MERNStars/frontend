@@ -1,26 +1,10 @@
 import React, { Component } from "react";
 import { Field, reduxForm, FieldArray } from "redux-form";
 import { withRouter } from "react-router-dom";
+import {RenderTextField} from '../FormFields/FormFields'
 
 class AttendForm extends Component {
-  submit = data => {
-    console.log(data);
-  };
-
-  renderField({ input, label, type, meta: { touched, error, warning } }) {
-    return (
-      <div>
-        <label>{label}</label>
-        <div>
-          <input {...input} placeholder={label} type={type} />
-          {touched &&
-            ((error && <span>{error}</span>) ||
-              (warning && <span>{warning}</span>))}
-        </div>
-      </div>
-    );
-  }
-
+  // Form Field To Render Input For Adding Friends
   renderFriends = ({ fields, meta: { error } }) => (
     <ul>
       {fields.map((friends, index) => (
@@ -28,7 +12,7 @@ class AttendForm extends Component {
           <Field
             name={friends}
             type="text"
-            component={this.renderField}
+            component={RenderTextField}
             label={`Friend #${index + 1}`}
           />
           <button
@@ -49,6 +33,7 @@ class AttendForm extends Component {
     </ul>
   );
 
+  // Form Field To Render Input For Adding Dependents
   renderDependents = ({ fields, meta: { error } }) => (
     <ul>
       {fields.map((dependents, index) => (
@@ -56,13 +41,13 @@ class AttendForm extends Component {
           <Field
             name={`${dependents}.name`}
             type="text"
-            component={this.renderField}
+            component={RenderTextField}
             label={`dependent #${index + 1}`}
           />
           <Field
             name={`${dependents}.age`}
             type="number"
-            component={this.renderField}
+            component={RenderTextField}
             label={`age`}
           />
           <button

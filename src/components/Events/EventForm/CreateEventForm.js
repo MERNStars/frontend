@@ -7,8 +7,7 @@ import { reduxForm } from "redux-form";
 class CreateEventForm extends Component {
   state = {
     page: 1,
-    event: "",
-    display_message: ""
+    event: null
   };
 
   nextPage = () => {

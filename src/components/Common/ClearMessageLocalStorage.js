@@ -1,10 +1,11 @@
 import { NotificationManager } from "react-notifications";
 
-const storageClear = () => {
+// Function to remove Message from localStorage after reload
+const ClearMessageLocalStorage = () => {
   if(localStorage.message) {
     NotificationManager.info(null, localStorage.message);
     localStorage.removeItem("message");
   }
 }
 
-export default storageClear
+export default ClearMessageLocalStorage

@@ -1,61 +1,33 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
-
-function validate(values) {
-  let errors = {};
-
-  if (!values.name) {
-    errors.name = "Required";
-  }
-
-  if (!values.email) {
-    errors.email = "Required";
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = "Invalid email address";
-  }
-
-  return errors;
-}
+import validate from '../FormFields/validate';
+import {RenderTextField} from '../FormFields/FormFields'
 
 class ContactForm extends React.Component {
-  renderField({ input, label, type, meta: { touched, error, warning } }) {
-    return (
-      <div>
-        <label>{label}</label>
-        <div>
-          <input {...input} placeholder={label} type={type} />
-          {touched &&
-            ((error && <span>{error}</span>) ||
-              (warning && <span>{warning}</span>))}
-        </div>
-      </div>
-    );
-  }
-
   render() {
     return (
       <form onSubmit={this.props.handleSubmit}>
         <Field
           name="name"
-          component={this.renderField}
+          component={RenderTextField}
           type="text"
           label="name"
         />
         <Field
           name="email"
-          component={this.renderField}
+          component={RenderTextField}
           type="email"
           label="email"
         />
         <Field
           name="subject"
-          component={this.renderField}
+          component={RenderTextField}
           type="text"
           label="subject"
         />
         <Field
           name="text"
-          component={this.renderField}
+          component={RenderTextField}
           type="textarea"
           label="text"
         />

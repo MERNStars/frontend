@@ -6,11 +6,18 @@ import { Button } from "semantic-ui-react";
 function mapStateToProps(state) {
   return {
     message: state.userReducer.message,
-    userLoggedIn: state.userReducer.userLoggedIn,
     token: state.userReducer.token,
-    isAdmin: state.userReducer.isAdmin
   };
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    logout: () => {
+      dispatch(logUserOut());
+    }
+  };
+};
+
 
 class Logout extends Component {
   logout = () => {
@@ -32,12 +39,5 @@ class Logout extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    logout: () => {
-      dispatch(logUserOut());
-    }
-  };
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Logout);

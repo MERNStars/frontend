@@ -1,11 +1,13 @@
+
 import React from 'react';
 
 import styles from '../../styles/event.module.scss';
 import {Item} from 'semantic-ui-react';
 
-class Presenters extends React.Component {
 
+class Presenters extends React.Component {
   adminDisplay = event => {
+
     console.log( this.props )
     return(
       event.presenters.map( (presenter) => {
@@ -42,6 +44,7 @@ class Presenters extends React.Component {
       this.eventDisplay(this.props)
      )
   } 
+
 }
 
-export default Presenters
+export default Presenters;

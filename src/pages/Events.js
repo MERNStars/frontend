@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import storageClear from "../components/Common/storageclear";
+import ClearMessageLocalStorage from "../components/Common/ClearMessageLocalStorage";
 
 import EventCard from "../components/Events/eventCard";
 import SearchBar from "../components/Events/searchBar";
@@ -30,7 +30,7 @@ export default class Events extends Component {
       return d.published === true && d.status !== "completed";
     });
     this.setState({ events: newData, resetEvents: newData });
-    storageClear();
+    ClearMessageLocalStorage();
   }
 
   categorySearch = events => {

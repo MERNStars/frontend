@@ -5,6 +5,14 @@ import { Field, reduxForm } from "redux-form";
 import "react-widgets/dist/css/react-widgets.css";
 import { connect } from "react-redux";
 import Axios from "axios";
+import validate from "../FormFields/validate";
+import {
+  RenderTextField,
+  renderAgeNumberPicker,
+  renderSexCombobox,
+  renderReligiousCombobox,
+  renderInterestMultiSelects
+} from "../FormFields/FormFields";
 
 simpleNumberLocalizer();
 
@@ -16,169 +24,23 @@ function mapStateToProps(state) {
   };
 }
 
-function validate(values) {
-  let errors = {};
-
-  if (!values.first_name) {
-    errors.first_name = "Required";
-  }
-
-  if (!values.last_name) {
-    errors.last_name = "Required";
-  }
-
-  if (!values["username"]) {
-    errors.username = "Required";
-  } else if (
-    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.username)
-  ) {
-    errors.username = "Invalid email address";
-  }
-
-  // if (
-  //   !/^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/i.test(
-  //     values.password
-  //   )
-  // ) {
-  //   errors.password =
-  //     "Password must be 8 characters or longer, including at a number, a symbol and a capital letter";
-  // }
-
-  if (!values.password) {
-    errors.password = "required"
-  }
-
-  if (values.password !== values.confirmPassword) {
-    errors.confirmPassword = "Password doesn't match";
-  }
-
-  if (!values.age) {
-    errors.age = "Required";
-  }
-
-  if (!values.sex) {
-    errors.sex = "Required";
-  }
-
-  return errors;
-}
-
-function asyncValidate(values) {
+function usernameValidate(values) {
   return Axios.post(`${process.env.REACT_APP_BACKEND_DB_URL}/users/exists`, {
     username: values.username
   }).then(response => {
     if (response.data.exists) {
-      throw { username: "That username is taken" }
+      throw { username: "That username is taken" };
     }
-  }) 
+  });
 }
 
 class SignUpForm extends Component {
-
-  renderTextField({
-    input,
-    label,
-    type,
-    meta: { asyncValidating, touched, error, warning }
-  }) {
-    return (
-      <div className={asyncValidating ? "async-validating" : ""}>
-        <label>{label}</label> <br />
-        <input
-          {...input}
-          className="text-field"
-          onChange={input.onChange}
-          placeholder={label}
-          type={type}
-        />
-        {touched &&
-          ((error && <span>{error}</span>) ||
-            (warning && <span>{warning}</span>))}
-      </div>
-    );
-  }
-
-  renderAgeNumberPicker({
-    input,
-    name,
-    label,
-    meta: { touched, error, warning }
-  }) {
-    return (
-      <div className="Small-Text">
-        <label>{label}</label> <br />
-        <NumberPicker
-          {...input}
-          name={name}
-          format="###"
-          min={13}
-          max={150}
-          value={input.value !== "" ? Number.parseInt(input.value) : 18}
-        />
-        {touched &&
-          ((error && <span>{error}</span>) ||
-            (warning && <span>{warning}</span>))}
-      </div>
-    );
-  }
-
-  renderSexCombobox = ({
-    input,
-    name,
-    label,
-    meta: { touched, error, warning }
-  }) => {
-    const { sexes } = this.props;
-    return (
-      <div className="My-Radio">
-        {label}:
-        <DropdownList {...input} name={name} data={sexes} value={input.value} />
-        {touched &&
-          ((error && <span>{error}</span>) ||
-            (warning && <span>{warning}</span>))}
-      </div>
-    );
-  };
-
-  renderReligiousCombobox = ({ input, name, label }) => {
-    const { religions } = this.props;
-    return (
-      <div className="My-Radio">
-        {label}:
-        <DropdownList
-          {...input}
-          name={name}
-          data={religions}
-          value={input.value}
-        />
-      </div>
-    );
-  };
-
-  renderInterestMultiSelects = ({ input, name, label }) => {
-    const { categories } = this.props;
-    console.log(input.value);
-
-    return (
-      <div className="My-Radio">
-        {label}:
-        <Multiselect
-          {...input}
-          name={name}
-          data={categories}
-          onBlur={this.props.onBlur}
-          value={input.value !== "[]" ? [...input.value] : "[]"}
-        />
-      </div>
-    );
-  };
-
   render() {
     return (
       <form onSubmit={this.props.handleSubmit} className="SignUpForm">
         <Field
           name="username"
-          component={this.renderTextField}
+          component={RenderTextField}
           type="email"
           label="Email"
           value={localStorage.username}
@@ -186,43 +48,50 @@ class SignUpForm extends Component {
         />
         <Field
           name="password"
-          component={this.renderTextField}
+          component={RenderTextField}
           type="password"
           label="Password"
         />
         <Field
           name="confirmPassword"
-          component={this.renderTextField}
+          component={RenderTextField}
           type="password"
           label="Confirm Password"
         />
         <Field
           name="first_name"
-          component={this.renderTextField}
+          component={RenderTextField}
           type="text"
           label="First Name"
         />
         <Field
           name="last_name"
-          component={this.renderTextField}
+          component={RenderTextField}
           type="text"
           label="Last Name"
         />
         <Field
           name="age"
-          component={this.renderAgeNumberPicker}
+          component={renderAgeNumberPicker}
           label="Age"
           value={13}
         />
-        <Field name="sex" component={this.renderSexCombobox} label="Sex" />
+        <Field
+          name="sex"
+          component={renderSexCombobox}
+          sexes={this.props.sexes}
+          label="Sex"
+        />
         <Field
           name="religion"
-          component={this.renderReligiousCombobox}
+          component={renderReligiousCombobox}
+          religions={this.props.religions}
           label="Religious affiliation:"
         />
         <Field
           name="interests"
-          component={this.renderInterestMultiSelects}
+          component={renderInterestMultiSelects}
+          categories={this.props.categories}
           label="Event categories that might interest you"
         />
         <br />
@@ -237,6 +106,6 @@ class SignUpForm extends Component {
 export default reduxForm({
   form: "SignUpForm",
   validate,
-  asyncValidate,
+  usernameValidate,
   asyncBlurFields: ["username"]
 })(connect(mapStateToProps)(SignUpForm));
