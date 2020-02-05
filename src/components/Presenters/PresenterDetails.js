@@ -1,6 +1,5 @@
 
 import React from 'react';
-
 import styles from '../../styles/event.module.scss';
 import {Item} from 'semantic-ui-react';
 
