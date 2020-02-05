@@ -127,6 +127,7 @@ class EditEventForm extends Component {
 
   onChange = (e) => {
     //   console.log(e.target.files[0]);
+    
     if(e.target.files[0]){
         this.setState({image_file: URL.createObjectURL(e.target.files[0])});
         this.props.newImage(e.target.files[0]);
