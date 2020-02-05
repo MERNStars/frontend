@@ -1,4 +1,5 @@
 import axios from "axios";
+import { NotificationManager } from "react-notifications";
 require("dotenv").config();
 
 const initialState = {
@@ -54,6 +55,11 @@ const userLoggedIn = (username, data) => ({
   data: data
 });
 
+const userEdited = data => ({
+  type: "USER_EDITED",
+  data: data
+});
+
 const userLoggedOut = message => ({
   type: "USER_LOGGED_OUT",
   message: message
@@ -66,8 +72,33 @@ function storeToken(username, token) {
   }
 }
 
-export const userLogin = user => {
+export const editUser = user => {
+  return dispatch => {
+    console.log(user);
+    axios
+      .patch(`${process.env.REACT_APP_BACKEND_DB_URL}/users/update`, user, {
+        headers: {
+          authorization: `${localStorage.weexplore_token}`
+        }
+      })
+      .then(response => {
+        console.log(response);
+        dispatch(userEdited(response.data));
+        if (response) {
+          console.log(response);
+          if (response.statusText === "OK") {
+            localStorage.message = "Successfully Updated Account";
+            window.location.href = "/";
+          }
+        }
+      })
+      .catch(err => {
+        console.error("Error: " + err);
+      });
+  };
+};
 
+export const userLogin = user => {
   return dispatch => {
     axios
       .post(`${process.env.REACT_APP_BACKEND_DB_URL}/users/login`, {
@@ -75,16 +106,22 @@ export const userLogin = user => {
         password: user.password
       })
       .then(response => {
-        // console.log("hello!!");
         dispatch(userLoggedIn(user.username, response.data));
-        // console.log(response.data.isAdmin)
         storeToken(user.username, response.data.token);
+        if (response.statusText === "OK") {
+          localStorage.message = "You Have Successfully Logged In";
+          window.location.href = "/";
+        }
       })
-      .catch(err => console.error("Error xxxx: " + err));
+      .catch(err => {
+        console.error("Error: " + err);
+        NotificationManager.warning(
+          null,
+          "Incorrect Email or Password, Please try again"
+        );
+      });
   };
 };
-
-
 
 export const logUserOut = () => {
   return dispatch => {
@@ -95,6 +132,7 @@ export const logUserOut = () => {
 export const logout = () => {};
 
 export const createUser = user => {
+  console.log(user);
   return dispatch => {
     axios
       .post(`${process.env.REACT_APP_BACKEND_DB_URL}/users/create`, {
@@ -110,16 +148,29 @@ export const createUser = user => {
       })
       .then(response => {
         dispatch(userCreated(response.data));
+        console.log(response.data.success);
+        if (response.data.success) {
+          localStorage.message =
+            "Account Successfully Created, Please Log In Again";
+          window.location.href = "/login";
+        }
+      })
+      .catch(err => {
+        console.error("Error: " + err);
       });
   };
 };
 
 const userReducer = (state = initialState, action) => {
   let newState = {};
- 
+
   switch (action.type) {
     case "USER_CREATED":
       newState = { ...state, message: "Your account has been created." };
+      break;
+
+    case "USER_EDITED":
+      newState = { ...state, message: "Account updated" };
       break;
     case "USER_LOGGED_IN":
       newState = {
@@ -136,10 +187,9 @@ const userReducer = (state = initialState, action) => {
         ...state,
         token: null,
         userLoggedIn: false,
-        username: '',
+        username: "",
         message: "You have been logged out."
       };
-      
       break;
     default:
       newState = { ...state };

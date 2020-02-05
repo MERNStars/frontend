@@ -1,23 +1,29 @@
 import React from "react";
-import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Redirect, Switch} from "react-router-dom";
 import Home from "../pages/Home";
 import Events from "../pages/Events";
 import Event from "../pages/Event";
 import SignUp from "../pages/SignUp";
 import AdminDashboard from "../pages/AdminDashboard";
-import Navbar from "../components/NavBar";
-import AboutUs from "../pages/about";
+import Navbar from "../components/NavBar/NavBar";
+import AboutUs from "../pages/AboutUs";
 import Contact from "../pages/contact";
 import Login from "../pages/Login";
-import NewEvent from "../pages/NewEvent";
-import CreateEventWizardForm from "../pages/CreateEventWizardForm";
+import CreateEvent from "../pages/CreateEvent";
 import NewPresenter from "../pages/NewPresenter";
 import EditEvent from "../pages/EditEvent";
 import PassRequest from "../pages/PassRequest";
 import PassReset from "../pages/PassReset";
-import AdminAccount from "../components/adminAccount";
-import EditAccountDetails from '../pages/EditAccount'
+import AdminAccount from "../components/AdminDashboard/adminAccount";
+import EditAccountDetails from "../pages/EditAccount";
+import PageNotFound from "../pages/PageNotFound";
 
+const NoMatch = ({ location }) => (
+  <div>
+    <PageNotFound />
+    
+  </div>
+);
 
 const Router = () => {
   return (
@@ -30,13 +36,8 @@ const Router = () => {
           <Route exact path="/signup" component={SignUp} />
           <Route exact path={`/events/:id`} component={Event} />
           <Route exact path="/about-us" component={AboutUs} />
-          <PrivateRoute
-            exact
-            path="/create-event"
-            component={CreateEventWizardForm}
-          />
+          <PrivateRoute exact path="/create-event" component={CreateEvent} />
           <PrivateRoute exact path="/edit-event/:index" component={EditEvent} />
-          <Route exact path="/new-event" component={NewEvent} />
           <PrivateRoute exact path="/admin" component={AdminDashboard} />
           <Route exact path="/contact" component={Contact} />
           <Route exact path="/login" component={Login} />
@@ -48,7 +49,8 @@ const Router = () => {
             path="/create-presenter"
             component={NewPresenter}
           />
-          <Route exact path="/edit-account" component={EditAccountDetails}/>
+          <Route exact path="/edit-account" component={EditAccountDetails} />
+          <Route component={NoMatch} />
         </Switch>
       </BrowserRouter>
     </div>

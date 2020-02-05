@@ -1,21 +1,22 @@
 import React, { Component } from "react";
 import axios from "axios";
-import AdminEvent from "../components/adminevents";
-import AdminMembers from "../components/adminmembers";
-import { Grid, Card } from "semantic-ui-react";
+import AdminEvent from "../components/AdminDashboard/adminevents";
+import AdminMembers from "../components/AdminDashboard/adminmembers";
+import { Grid, Card, Menu, Icon } from "semantic-ui-react";
 import { connect } from "react-redux";
-
-import Moment from 'moment';
-
-import { populateEvents } from '../reducers/event_reducer'
-import {loadPresenters} from '../reducers/presenter_reducer';
-
+import Moment from "moment";
+import { populateEvents } from "../reducers/event_reducer";
+import { NotificationManager } from "react-notifications";
+import { loadPresenters } from "../reducers/presenter_reducer";
+import styles from "../styles/admin.module.scss";
+require("dotenv").config();
 
 function mapStateToProps(state) {
   return {
     isAdmin: state.userReducer.isAdmin,
     events: state.eventReducer.events,
-    presenters: state.presenterReducer.presenters
+    presenters: state.presenterReducer.presenters,
+    message: state.eventReducer.message
   };
 }
 
@@ -50,40 +51,47 @@ class AdminDashboard extends Component {
   async componentDidMount() {
     this.props.loadPresenters();
     const response = await axios
-      .get("https://weexplorebackend.herokuapp.com/events")
+      .get(`${process.env.REACT_APP_BACKEND_DB_URL}/events`)
       .catch(error => {
         console.log(`ERROR: ${error}`);
       });
     const data = await response.data;
 
-    const sortedArray  = data.sort((a,b) => new Moment(a.event_date.begin).format('YYYYMMDD') - new Moment(b.event_date.begin).format('YYYYMMDD'))
-
-
+    const sortedArray = data.sort(
+      (a, b) =>
+        new Moment(a.event_date.begin).format("YYYYMMDD") -
+        new Moment(b.event_date.begin).format("YYYYMMDD")
+    );
     this.props.populateEvents(data);
-    // console.log("No. presenters" + this.props.presenters.length);
 
+    if (localStorage.message) {
+      NotificationManager.success(null, localStorage.message);
+      localStorage.removeItem("message");
+    }
   }
 
   renderAdminPage() {
     const { pageStatus } = this.state;
     const { events } = this.props;
     return (
-      <>
+      <div className={styles.adminDashboard}>
         <Grid columns={2} divided>
-          <Grid.Row></Grid.Row>
           <Grid.Row>
-            <Grid.Column width={2}></Grid.Column>
-            <div>
-              <button onClick={this.handleClick2}>Events</button>
-              <br />
-              <button onClick={this.handleClick}>Members</button>
-            </div>
-            <Grid.Column width={10}>
-              <Card
-                href="/create-event"
-                header="+"
-                description="Add New Event"
+            <Grid.Column width={1}></Grid.Column>
+            <Menu pointing secondary vertical size="huge">
+              <Menu.Header>Admin Dashboard</Menu.Header><br />
+              <Menu.Item
+                name="Events"
+                active={pageStatus === "events"}
+                onClick={this.handleClick2}
               />
+              <Menu.Item
+                name="Members"
+                active={pageStatus === "members"}
+                onClick={this.handleClick}
+              />
+            </Menu>
+            <Grid.Column width={10}>
               <AdminDisplay
                 page={true}
                 events={events}
@@ -92,7 +100,7 @@ class AdminDashboard extends Component {
             </Grid.Column>
           </Grid.Row>
         </Grid>
-      </>
+      </div>
     );
   }
 

@@ -1,18 +1,19 @@
 import React from "react";
 import Axios from "axios";
+import { connect } from "react-redux";
+import { editUser } from "../reducers/user_reducer";
 import EditUsersForm from "../components/Users/EditUsersForm";
+import styles from '../styles/form.module.scss';
+import {Segment} from 'semantic-ui-react';
 
 require("dotenv").config();
 
-let submit = data => {
-  console.log(data);
-  Axios.patch(`${process.env.REACT_APP_BACKEND_DB_URL}/users/update`, data, {
-    headers: {
-      authorization: `${localStorage.weexplore_token}`
+const mapDispatchToProps = dispatch => {
+  return {
+    editUser: userData => {
+      dispatch(editUser(userData));
     }
-  })
-    .then(response => console.log(response))
-    .catch(error => console.log("error:" + error));
+  };
 };
 
 class EditAccountDetails extends React.Component {
@@ -22,6 +23,10 @@ class EditAccountDetails extends React.Component {
     initialValues: {}
   };
 
+  submit = data => {
+    this.props.editUser(data);
+  };
+  
   componentDidMount() {
     Axios.get(
       `${process.env.REACT_APP_BACKEND_DB_URL}/users/${localStorage.username}`,
@@ -51,13 +56,13 @@ class EditAccountDetails extends React.Component {
       return null;
     }
     return (
-      <div>
-        <EditUsersForm
-          onSubmit={submit}
+      <div className={styles.SignUpFormContainer}>
+        <Segment id={styles.eventFormSegment} color='green'><EditUsersForm
+          onSubmit={this.submit}
           initialValues={this.state.userDetail}
-        />
+        /></Segment>
       </div>
     );
   }
 }
-export default EditAccountDetails;
+export default connect(null, mapDispatchToProps)(EditAccountDetails);

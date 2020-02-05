@@ -1,0 +1,251 @@
+.contactForm {
+  border-radius: 15px;
+  padding: 20px;
+  min-width: 800px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  button {
+    padding: 10px;
+    width: 100%;
+    background-color: #40434E;
+    margin: 5px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    float: right;
+    font-size: 18px;
+    color: white;
+    font-weight: bolder;
+  }
+  #clearButton {
+    background-color: white;
+    border: #40434E 1px solid;
+    color: #40434E;
+  }
+  input {
+    padding: 10px;
+    min-width: 600px;
+    border: none;
+    border-bottom: 1px solid grey;
+  }
+  label {
+    font-size: 16px;
+  }
+}
+
+.FormContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  min-height: calc( 100vh - 100px);
+  #eventFormSegment{
+    margin: 50px;
+  }
+  input {
+    padding: 10px;
+    min-width: 600px;
+    border: 1px solid rgba(229,229,229,0.8);
+    border-radius: 5px;
+    margin: 10px 0px;
+  }
+  .SmallInput {
+    min-width: 200px;
+    margin: 20px;
+  }
+  .description {
+    min-height: 100px;
+    min-width: 600px;
+    border: 1px solid rgba(229,229,229,0.8);
+    border-radius: 5px;
+    margin: 10px 0px;
+    padding: 10px;
+  }
+  .Categories{
+    min-width: 600px;
+    border-radius: 5px;
+    margin: 10px 0px;
+  }
+  input[type="checkbox"]{
+    margin: 20px;
+  }
+  label {
+    font-size: 16px;
+    margin: 5px;
+  }
+  .NextButton {
+    padding: 10px;
+    width: 100%;
+    background-color: #40434E;
+    margin: 5px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    float: right;
+    font-size: 18px;
+    color: white;
+    font-weight: bolder;
+  }
+  #PreviousButton {
+    background-color: white;
+    border: #40434E 1px solid;
+    color: #40434E;
+  }
+  #presenterButton{
+    margin: 10px 5px;
+  }
+}
+
+.LoginForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #E5E5E5;
+  width: 100%;
+  height: auto;
+  min-height: 100vh;
+  #eventFormSegment{
+    margin: 50px;
+  }
+  input {
+    padding: 10px;
+    min-width: 600px;
+    border: 1px solid rgba(229,229,229,0.8);
+    border-radius: 5px;
+    margin: 10px 0px;
+  }
+  label {
+    font-size: 16px;
+    margin: 5px;
+  }
+  .SubmitButton {
+    padding: 10px;
+    width: 100%;
+    background-color: #40434E;
+    margin: 5px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    float: right;
+    font-size: 18px;
+    color: white;
+    font-weight: bolder;
+  }
+  #SignUpButton {
+    margin: 0px 10px;
+  }
+}
+
+.SignUpFormContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #E5E5E5;
+  width: 100%;
+  height: auto;
+  min-height: calc( 100vh - 100px);
+  #eventFormSegment{
+    margin: 50px;
+  }
+  .input {
+    padding: 10px;
+    width: 600px;
+    border: 1px solid rgba(229,229,229,0.8);
+    border-radius: 5px;
+    margin: 10px 0px;
+  }
+  input {
+    width: 100px;
+    margin: 10px 0px;
+    border: none;
+  }
+  .Categories{
+    min-width: 600px;
+    border-radius: 5px;
+    margin: 10px 0px;
+    border: 1px solid rgba(229,229,229,0.8);
+  }
+  input[type="checkbox"]{
+    margin: 20px;
+  }
+  label {
+    font-size: 16px;
+    margin: 5px;
+  }
+  .NextButton {
+    padding: 10px;
+    width: 100%;
+    background-color: #40434E;
+    margin: 5px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    float: right;
+    font-size: 18px;
+    color: white;
+    font-weight: bolder;
+  }
+}
+
+.AttendForm{
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .NextButton {
+    padding: 10px;
+    width: 100%;
+    background-color: #40434E;
+    margin: 5px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    color: white;
+    font-weight: bolder;
+  }
+  #AddButton {
+    width: 50%;
+    background-color: white;
+    border: #40434E 1px solid;
+    color: #40434E;
+    font-size: 12px;
+  }
+  #RemoveButton {
+    width: 30%;
+    background-color: white;
+    border: #40434E 1px solid;
+    color: #40434E;
+    font-size: 12px;
+    font-weight: lighter;
+  }
+  ul {
+    list-style: none;
+    li {
+      text-decoration: none;
+    }
+  }
+  input {
+    padding: 10px;
+    width: 600px;
+    border: 1px solid rgba(229,229,229,0.8);
+    border-radius: 5px;
+    margin: 10px 0px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+

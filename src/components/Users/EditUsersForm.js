@@ -1,9 +1,18 @@
 import React, { Component } from "react";
 import simpleNumberLocalizer from "react-widgets-simple-number";
-import { NumberPicker, DropdownList, Multiselect } from "react-widgets";
 import { Field, reduxForm } from "redux-form";
 import "react-widgets/dist/css/react-widgets.css";
 import { connect } from "react-redux";
+import validate from "../FormFields/validate";
+import styles from '../../styles/form.module.scss';
+import {
+  renderAgeNumberPicker,
+  renderSexCombobox,
+  RenderUneditableTextField,
+  renderReligiousCombobox,
+  renderInterestMultiSelects,
+  RenderTextField
+} from "../FormFields/FormFields";
 
 simpleNumberLocalizer();
 
@@ -15,172 +24,15 @@ function mapStateToProps(state) {
   };
 }
 
-function validate(values) {
-  let errors = {};
-
-  if (!values.first_name) {
-    errors.first_name = "Required";
-  }
-
-  if (!values.last_name) {
-    errors.last_name = "Required";
-  }
-
-  if (!values["username"]) {
-    errors.username = "Required";
-  } else if (
-    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.username)
-  ) {
-    errors.username = "Invalid email address";
-  }
-
-  if (
-    !/^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/i.test(
-      values.password
-    )
-  ) {
-    errors.password =
-      "Password must be 8 characters or longer, including at a number, a symbol and a capital letter";
-  }
-
-  if (values.password !== values.confirmPassword) {
-    errors.confirmPassword = "Password doesn't match";
-  }
-
-  if (!values.age) {
-    errors.age = "Required";
-  }
-
-  if (!values.sex) {
-    errors.sex = "Required";
-  }
-
-  return errors;
-}
-
 class EditUserForm extends Component {
-  renderTextField({ input, label, type, meta: { touched, error, warning } }) {
-    return (
-      <div className="Small-Text">
-        <label>{label}</label> <br />
-        <input
-          {...input}
-          className="text-field"
-          onChange={input.onChange}
-          placeholder={label}
-          type={type}
-        />
-        {touched &&
-          ((error && <span>{error}</span>) ||
-            (warning && <span>{warning}</span>))}
-      </div>
-    );
-  }
-
-  renderAgeNumberPicker({
-    input,
-    name,
-    label,
-    meta: { touched, error, warning }
-  }) {
-    return (
-      <div className="Small-Text">
-        <label>{label}</label> <br />
-        <NumberPicker
-          {...input}
-          name={name}
-          format="###"
-          min={13}
-          max={150}
-          value={input.value !== "" ? Number.parseInt(input.value) : 18}
-        />
-        {touched &&
-          ((error && <span>{error}</span>) ||
-            (warning && <span>{warning}</span>))}
-      </div>
-    );
-  }
-
-  renderSexCombobox = ({
-    input,
-    name,
-    label,
-    meta: { touched, error, warning }
-  }) => {
-    const { sexes } = this.props;
-    return (
-      <div className="My-Radio">
-        {label}:
-        <DropdownList {...input} name={name} data={sexes} value={input.value} />
-        {touched &&
-          ((error && <span>{error}</span>) ||
-            (warning && <span>{warning}</span>))}
-      </div>
-    );
-  };
-
-  renderReligiousCombobox = ({ input, name, label }) => {
-    const { religions } = this.props;
-    return (
-      <div className="My-Radio">
-        {label}:
-        <DropdownList
-          {...input}
-          name={name}
-          data={religions}
-          value={input.value}
-        />
-      </div>
-    );
-  };
-
-  renderInterestMultiSelects = ({ input, name, label }) => {
-    const { categories } = this.props;
-
-    return (
-      <div className="My-Radio">
-        {label}:
-        <Multiselect
-          {...input}
-          name={name}
-          data={categories}
-          onBlur={this.props.onBlur}
-          value={input.value !== "[]" ? [...input.value] : "[]"}
-        />
-      </div>
-    );
-  };
-
-  RenderUneditableTextField = ({
-    input,
-    label,
-    type,
-    meta: { touched, error, warning }
-  }) => {
-    return (
-      <div className="Small-Text">
-        <label>{label}</label> <br />
-        <input
-          {...input}
-          className="text-field"
-          onChange={input.onChange}
-          placeholder={label}
-          type={type}
-          disabled={true}
-        />
-        {touched &&
-          ((error && <span>{error}</span>) ||
-            (warning && <span>{warning}</span>))}
-      </div>
-    );
-  };
-
   render() {
     return (
-      <form onSubmit={this.props.handleSubmit} className="EditUserForm">
+      <form onSubmit={this.props.handleSubmit}>
+        <h2>Edit Account</h2>
         <Field
           name="username"
-          component={this.RenderUneditableTextField}
+          className={styles.input}
+          component={RenderUneditableTextField}
           type="email"
           label="Email"
           props={{
@@ -189,35 +41,44 @@ class EditUserForm extends Component {
         />
         <Field
           name="first_name"
-          component={this.renderTextField}
+          className={styles.input}
+          component={RenderTextField}
           type="text"
           label="First Name"
         />
         <Field
           name="last_name"
-          component={this.renderTextField}
+          className={styles.input}
+          component={RenderTextField}
           type="text"
           label="Last Name"
         />
         <Field
           name="age"
-          component={this.renderAgeNumberPicker}
+          component={renderAgeNumberPicker}
           label="Age"
           value={13}
         />
-        <Field name="sex" component={this.renderSexCombobox} label="Sex" />
+        <Field
+          name="sex"
+          component={renderSexCombobox}
+          label="Sex"
+          sexes={this.props.sexes}
+        />
         <Field
           name="religion"
-          component={this.renderReligiousCombobox}
+          component={renderReligiousCombobox}
+          religions={this.props.religions}
           label="Religious affiliation:"
         />
         <Field
           name="interests"
-          component={this.renderInterestMultiSelects}
+          component={renderInterestMultiSelects}
+          categories={this.props.categories}
           label="Event categories that might interest you"
         />
         <br />
-        <button className="btnSubmit" type="submit">
+        <button className={styles.NextButton} type="submit">
           Send
         </button>
       </form>

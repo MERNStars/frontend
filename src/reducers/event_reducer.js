@@ -1,6 +1,7 @@
 import Axios from "axios";
-require("dotenv").config();
+import { NotificationManager } from "react-notifications";
 
+require("dotenv").config();
 const initialState = {
   event_categories: [
     "bible seminar",
@@ -23,27 +24,27 @@ const initialState = {
     "completed",
     "sold out"
   ],
-  
-    message: '',
 
-    events: [],
+  message: "",
 
-    newImage: null
-}
+  events: [],
 
-export const populateEvents = (events) => {
-    return {
-        type: "POPULATE_EVENTS",
-        data: events
-    }
-}
+  newImage: null
+};
 
-export const deleteEvents = (events) => {
-    return {
-        type: "EVENT_DELETED",
-        data: events
-    }
-}
+export const populateEvents = events => {
+  return {
+    type: "POPULATE_EVENTS",
+    data: events
+  };
+};
+
+export const deleteEvents = events => {
+  return {
+    type: "EVENT_DELETED",
+    data: events
+  };
+};
 
 const eventCreated = message => ({
   type: "EVENT_CREATED",
@@ -62,33 +63,31 @@ const newImage = data => ({
 
 const noImage = () => ({
   type: "RESET_IMAGE"
-})
+});
 
-export const updateEvents = (events) => {
+export const updateEvents = events => {
   return {
     type: "UPDATE_EVENTS",
     data: events
-  }
-}
+  };
+};
 
 export const setNewImage = fileData => {
   return dispatch => {
     dispatch(newImage(fileData));
-  }
-}
+  };
+};
 
 export const resetNewImage = () => {
   return dispatch => {
     dispatch(noImage());
-  }
-}
+  };
+};
 
 export const createEvent = event => {
   return dispatch => {
-    // console.log(`${event.event_date}T${event.event_start_time}`);
-    // console.log(`${event.event_date}T${event.event_end_time}`);
     Axios.post(
-      `http://localhost:8888/events/create`,
+      `${process.env.REACT_APP_BACKEND_DB_URL}/events/create`,
       {
         event_name: event.event_name,
         description: event.description,
@@ -101,7 +100,7 @@ export const createEvent = event => {
         is_family_friendly: event.is_family_friendly,
         minimum_age: event.minimum_age,
         event_category: event.event_category,
-        status: event.status,
+        status: "scheduled",
         images: event.images,
         event_capacity: event.event_capacity,
         published: event.published
@@ -111,10 +110,60 @@ export const createEvent = event => {
           authorization: `${localStorage.weexplore_token}`
         }
       }
-    ).then(response => {
-      // console.log(response);
-      dispatch(eventCreated(response.data));
-    });
+    )
+      .then(response => {
+        console.log(response.status);
+        if (response.status === 201) {
+          dispatch(eventCreated(response.data));
+          localStorage.message = "Event Successfully Created";
+          window.location.href = "/admin";
+        } else {
+          NotificationManager.error(null, "Failed To Create Event");
+        }
+      })
+      .catch(err => {
+        console.error("error: " + err);
+      });
+  };
+};
+
+export const republishEvent = event => {
+  return dispatch => {
+    Axios.post(
+      `${process.env.REACT_APP_BACKEND_DB_URL}/events/create`,
+      {
+        event_name: event.event_name,
+        description: event.description,
+        event_date: event.event_date,
+        registration_closed_date: `${event.registration_closed_date}T23:55:55.000Z`,
+        presenters: event.presenters,
+        is_family_friendly: event.is_family_friendly,
+        minimum_age: event.minimum_age,
+        event_category: event.event_category,
+        status: "scheduled",
+        images: event.images,
+        event_capacity: event.event_capacity,
+        published: event.published
+      },
+      {
+        headers: {
+          authorization: `${localStorage.weexplore_token}`
+        }
+      }
+    )
+      .then(response => {
+        console.log(response.status);
+        if (response.status === 201) {
+          dispatch(eventCreated(response.data));
+          localStorage.message = "Event Successfully Created";
+          window.location.href = "/admin";
+        } else {
+          NotificationManager.error(null, "Failed To Create Event");
+        }
+      })
+      .catch(err => {
+        console.error("error: " + err);
+      });
   };
 };
 
@@ -123,70 +172,75 @@ export const editEvent = event => {
     console.log("Edit Event ...");
     console.log(event);
     Axios({
-      url: "http://localhost:8888/events/update",
+      url: `${process.env.REACT_APP_BACKEND_DB_URL}/events/update`,
       method: "PATCH",
       data: event,
       headers: {
-          authorization: `${localStorage.weexplore_token}`
-        }
-    }
-    ).then(response => {
-        console.log("Data from response...");
-        
-        console.log(response.data);
-        dispatch(eventUpdated(response.data));
+        authorization: `${localStorage.weexplore_token}`
+      }
     })
-    .catch(err => {
-      console.error("Ooops...there is a problem.");
-      
-      console.error(err);
-    });
+      .then(response => {
+        console.log("Data from response...");
+        console.log(response);
+        dispatch(eventUpdated(response.data));
+
+        if (response.statusText === "OK") {
+          localStorage.message = "Event Edited";
+          window.location.href = "/admin";
+        }
+      })
+      .catch(err => {
+        console.error("error: " + err);
+      });
   };
-}
+};
 
+const eventReducer = (state = initialState, action) => {
+  let newState = {};
+  switch (action.type) {
+    case "EVENT_CREATED":
+      newState = { ...state, message: "Your event has been created." };
+      break;
+    case "EVENT_DELETED":
+      newState = {
+        ...state,
+        message: "Your event has been deleted.",
+        events: action.data
+      };
+      break;
+    case "POPULATE_EVENTS":
+      newState = { ...state, events: action.data };
+      break;
+    case "UPDATE_EVENTS":
+      newState = { ...state, events: action.data };
+      break;
+    case "EVENT_EDITED":
+      let updated_events = state.events;
+      console.log("Before data...");
+      console.log(updated_events);
 
+      console.log("Returned data...");
+      console.log(action.data);
 
-const eventReducer = (state=initialState, action) => {
+      const index = updated_events.findIndex(
+        event => event._id === action.data._id
+      );
+      updated_events[index] = action.data;
+      newState = { ...state, events: updated_events };
+      break;
 
-    let newState = {};
-    switch(action.type){
-        case "EVENT_CREATED":
-            newState = { ...state, message: "Your event has been created." };
-            break;
-        case "EVENT_DELETED":
-            newState = { ...state, message: "Your event has been deleted.", events: action.data };
-            break;  
-        case "POPULATE_EVENTS":
-            newState = { ...state, events: action.data };
-            break;
-        case "UPDATE_EVENTS":
-            newState = { ...state, events: action.data };
-            break;
-        case "EVENT_EDITED":
-            let updated_events = state.events;
-            console.log("Before data...");
-            console.log(updated_events);
-                        
-            console.log("Returned data...")
-            console.log(action.data);
-            
-            const index = updated_events.findIndex(event => event._id === action.data._id);
-            updated_events[index] = action.data;
-            newState = { ...state, events: updated_events };
-            break;
+    case "NEW_IMAGE":
+      newState = { ...state, newImage: action.data };
+      break;
 
-        case "NEW_IMAGE":
-            newState = { ...state, newImage: action.data };
-            break;
-
-        case "RESET_IMAGE":
-            newState = { ...state, newImage: null };
-            break;
-        default:
-            newState = { ...state};
-            break;
-    }
-    return newState;
-}
+    case "RESET_IMAGE":
+      newState = { ...state, newImage: null };
+      break;
+    default:
+      newState = { ...state };
+      break;
+  }
+  return newState;
+};
 
 export default eventReducer;
