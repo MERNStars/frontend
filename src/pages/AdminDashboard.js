@@ -8,6 +8,7 @@ import Moment from "moment";
 import { populateEvents } from "../reducers/event_reducer";
 import { NotificationManager } from "react-notifications";
 import { loadPresenters } from "../reducers/presenter_reducer";
+import styles from "../styles/admin.module.scss";
 require("dotenv").config();
 
 function mapStateToProps(state) {
@@ -73,11 +74,12 @@ class AdminDashboard extends Component {
     const { pageStatus } = this.state;
     const { events } = this.props;
     return (
-      <>
+      <div className={styles.adminDashboard}>
         <Grid columns={2} divided>
           <Grid.Row>
             <Grid.Column width={1}></Grid.Column>
             <Menu pointing secondary vertical size="huge">
+              <Menu.Header>Admin Dashboard</Menu.Header><br />
               <Menu.Item
                 name="Events"
                 active={pageStatus === "events"}
@@ -98,7 +100,7 @@ class AdminDashboard extends Component {
             </Grid.Column>
           </Grid.Row>
         </Grid>
-      </>
+      </div>
     );
   }
 

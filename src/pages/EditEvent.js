@@ -5,7 +5,8 @@ import { connect } from "react-redux";
 import {
   editEvent,
   createEvent,
-  resetNewImage
+  resetNewImage,
+  republishEvent
 } from "../reducers/event_reducer";
 
 import config from "../components/Events/EventForm/awsconfig";
@@ -39,6 +40,9 @@ const mapDispatchToProps = dispatch => {
     },
     resetNewImage: () => {
       dispatch(resetNewImage());
+    },
+    republishEvent: eventData => {
+      dispatch(republishEvent(eventData))
     }
   };
 };
@@ -110,14 +114,14 @@ class EditEvent extends React.Component {
         .then(data => {
           console.log("Uploaded file...response");
           event.images = [data.location];
-          event.status !== "completed" ? this.props.editEvent(event) : this.props.createEvent(event);
+          event.status !== "completed" ? this.props.editEvent(event) : this.props.republishEvent(event);
           this.props.resetNewImage();
         })
         .catch(err => console.error(err));
       this.props.editEvent(event);
       console.log("Submit end...");
     } else {
-      event.status !== "completed" ? this.props.editEvent(event) : this.props.createEvent(event);
+      event.status !== "completed" ? this.props.editEvent(event) : this.props.republishEvent(event);
     }
 
     this.setState({

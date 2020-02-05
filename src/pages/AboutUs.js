@@ -1,29 +1,27 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Segment, Container, Card, Button } from "semantic-ui-react";
+import { List, Container, Card, Button, Icon } from "semantic-ui-react";
 import styles from "../styles/aboutus.module.scss";
 
 const items = [
   {
     image:
-      "https://images.unsplash.com/photo-1556740772-1a741367b93e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80",
-    header: "Service 1",
+      require("../assets/outdoor.jpg"),
+    header: "Group Activities",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      "Join us for our next activity. You can catch us berry picking, bike riding or camping"
   },
   {
-    image:
-      "https://images.unsplash.com/photo-1511632765486-a01980e01a18?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80",
-    header: "Service 2",
+    image: require("../assets/chef.png"),
+    header: "Free Dinners and Cooking Classes",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+      "We host regular vegetarian based dinners and simple cooking classes so you can learn how to eat and live better."
   },
   {
-    image:
-      "https://images.unsplash.com/photo-1549227082-0ea18ce30397?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80",
-    header: "Service 3",
+    image: require("../assets/friends.jpg"),
+    header: "Health and Fitness Seminars",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+      "Hear from qualified health professionals at our seminars and talks. Or come along to a fitness class at our community centre."
   }
 ];
 
@@ -31,32 +29,45 @@ class AboutUs extends Component {
 
   render() {
     return (
-      <div className="About-us">
-        <h1>About Us</h1>
-        <Container>
-          <Segment>
+      <div className={styles.mainContainer}>
+        <header>
+          <h1>weExplore About</h1>
+        </header>
+        <div className={styles.section}>
             <h2>Our Story</h2>
+            <Container text>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
+              We're a diverse group of people who are interested in living a healthy lifestyle.<br />
+              We spend our time enjoying healthy activities, as well as volunteering in the community. Our focus is on holistic health, involving physical, mental, social and spiritual well-being.<br />
+              Our principles are Bible-based but we welcome anyone who's interested in experiencing warm friendship and better health.
             </p>
-          </Segment>
-        </Container>
-        <div className={styles.section}>
-          <h1>Other Services</h1>
+            </Container>
+          
+          <h2>Services</h2>
           <Card.Group centered items={items} />
-        </div>
-
-        <div className={styles.section}>
+        
           <h2>Want To Know More?</h2>
-          <Container>
-            <Link exact to="/contact">
-              <Button fluid negative>
-                Contact Us
-              </Button>
-            </Link>
+          <Container text>
+            <List animated verticalAlign='middle' size='huge' >
+              <List.Item>
+                <Icon name='mobile alternate'/>
+                <List.Content>
+                  <Link to='/contact'><List.Header id={styles.list}>Get in touch</List.Header></Link>
+                </List.Content>
+              </List.Item>
+              <List.Item>
+                <Icon name='bookmark outline'/>
+                <List.Content>
+                  <Link to='/events'><List.Header id={styles.list}>Explore events</List.Header></Link>
+                </List.Content>
+              </List.Item>
+              <List.Item>
+                <Icon name='newspaper outline'/>
+                <List.Content>
+                  <Link to=''><List.Header id={styles.list}>More Resources</List.Header></Link>
+                </List.Content>
+              </List.Item>
+            </List>
           </Container>
         </div>
       </div>
@@ -64,6 +75,5 @@ class AboutUs extends Component {
   }
 }
 
-// export default connect(null,mapDispatchToProps)(AboutUs)
 
 export default AboutUs;
