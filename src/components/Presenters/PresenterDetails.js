@@ -6,8 +6,6 @@ import {Item} from 'semantic-ui-react';
 
 class Presenters extends React.Component {
   adminDisplay = event => {
-
-    console.log( this.props )
     return(
       event.presenters.map( (presenter) => {
         return(
@@ -17,6 +15,7 @@ class Presenters extends React.Component {
   }
 
   eventDisplay = event => {
+    console.log( event )
     const { presenter_detail } = event;
       return presenter_detail
         ? <Item.Group divided> {presenter_detail.map(presenter => {

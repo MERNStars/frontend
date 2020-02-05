@@ -6,7 +6,9 @@ import styles from '../../styles/form.module.scss';
 class AddNewPresenter extends Component {
   render() {
     const { handleSubmit, submitting } = this.props;
+    console.log( this.props)
     return (
+      
       <div>
         <form onSubmit={handleSubmit}>
           <h2>Add New Presenter</h2>
@@ -55,7 +57,9 @@ class AddNewPresenter extends Component {
           <button type="submit" disabled={submitting} className={styles.NextButton}>
             Submit
           </button>
+          <button onClick={this.props.previousPage.goBack()} className={styles.PreviousButton}>Previous</button>
         </form>
+        
       </div>
     );
   }

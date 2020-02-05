@@ -47,3 +47,13 @@
   -webkit-background-size: cover;
   background-size: cover;
 }
+
+.NotFoundContainer {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 50px;
+  img {
+    opacity: 0.6;
+  }
+}

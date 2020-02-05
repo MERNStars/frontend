@@ -38,7 +38,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #E5E5E5;
   width: 100%;
   height: auto;
   min-height: calc( 100vh - 100px);
@@ -188,6 +187,54 @@
     font-size: 18px;
     color: white;
     font-weight: bolder;
+  }
+}
+
+.AttendForm{
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .NextButton {
+    padding: 10px;
+    width: 100%;
+    background-color: #40434E;
+    margin: 5px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    color: white;
+    font-weight: bolder;
+  }
+  #AddButton {
+    width: 50%;
+    background-color: white;
+    border: #40434E 1px solid;
+    color: #40434E;
+    font-size: 12px;
+  }
+  #RemoveButton {
+    width: 30%;
+    background-color: white;
+    border: #40434E 1px solid;
+    color: #40434E;
+    font-size: 12px;
+    font-weight: lighter;
+  }
+  ul {
+    list-style: none;
+    li {
+      text-decoration: none;
+    }
+  }
+  input {
+    padding: 10px;
+    width: 600px;
+    border: 1px solid rgba(229,229,229,0.8);
+    border-radius: 5px;
+    margin: 10px 0px;
   }
 }
 

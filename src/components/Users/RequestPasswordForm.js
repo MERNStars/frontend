@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import axios from "axios";
+import styles from '../../styles/form.module.scss';
 require("dotenv").config();
 
 class RequestPasswordForm extends Component {
   state = {
     email: "Please, enter your email to request a password reset.",
-    message: "",
+    message: "Enter your email to reset your password",
     submitted: false
   };
 
@@ -36,7 +37,7 @@ class RequestPasswordForm extends Component {
           placeholder="john.doe@email.com"
           onChange={this.updateEmail}
         />
-        <button className="btnSubmit" type="submit" onClick={this.submit}>
+        <button className={styles.SubmitButton} type="submit" onClick={this.submit}>
           Submit
         </button>
       </div>

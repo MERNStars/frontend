@@ -101,9 +101,9 @@ class AdminEventCard extends React.Component {
   };
 
   // Update Status Functions
-  updateEventStatus = ({ value }) => {
+  //  'e' is required to capture the value from the event or else renders new status as undefined 
+  updateEventStatus = (e,{ value }) => {
     let newStatus = this.props.event_statuses[value];
-
     Axios.patch(
       `${process.env.REACT_APP_BACKEND_DB_URL}/events/status`,
       {

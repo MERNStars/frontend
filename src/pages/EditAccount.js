@@ -3,6 +3,8 @@ import Axios from "axios";
 import { connect } from "react-redux";
 import { editUser } from "../reducers/user_reducer";
 import EditUsersForm from "../components/Users/EditUsersForm";
+import styles from '../styles/form.module.scss';
+import {Segment} from 'semantic-ui-react';
 
 require("dotenv").config();
 
@@ -54,11 +56,11 @@ class EditAccountDetails extends React.Component {
       return null;
     }
     return (
-      <div>
-        <EditUsersForm
+      <div className={styles.SignUpFormContainer}>
+        <Segment id={styles.eventFormSegment} color='green'><EditUsersForm
           onSubmit={this.submit}
           initialValues={this.state.userDetail}
-        />
+        /></Segment>
       </div>
     );
   }

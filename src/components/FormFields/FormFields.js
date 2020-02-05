@@ -266,6 +266,7 @@ export function RenderUneditableTextField({
   input,
   label,
   type,
+  className,
   meta: { touched, error, warning }
 }) {
   return (
@@ -273,7 +274,7 @@ export function RenderUneditableTextField({
       <label>{label}</label> <br />
       <input
         {...input}
-        className="text-field"
+        className={className}
         onChange={input.onChange}
         placeholder={label}
         type={type}

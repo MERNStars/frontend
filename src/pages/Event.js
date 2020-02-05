@@ -3,17 +3,14 @@ import axios from "axios";
 import Moment from "react-moment";
 import { connect } from "react-redux";
 import styles from "../styles/event.module.scss";
+import formStyles from "../styles/form.module.scss";
 import AttendForm from "../components/Attendees/attendform";
 import EventCard from "../components/Events/eventCard";
 
 import { Link } from "react-router-dom";
 
-import { Button, Image, Modal, Icon, Card } from "semantic-ui-react";
+import { Button, Image, Modal, Icon, Card, Segment, Header } from "semantic-ui-react";
 import Presenters from "../components/Presenters/PresenterDetails";
-
-import {FacebookShareButton} from 'react-share';
-
-
 
 require("dotenv").config();
 
@@ -116,11 +113,11 @@ class Event extends React.Component {
       event_name,
       event_date,
       description,
-      event_category,
       images, 
       event_capacity,
       fee,
-      attendee_count
+      attendee_count,
+      presenter_detail
     } = this.state.event;
 
     return (
@@ -128,7 +125,8 @@ class Event extends React.Component {
         <header>
           <h2><Moment format="D MMM YYYY">{event_date.begin}</Moment></h2>
           <h1>{event_name}</h1>
-          
+          <p>Hosted by {presenter_detail.map( (presenter) => {
+            return( `${presenter.title} ${presenter.first_name} ${presenter.last_name}`)})}</p>
         </header>
         <div className={styles.eventBox}>
           <div className={styles.innerContainer}>
@@ -151,38 +149,29 @@ class Event extends React.Component {
             </div>
           </div>
         </div>
-        <div className={styles.eventBox}>
-          <div className={styles.extraContainer}>
-            <div className={styles.extraContent}>
-        <Card>
-          <Image src={require('../assets/staticmap.png')} wrapped ui={false} />
-          <Card.Content>
-            <Card.Header><Icon name='point'/>
-                      weExplore Centre, Clayton, VIC</Card.Header>
-            <Card.Meta>
-            
-            </Card.Meta>
-            <Card.Description>
-              <Icon name='clock outline' size='large'/>
-                Duration <Moment to={event_date.begin} ago>
-                {event_date.end}
-              </Moment><br />
-                Start <Moment format=" h:mm a">{event_date.begin}</Moment><br />
-                End <Moment format= "h:mm a">{event_date.end}</Moment><br />
-            </Card.Description>
-          </Card.Content>
-          <Card.Content extra>
-            {this.renderIcons()}
-          </Card.Content>
-          </Card>
-          </div>
-          <div className={styles.extraContent}>
-            
-            <h1>Event Hosts</h1>
-            <Presenters {...this.state.event} {...this.props} />
-       
-          </div>
-          </div>
+        <div className={styles.eventBox} id={styles.descriptionBox}>
+        <h2>Here's a little more information</h2>
+            <Segment.Group horizontal >
+              <Segment.Group >
+                <Segment color='green'><Image src={require('../assets/staticmap.png')} size='medium' /></Segment>
+                <Segment.Group>
+                  <Segment><Icon name='point'/>weExplore Centre, Clayton, VIC <br /></Segment>
+                  <Segment><Icon name='clock outline' size='large'/>
+                    Duration <Moment to={event_date.begin} ago>
+                    {event_date.end}
+                    </Moment><br />
+                    <h3>Start <Moment format=" h:mm a">{event_date.begin}</Moment></h3>
+                    <h3>End <Moment format= "h:mm a">{event_date.end}</Moment></h3></Segment>
+                  <Segment>{this.renderIcons()}</Segment>
+                </Segment.Group>
+              </Segment.Group> 
+              <Segment.Group>
+                <Segment color='green'><Header textAlign='center'>
+                    Event Hosts
+                  </Header></Segment>
+                  <Segment><Presenters {...this.state.event} {...this.props} /></Segment>
+              </Segment.Group>
+            </Segment.Group>   
         </div>
 
         <div className={styles.extraEventsBox}>
@@ -233,20 +222,22 @@ class Event extends React.Component {
     if (localStorage.weexplore_token)
       return (
         <Modal trigger={this.state.event ? this.attendButton() : null}>
-          <Modal.Header>{this.state.attend}</Modal.Header>
+          <Modal.Header className={styles.ModalHeader}>{this.state.attend} <strong>{this.state.event.event_name}</strong></Modal.Header>
           <Modal.Content>
             <Modal.Description>
               {this.state.attending ? (
-                <>
-                  Are you sure you want to unattend?
-                  <Button onClick={this.unattendEvent}>Yes</Button>
-                </>
+                <div className={formStyles.AttendForm}>
+                  <Segment id={formStyles.AttendFormSegment} raised color='green'>
+                    <h2>Are you sure you want to unattend?</h2>
+                  <Button onClick={this.unattendEvent} className={formStyles.NextButton}>Yes</Button></Segment>
+                </div>
               ) : (
-                <AttendForm
+                <div className={formStyles.AttendForm}>
+                <Segment id={formStyles.AttendFormSegment} raised color='green'><AttendForm
                   onSubmit={this.attendEvent}
                   event={this.state.event}
                   initialValues={{ username: localStorage.username }}
-                />
+                /></Segment></div>
               )}
             </Modal.Description>
           </Modal.Content>
@@ -276,13 +267,10 @@ class Event extends React.Component {
   render() {
     console.log( this.state.event)
     return (
-      
-      <div>
-          <Link to={{ pathname: `/events` }}>Back to events</Link>
         <div className={styles.eventContainer}>
           {this.state.event ? this.renderEvent() : null}
         </div>
-      </div>
+      
     );
   }
 }
