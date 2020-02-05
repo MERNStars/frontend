@@ -64,7 +64,7 @@ class AboutUs extends Component {
               <List.Item>
                 <Icon name='newspaper outline'/>
                 <List.Content>
-                  <Link to=''><List.Header id={styles.list}>More Resources</List.Header></Link>
+                  <List.Header id={styles.list}><a href="http://www.gatewaysda.org/">More Resources</a></List.Header>
                 </List.Content>
               </List.Item>
             </List>
