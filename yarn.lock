@@ -9341,6 +9341,11 @@ react-transition-group@^2.4.0:
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
 
+react-widgets-moment@^4.0.27:
+  version "4.0.27"
+  resolved "https://registry.yarnpkg.com/react-widgets-moment/-/react-widgets-moment-4.0.27.tgz#0909dd32685789257d834eb6c4e8b2f9ba89373c"
+  integrity sha512-lffLAf5FxrW0G78wJIZvQsJ+AhLOEnjBATVpE0XyP2Ow81tAiHFqBjuOsw5HvkCPAs59ChVErmXBNCO9ekhIpw==
+
 react-widgets-simple-number@^4.1.23:
   version "4.1.23"
   resolved "https://registry.yarnpkg.com/react-widgets-simple-number/-/react-widgets-simple-number-4.1.23.tgz#38c4b5fd1e1906906f7e17247f3100077268e675"

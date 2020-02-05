@@ -5,7 +5,11 @@ import { createEvent, resetNewImage } from "../reducers/event_reducer";
 import config from "../components/Events/EventForm/awsconfig";
 import { withRouter } from "react-router-dom";
 import S3 from "react-aws-s3";
+import styles from '../styles/form.module.scss';
+import {Segment} from 'semantic-ui-react';
 const { uuid } = require("uuidv4");
+
+
 
 require("dotenv").config();
 
@@ -64,8 +68,8 @@ export class CreateEvent extends React.Component {
 
   render() {
     return (
-      <div>
-        <CreateEventForm handleSubmit={this.handleSubmit} />
+      <div className={styles.FormContainer}>
+        <Segment id={styles.eventFormSegment} raised color='green'><h3>Create New Event</h3><CreateEventForm handleSubmit={this.handleSubmit} /></Segment>
       </div>
     );
   }

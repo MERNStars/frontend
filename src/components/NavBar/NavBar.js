@@ -3,17 +3,18 @@ import { NavLink } from "react-router-dom";
 import { Menu, Dropdown, Button } from "semantic-ui-react";
 import AdminAccount from "../AdminDashboard/adminAccount";
 import Logout from '../Users/Logout';
+import styles from '../../styles/navbar.module.scss';
 
 class Navbar extends React.Component {
 
   render() {
     let result = AdminAccount();
     return (
-      <Menu borderless size="huge">
+      <Menu borderless size="huge" id={styles.Navbar}>
         <Menu.Menu position="left">
         <Menu.Item>
           <NavLink exact to="/">
-            weExplore
+            <h1>weExplore</h1>
           </NavLink>
         </Menu.Item>
         </Menu.Menu>

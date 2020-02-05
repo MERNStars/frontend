@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { userLogin } from "../../reducers/user_reducer";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import styles from '../../styles/form.module.scss';
 
 function mapStateToProps(state) {
   return {
@@ -41,18 +42,19 @@ class LoginForm extends Component {
   render() {
     return (
       <div>
+        <h2>Login to your weExplore account</h2>
         <input
           type="text"
           placeholder="Your username or email"
           onChange={this.updateUsername}
-        />
+        /><br />
         <input
           type="password"
           placeholder="Your password"
           onChange={this.updatePassword}
-        />
-        <button onClick={this.login}>Login</button>
-        <Link to="/passrequest">forgot password</Link>
+        /><br />
+        <button className={styles.SubmitButton}onClick={this.login}>Login</button>
+        <Link to="/passrequest">Click here if you forgot your password</Link>
       </div>
     );
   }

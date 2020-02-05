@@ -4,6 +4,7 @@ import validate from "../../FormFields/validate";
 import { connect } from "react-redux";
 import { setNewImage } from "../../../reducers/event_reducer";
 import {RenderTextField, RenderImageField} from '../../FormFields/FormFields'
+import styles from '../../../styles/form.module.scss';
 
 function mapStateToProps(state) {
   return {
@@ -48,10 +49,10 @@ class WizardFormThirdPage extends React.Component {
           label="Published"
         />
         <div>
-          <button type="button" className="previous" onClick={previousPage}>
+          <button type="button" className={styles.NextButton} id={styles.PreviousButton} onClick={previousPage}>
             Previous
           </button>
-          <button type="submit" disabled={pristine || submitting}>
+          <button type="submit" className={styles.NextButton} disabled={pristine || submitting}>
             Create Event
           </button>
         </div>

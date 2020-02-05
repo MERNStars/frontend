@@ -47,4 +47,21 @@
     align-items: center;
   }
 }
+.mainContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 500px);
+  margin: 100px;
+  margin-top: 150px;
+  #contactSubmit{
+    font-size: 18px;
+    font-weight: bolder;
+    line-height: 2;
+    text-align: center;
+  }
+}
+
+
 

@@ -115,15 +115,13 @@ class AdminEventCard extends React.Component {
           authorization: `${localStorage.weexplore_token}`
         }
       }
-    )
-      .then(response => {
-        console.log(response);
-        this.dispatchEvent(response.data);
-      })
-      .catch(err => {
-        console.error("error: " + err);
-      });
-  };
+    };
+    const response = await Axios(options).catch( (err) => {
+      console.log( `Error: ${err}`)
+    })
+    console.log( response.data )
+    this.dispatchEvent(response.data)
+  }
 
   // Update store events
 
