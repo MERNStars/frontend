@@ -177,11 +177,12 @@ export function renderAgeNumberPicker({
   input,
   name,
   label,
+  className,
   meta: { touched, error, warning }
 }) {
   return (
-    <div className="Small-Text">
-      <label>{label}</label> <br />
+    <div>
+      <label>{label}</label>
       <NumberPicker
         {...input}
         name={name}
@@ -202,12 +203,13 @@ export function renderSexCombobox({
   name,
   label,
   sexes,
+  className,
   meta: { touched, error, warning }
 }) {
   return (
-    <div className="My-Radio">
-      {label}:
-      <DropdownList {...input} name={name} data={sexes} value={input.value} />
+    <div>
+      <label>{label}</label> <br />
+      <DropdownList {...input} name={name} data={sexes} value={input.value} className={className} placeholder={sexes[0]} />
       {touched &&
         ((error && <span>{error}</span>) ||
           (warning && <span>{warning}</span>))}
@@ -215,15 +217,17 @@ export function renderSexCombobox({
   );
 };
 
-export function renderReligiousCombobox ({ input, name, label, religions }) {
+export function renderReligiousCombobox ({ input, name, label, religions, className }) {
   return (
-    <div className="My-Radio">
-      {label}:
+    <div>
+      <label>{label}</label> <br />
       <DropdownList
         {...input}
         name={name}
         data={religions}
         value={input.value}
+        className={className}
+        placeholder={religions[0]}
       />
     </div>
   );
@@ -254,17 +258,19 @@ export function RenderUneditableTextField({
   );
 };
 
-export function renderInterestMultiSelects({ input, name, label, categories,onBlur }) {
+export function renderInterestMultiSelects({ input, name, label, categories,onBlur, className }) {
 
   return (
-    <div className="My-Radio">
-      {label}:
+    <div>
+      <label>{label}</label> <br />
       <Multiselect
         {...input}
+        className={className}
         name={name}
         data={categories}
         onBlur={onBlur}
         value={input.value !== "[]" ? [...input.value] : "[]"}
+        placeholder={categories[0]}
       />
     </div>
   );

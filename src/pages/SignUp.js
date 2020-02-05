@@ -3,6 +3,8 @@ import UserSignUpForm from "../components/Users/SignUpForm";
 import { connect } from "react-redux";
 import { createUser } from "../reducers/user_reducer";
 import { Redirect } from "react-router-dom";
+import styles from '../styles/form.module.scss';
+import {Segment} from 'semantic-ui-react';
 
 function mapStateToProps(state) {
   return {
@@ -13,7 +15,7 @@ function mapStateToProps(state) {
 
 class SignUp extends Component {
   state = {
-    display_message: "Sign Up",
+    display_message: "weExplore Sign Up",
     redirect: false
   };
 
@@ -30,10 +32,10 @@ class SignUp extends Component {
 
   render() {
     return (
-      <div>
+      <div className={styles.SignUpFormContainer}>
         {this.redirectToLogin()}
-        <h1>{this.state.display_message}</h1>
-        <UserSignUpForm onSubmit={this.submit} />
+        <Segment id={styles.eventFormSegment} color='green'><h1>{this.state.display_message}</h1>
+        <UserSignUpForm onSubmit={this.submit} /></Segment>
       </div>
     );
   }

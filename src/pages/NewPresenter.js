@@ -33,8 +33,8 @@ class NewPresenter extends Component {
 
   render() {
     return (
-      <div className={styles.eventFormContainer}>
-        <Segment id={styles.eventFormSegment} raised color='green'><AddNewPresenter onSubmit={this.handleSubmit} /></Segment>
+      <div className={styles.FormContainer}>
+        <Segment id={styles.eventFormSegment} raised color='green'><AddNewPresenter onSubmit={this.handleSubmit} /><br /><button onClick={this.props.history.goBack()} className={styles.PreviousButton}>Previous</button></Segment>
      </div>
     );
   }

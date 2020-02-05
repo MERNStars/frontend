@@ -114,6 +114,7 @@ componentDidMount() {
     const response = await Axios(options).catch( (err) => {
       console.log( `Error: ${err}`)
     })
+    console.log( response.data )
     this.dispatchEvent(response.data)
   }
 

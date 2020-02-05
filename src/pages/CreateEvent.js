@@ -68,8 +68,8 @@ export class CreateEvent extends React.Component {
 
   render() {
     return (
-      <div className={styles.eventFormContainer}>
-        <Segment id={styles.eventFormSegment} raised color='green'><CreateEventForm handleSubmit={this.handleSubmit} /></Segment>
+      <div className={styles.FormContainer}>
+        <Segment id={styles.eventFormSegment} raised color='green'><h3>Create New Event</h3><CreateEventForm handleSubmit={this.handleSubmit} /></Segment>
       </div>
     );
   }

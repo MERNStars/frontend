@@ -48,7 +48,7 @@ class AddNewPresenter extends Component {
           />
           <Field
             name="avatar"
-            component={RenderImageField}
+            component={RenderTextField}
             type="textarea"
             label="Upload Avatar"
           />

@@ -9,6 +9,8 @@ import {
 import config from "../components/Events/EventForm/awsconfig";
 import { withRouter } from "react-router-dom";
 import S3 from "react-aws-s3";
+import styles from '../styles/form.module.scss';
+import {Segment} from 'semantic-ui-react';
 const { uuid } = require("uuidv4");
 
 require("dotenv").config();
@@ -124,11 +126,13 @@ class EditEvent extends React.Component {
 
   render() {
     return (
-      <div>
-        <CreateEventForm
+      <div className={styles.FormContainer}>
+        <Segment id={styles.eventFormSegment} raised color='green'>
+          <h2>Edit Event</h2>
+          <CreateEventForm
           handleSubmit={this.handleSubmit}
           populatedValue={this.state.event}
-        />
+        /></Segment>
       </div>
     );
   }

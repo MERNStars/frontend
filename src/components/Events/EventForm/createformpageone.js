@@ -20,7 +20,6 @@ const WizardFormFirstPage = props => {
   return (
     
     <form onSubmit={handleSubmit}>
-      <h2>Create a new event</h2>
       <Field
         name="event_name"
         component={RenderTextField}
