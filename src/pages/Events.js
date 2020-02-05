@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import ClearMessageLocalStorage from "../components/Common/ClearMessageLocalStorage";
-
+import Moment from "moment";
 import EventCard from "../components/Events/eventCard";
 import SearchBar from "../components/Events/searchBar";
 
@@ -29,7 +29,12 @@ export default class Events extends Component {
     let newData = data.filter(d => {
       return d.published === true && d.status !== "completed";
     });
-    this.setState({ events: newData, resetEvents: newData });
+    const sortedArray = newData.sort(
+      (a, b) =>
+        new Moment(a.event_date.begin).format("YYYYMMDD") -
+        new Moment(b.event_date.begin).format("YYYYMMDD")
+    );
+    this.setState({ events: sortedArray, resetEvents: newData });
     ClearMessageLocalStorage();
   }
 

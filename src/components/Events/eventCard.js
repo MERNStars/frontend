@@ -1,7 +1,7 @@
 import React from "react";
 import Moment from "react-moment";
 import { Card, Icon, Image, Segment, Label } from "semantic-ui-react";
-
+import styles from '../../styles/events.module.scss';
 class EventCard extends React.Component {
   displayEventCard = () => (
     <Card href={`/events/${this.props._id}`}>
@@ -26,7 +26,7 @@ class EventCard extends React.Component {
         </Card.Description><br />
         
         <Card.Description><Label basic color='green'>{this.props.event_category}</Label><Label basic color='green'>{this.props.fee[0].type}</Label>
-        <Label size='massive' attached='top left'><Moment format="D">{this.props.event_date.begin}</Moment><br /><Moment format="MMM">{this.props.event_date.begin}</Moment></Label>
+        <Label id={styles.dateLabel} size='massive' attached='top left'><Moment format="D">{this.props.event_date.begin}</Moment><br /><Moment format="MMM">{this.props.event_date.begin}</Moment></Label>
           
         </Card.Description>
       </Card.Content>
