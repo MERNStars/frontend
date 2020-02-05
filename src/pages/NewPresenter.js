@@ -31,10 +31,15 @@ class NewPresenter extends Component {
     }
   };
 
+
+  // Passed through this.props.history to be able to go back to previous page
+
   render() {
     return (
       <div className={styles.FormContainer}>
-        <Segment id={styles.eventFormSegment} raised color='green'><AddNewPresenter onSubmit={this.handleSubmit} /><br /><button onClick={this.props.history.goBack()} className={styles.PreviousButton}>Previous</button></Segment>
+        <Segment id={styles.eventFormSegment} raised color='green'>
+          <AddNewPresenter onSubmit={this.handleSubmit} previousPage={this.props.history} /><br />
+        </Segment>
      </div>
     );
   }

@@ -4,6 +4,7 @@ import { Field, reduxForm } from "redux-form";
 import "react-widgets/dist/css/react-widgets.css";
 import { connect } from "react-redux";
 import validate from "../FormFields/validate";
+import styles from '../../styles/form.module.scss';
 import {
   renderAgeNumberPicker,
   renderSexCombobox,
@@ -26,9 +27,11 @@ function mapStateToProps(state) {
 class EditUserForm extends Component {
   render() {
     return (
-      <form onSubmit={this.props.handleSubmit} className="EditUserForm">
+      <form onSubmit={this.props.handleSubmit}>
+        <h2>Edit Account</h2>
         <Field
           name="username"
+          className={styles.input}
           component={RenderUneditableTextField}
           type="email"
           label="Email"
@@ -38,12 +41,14 @@ class EditUserForm extends Component {
         />
         <Field
           name="first_name"
+          className={styles.input}
           component={RenderTextField}
           type="text"
           label="First Name"
         />
         <Field
           name="last_name"
+          className={styles.input}
           component={RenderTextField}
           type="text"
           label="Last Name"
@@ -73,7 +78,7 @@ class EditUserForm extends Component {
           label="Event categories that might interest you"
         />
         <br />
-        <button className="btnSubmit" type="submit">
+        <button className={styles.NextButton} type="submit">
           Send
         </button>
       </form>

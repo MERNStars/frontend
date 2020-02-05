@@ -6,8 +6,6 @@ import {Item} from 'semantic-ui-react';
 
 class Presenters extends React.Component {
   adminDisplay = event => {
-
-    console.log( this.props )
     return(
       event.presenters.map( (presenter) => {
         return(
