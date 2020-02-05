@@ -127,6 +127,46 @@ export const createEvent = event => {
   };
 };
 
+export const republishEvent = event => {
+  return dispatch => {
+    Axios.post(
+      `${process.env.REACT_APP_BACKEND_DB_URL}/events/create`,
+      {
+        event_name: event.event_name,
+        description: event.description,
+        event_date: event.event_date,
+        registration_closed_date: `${event.registration_closed_date}T23:55:55.000Z`,
+        presenters: event.presenters,
+        is_family_friendly: event.is_family_friendly,
+        minimum_age: event.minimum_age,
+        event_category: event.event_category,
+        status: "scheduled",
+        images: event.images,
+        event_capacity: event.event_capacity,
+        published: event.published
+      },
+      {
+        headers: {
+          authorization: `${localStorage.weexplore_token}`
+        }
+      }
+    )
+      .then(response => {
+        console.log(response.status);
+        if (response.status === 201) {
+          dispatch(eventCreated(response.data));
+          localStorage.message = "Event Successfully Created";
+          window.location.href = "/admin";
+        } else {
+          NotificationManager.error(null, "Failed To Create Event");
+        }
+      })
+      .catch(err => {
+        console.error("error: " + err);
+      });
+  };
+};
+
 export const editEvent = event => {
   return dispatch => {
     console.log("Edit Event ...");
