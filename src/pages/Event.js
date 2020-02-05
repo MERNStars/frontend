@@ -8,12 +8,8 @@ import EventCard from "../components/Events/eventCard";
 
 import { Link } from "react-router-dom";
 
-import { Button, Image, Modal, Icon, Card } from "semantic-ui-react";
+import { Button, Image, Modal, Icon, Card, Segment, Divider, Grid, Header } from "semantic-ui-react";
 import Presenters from "../components/Presenters/PresenterDetails";
-
-import {FacebookShareButton} from 'react-share';
-
-
 
 require("dotenv").config();
 
@@ -116,11 +112,11 @@ class Event extends React.Component {
       event_name,
       event_date,
       description,
-      event_category,
       images, 
       event_capacity,
       fee,
-      attendee_count
+      attendee_count,
+      presenter_detail
     } = this.state.event;
 
     return (
@@ -128,7 +124,8 @@ class Event extends React.Component {
         <header>
           <h2><Moment format="D MMM YYYY">{event_date.begin}</Moment></h2>
           <h1>{event_name}</h1>
-          
+          <p>Hosted by {presenter_detail.map( (presenter) => {
+            return( `${presenter.title} ${presenter.first_name} ${presenter.last_name}`)})}</p>
         </header>
         <div className={styles.eventBox}>
           <div className={styles.innerContainer}>
@@ -151,38 +148,29 @@ class Event extends React.Component {
             </div>
           </div>
         </div>
-        <div className={styles.eventBox}>
-          <div className={styles.extraContainer}>
-            <div className={styles.extraContent}>
-        <Card>
-          <Image src={require('../assets/staticmap.png')} wrapped ui={false} />
-          <Card.Content>
-            <Card.Header><Icon name='point'/>
-                      weExplore Centre, Clayton, VIC</Card.Header>
-            <Card.Meta>
-            
-            </Card.Meta>
-            <Card.Description>
-              <Icon name='clock outline' size='large'/>
-                Duration <Moment to={event_date.begin} ago>
-                {event_date.end}
-              </Moment><br />
-                Start <Moment format=" h:mm a">{event_date.begin}</Moment><br />
-                End <Moment format= "h:mm a">{event_date.end}</Moment><br />
-            </Card.Description>
-          </Card.Content>
-          <Card.Content extra>
-            {this.renderIcons()}
-          </Card.Content>
-          </Card>
-          </div>
-          <div className={styles.extraContent}>
-            
-            <h1>Event Hosts</h1>
-            <Presenters {...this.state.event} {...this.props} />
-       
-          </div>
-          </div>
+        <div className={styles.eventBox} id={styles.descriptionBox}>
+        <h2>Here's a little more information</h2>
+            <Segment.Group horizontal >
+              <Segment.Group>
+                <Segment><Image src={require('../assets/staticmap.png')} size='medium' /></Segment>
+                <Segment.Group>
+                  <Segment><Icon name='point'/>weExplore Centre, Clayton, VIC <br /></Segment>
+                  <Segment><Icon name='clock outline' size='large'/>
+                    Duration <Moment to={event_date.begin} ago>
+                    {event_date.end}
+                    </Moment><br />
+                    Start <Moment format=" h:mm a">{event_date.begin}</Moment><br />
+                    End <Moment format= "h:mm a">{event_date.end}</Moment><br /></Segment>
+                  <Segment>{this.renderIcons()}</Segment>
+                </Segment.Group>
+              </Segment.Group> 
+              <Segment.Group>
+                <Segment><Header textAlign='center'>
+                    Event Hosts
+                  </Header></Segment>
+                  <Segment><Presenters {...this.state.event} {...this.props} /></Segment>
+              </Segment.Group>
+            </Segment.Group>   
         </div>
 
         <div className={styles.extraEventsBox}>
@@ -276,13 +264,10 @@ class Event extends React.Component {
   render() {
     console.log( this.state.event)
     return (
-      
-      <div>
-          <Link to={{ pathname: `/events` }}>Back to events</Link>
         <div className={styles.eventContainer}>
           {this.state.event ? this.renderEvent() : null}
         </div>
-      </div>
+      
     );
   }
 }
