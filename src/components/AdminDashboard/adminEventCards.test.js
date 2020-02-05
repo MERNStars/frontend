@@ -11,8 +11,5 @@ describe("<AdminEventCard />", () => {
     const { getByText } = render(wrapper(<BrowserRouter><AdminEventCard event_name="Test Event Name" event_date={{begin: Date.now()}}/></BrowserRouter>));
     expect(getByText("Test Event Name")).toBeInTheDocument()
   })
-  // it("tests if component did mount returns data", () => {
-  //   jest.spyOn(AdminEventCard.prototype,"componentDidMount")
-  // })
 
 })

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Axios from "axios";
-import { Table, Statistic} from "semantic-ui-react";
+import { Table, Statistic } from "semantic-ui-react";
 require("dotenv").config();
 
 class AdminMembers extends Component {
@@ -15,10 +15,13 @@ class AdminMembers extends Component {
         "content-type": "application/x-www-form-urlencoded",
         authorization: `${localStorage.weexplore_token}`
       }
-    }).then(response => {
-      this.setState({ members: response.data });
-      console.log(this.state.members);
-    });
+    })
+      .then(response => {
+
+        this.setState({ members: response.data });
+
+      })
+      .catch(err => console.error("Error" + err));
   }
 
   render() {
@@ -27,25 +30,39 @@ class AdminMembers extends Component {
         <h1>Members</h1>
         <Table color="green" striped>
           <Table.Header>
-            <Table.HeaderCell textAlign="center">Member</Table.HeaderCell>
-            <Table.HeaderCell textAlign="center">Age</Table.HeaderCell>
-            <Table.HeaderCell textAlign="center">Gender</Table.HeaderCell>
-            <Table.HeaderCell textAlign="center">Interests</Table.HeaderCell>
-            <Table.HeaderCell textAlign="center">Email</Table.HeaderCell>
+            <Table.Row>
+              <Table.HeaderCell textAlign="center">Member</Table.HeaderCell>
+              <Table.HeaderCell textAlign="center">Age</Table.HeaderCell>
+              <Table.HeaderCell textAlign="center">Gender</Table.HeaderCell>
+              <Table.HeaderCell textAlign="center">Interests</Table.HeaderCell>
+              <Table.HeaderCell textAlign="center">Email</Table.HeaderCell>
+            </Table.Row>
           </Table.Header>
           <Table.Body>
-          {this.state.members
-          ? this.state.members.map((member, i) => {
-              return (
-                <Table.Row textAlign='center'>
-                  <Table.Cell>{member.first_name} {member.last_name}</Table.Cell>
-                  <Table.Cell>{member.age}</Table.Cell>
-                  <Table.Cell>{member.sex}</Table.Cell>
-                  <Table.Cell verticalAlign='top'>{member.interests.map( (interest) => {
-                    return (  <>{`${interest} `}<br /></> )})}</Table.Cell>
-                  <Table.Cell>{member.username}</Table.Cell>
-                </Table.Row>)}): 
-                null }
+            {this.state.members
+              ? this.state.members.map((member, i) => {
+                  return (
+                    <Table.Row textAlign="center">
+                      <Table.Cell>
+                        {member.first_name} {member.last_name}
+                      </Table.Cell>
+                      <Table.Cell>{member.age}</Table.Cell>
+                      <Table.Cell>{member.sex}</Table.Cell>
+                      <Table.Cell verticalAlign="top">
+                        {member.interests.map(interest => {
+                          return (
+                            <>
+                              {`${interest} `}
+                              <br />
+                            </>
+                          );
+                        })}
+                      </Table.Cell>
+                      <Table.Cell>{member.username}</Table.Cell>
+                    </Table.Row>
+                  );
+                })
+              : null}
           </Table.Body>
         </Table>
         <Statistic size="small" horizontal>
