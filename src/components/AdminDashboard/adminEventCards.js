@@ -115,13 +115,15 @@ class AdminEventCard extends React.Component {
           authorization: `${localStorage.weexplore_token}`
         }
       }
-    };
-    const response = await Axios(options).catch( (err) => {
-      console.log( `Error: ${err}`)
-    })
-    console.log( response.data )
-    this.dispatchEvent(response.data)
-  }
+    )
+      .then(response => {
+        console.log(response.data);
+        this.dispatchEvent(response.data);
+      })
+      .catch(err => {
+        console.log(`Error: ${err}`);
+      });
+  };
 
   // Update store events
 
@@ -133,8 +135,6 @@ class AdminEventCard extends React.Component {
     newEvents[eventIndex] = response;
     this.props.updateEvents(newEvents);
   };
-
-
 
   render() {
     const event = this.props;
@@ -148,7 +148,8 @@ class AdminEventCard extends React.Component {
             <Presenter {...event} />
           </Card.Description>
           <Card.Meta>
-            <Icon name="time"/><Moment format="D MMM h:mm a">{event.event_date.begin}</Moment>
+            <Icon name="time" />
+            <Moment format="D MMM h:mm a">{event.event_date.begin}</Moment>
           </Card.Meta>
         </Card.Content>
         <Card.Content>

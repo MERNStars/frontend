@@ -1,11 +1,8 @@
 import React from "react";
 import Moment from 'moment'
-import momentLocalizer from 'react-widgets-moment';
 import {Image} from 'semantic-ui-react';
 import { NumberPicker, DropdownList, Multiselect, DateTimePicker} from "react-widgets";
 import ImageUploadPreviewer from "../FormFields/ImageUploadPreviewer";
-Moment.locale('en')
-momentLocalizer()
 
 // Contains Form Fields to be used in differnet forms
 
@@ -63,15 +60,6 @@ export function RenderTextField({
   );
 }
 
-<<<<<<< HEAD
-export const renderPresentersField = ({
-  input,
-  name,
-  label,
-  presenters,
-  onBlur
-}) => {
-=======
 export function RenderSmallTextField ({
   input,
   className,
@@ -147,7 +135,6 @@ export function RenderTextArea ({
 
 
 export const renderPresentersField = ({ input, name, label, presenters, onBlur }) => {
->>>>>>> master
   let emptyArray = [];
   presenters.map(presenter => {
     emptyArray.push({
@@ -259,11 +246,7 @@ export function renderSexCombobox({
   );
 }
 
-<<<<<<< HEAD
-export function renderReligiousCombobox({ input, name, label, religions }) {
-=======
 export function renderReligiousCombobox ({ input, name, label, religions, className }) {
->>>>>>> master
   return (
     <div>
       <label>{label}</label> <br />
@@ -301,20 +284,15 @@ export function RenderUneditableTextField({
           (warning && <span>{warning}</span>))}
     </div>
   );
-<<<<<<< HEAD
-}
-=======
 };
-
-export function renderInterestMultiSelects({ input, name, label, categories,onBlur, className }) {
->>>>>>> master
 
 export function renderInterestMultiSelects({
   input,
   name,
   label,
   categories,
-  onBlur
+  onBlur,
+  className
 }) {
   return (
     <div>
