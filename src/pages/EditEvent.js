@@ -1,11 +1,13 @@
 import React from "react";
 import CreateEventForm from "../components/Events/EventForm/CreateEventForm";
 import { connect } from "react-redux";
+
 import {
   editEvent,
   createEvent,
   resetNewImage
 } from "../reducers/event_reducer";
+
 import config from "../components/Events/EventForm/awsconfig";
 import { withRouter } from "react-router-dom";
 import S3 from "react-aws-s3";
@@ -83,6 +85,7 @@ class EditEvent extends React.Component {
 
   handleSubmit = data => {
     try {
+
     const event = JSON.parse(JSON.stringify(data));
     console.log(event);
     const presenters = event.selectedPresenters.map(presenter => presenter.id);
@@ -122,6 +125,7 @@ class EditEvent extends React.Component {
     });
   } catch(error) {console.log(error)}
     
+
   };
 
   render() {

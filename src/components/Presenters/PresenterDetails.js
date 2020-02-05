@@ -7,14 +7,15 @@ import {Item} from 'semantic-ui-react';
 
 class Presenters extends React.Component {
   adminDisplay = event => {
-    return event.presenters.map(presenter => {
-      return (
-        <p>
-          {presenter.title} {presenter.first_name} {presenter.last_name}
-        </p>
-      );
-    });
-  };
+
+    console.log( this.props )
+    return(
+      event.presenters.map( (presenter) => {
+        return(
+          <p>{presenter.title} {presenter.first_name} {presenter.last_name}</p>
+        )
+      }))
+  }
 
   eventDisplay = event => {
     const { presenter_detail } = event;
@@ -43,6 +44,7 @@ class Presenters extends React.Component {
       this.eventDisplay(this.props)
      )
   } 
+
 }
 
 export default Presenters;
