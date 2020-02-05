@@ -36,6 +36,13 @@
     align-items: center;
     width: 100%;
     height: 500px;
+    margin-bottom: 50px;
+    .ModalHeader{
+      strong {
+        font-weight: lighter;
+        font-family: 'Oswald', sans-serif;
+      }
+    }
     .outerContainer {
       width: 100%;
       height: 100%;
@@ -126,16 +133,10 @@
         align-items: center;
         justify-content: center;
       }
-      
-     
     }
-  
-
   h4 {
     margin-bottom: 0px;
   }
-
-
 .eventCard {
   margin-bottom: 5px;
 }

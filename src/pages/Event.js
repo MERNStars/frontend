@@ -3,12 +3,13 @@ import axios from "axios";
 import Moment from "react-moment";
 import { connect } from "react-redux";
 import styles from "../styles/event.module.scss";
+import formStyles from "../styles/form.module.scss";
 import AttendForm from "../components/Attendees/attendform";
 import EventCard from "../components/Events/eventCard";
 
 import { Link } from "react-router-dom";
 
-import { Button, Image, Modal, Icon, Card, Segment, Divider, Grid, Header } from "semantic-ui-react";
+import { Button, Image, Modal, Icon, Card, Segment, Header } from "semantic-ui-react";
 import Presenters from "../components/Presenters/PresenterDetails";
 
 require("dotenv").config();
@@ -151,21 +152,21 @@ class Event extends React.Component {
         <div className={styles.eventBox} id={styles.descriptionBox}>
         <h2>Here's a little more information</h2>
             <Segment.Group horizontal >
-              <Segment.Group>
-                <Segment><Image src={require('../assets/staticmap.png')} size='medium' /></Segment>
+              <Segment.Group >
+                <Segment color='green'><Image src={require('../assets/staticmap.png')} size='medium' /></Segment>
                 <Segment.Group>
                   <Segment><Icon name='point'/>weExplore Centre, Clayton, VIC <br /></Segment>
                   <Segment><Icon name='clock outline' size='large'/>
                     Duration <Moment to={event_date.begin} ago>
                     {event_date.end}
                     </Moment><br />
-                    Start <Moment format=" h:mm a">{event_date.begin}</Moment><br />
-                    End <Moment format= "h:mm a">{event_date.end}</Moment><br /></Segment>
+                    <h3>Start <Moment format=" h:mm a">{event_date.begin}</Moment></h3>
+                    <h3>End <Moment format= "h:mm a">{event_date.end}</Moment></h3></Segment>
                   <Segment>{this.renderIcons()}</Segment>
                 </Segment.Group>
               </Segment.Group> 
               <Segment.Group>
-                <Segment><Header textAlign='center'>
+                <Segment color='green'><Header textAlign='center'>
                     Event Hosts
                   </Header></Segment>
                   <Segment><Presenters {...this.state.event} {...this.props} /></Segment>
@@ -221,20 +222,22 @@ class Event extends React.Component {
     if (localStorage.weexplore_token)
       return (
         <Modal trigger={this.state.event ? this.attendButton() : null}>
-          <Modal.Header>{this.state.attend}</Modal.Header>
+          <Modal.Header className={styles.ModalHeader}>{this.state.attend} <strong>{this.state.event.event_name}</strong></Modal.Header>
           <Modal.Content>
             <Modal.Description>
               {this.state.attending ? (
-                <>
-                  Are you sure you want to unattend?
-                  <Button onClick={this.unattendEvent}>Yes</Button>
-                </>
+                <div className={formStyles.AttendForm}>
+                  <Segment id={formStyles.AttendFormSegment} raised color='green'>
+                    <h2>Are you sure you want to unattend?</h2>
+                  <Button onClick={this.unattendEvent} className={formStyles.NextButton}>Yes</Button></Segment>
+                </div>
               ) : (
-                <AttendForm
+                <div className={formStyles.AttendForm}>
+                <Segment id={formStyles.AttendFormSegment} raised color='green'><AttendForm
                   onSubmit={this.attendEvent}
                   event={this.state.event}
                   initialValues={{ username: localStorage.username }}
-                />
+                /></Segment></div>
               )}
             </Modal.Description>
           </Modal.Content>

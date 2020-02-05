@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Redirect, Switch, Link } from "react-router-dom";
+import { BrowserRouter, Route, Redirect, Switch} from "react-router-dom";
 import Home from "../pages/Home";
 import Events from "../pages/Events";
 import Event from "../pages/Event";
@@ -16,17 +16,12 @@ import PassRequest from "../pages/PassRequest";
 import PassReset from "../pages/PassReset";
 import AdminAccount from "../components/AdminDashboard/adminAccount";
 import EditAccountDetails from "../pages/EditAccount";
+import PageNotFound from "../pages/PageNotFound";
 
 const NoMatch = ({ location }) => (
   <div>
-    <h2>
-      404 ERROR..BEEP..BOOP...BEEP! No Routes Matching{" "}
-      <code>{location.pathname}</code>
-    </h2>
-
-    <Link exact to="/">
-      <h3>Return To Home Page</h3>
-    </Link>
+    <PageNotFound />
+    
   </div>
 );
 

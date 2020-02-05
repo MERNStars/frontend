@@ -15,6 +15,7 @@ class Presenters extends React.Component {
   }
 
   eventDisplay = event => {
+    console.log( event )
     const { presenter_detail } = event;
       return presenter_detail
         ? <Item.Group divided> {presenter_detail.map(presenter => {
