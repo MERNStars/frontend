@@ -1,15 +1,41 @@
 import React from "react";
 import Moment from 'moment'
-import momentLocalizer from 'react-widgets-moment';
 import {Image} from 'semantic-ui-react';
 import { NumberPicker, DropdownList, Multiselect, DateTimePicker} from "react-widgets";
 import ImageUploadPreviewer from "../FormFields/ImageUploadPreviewer";
-Moment.locale('en')
-momentLocalizer()
 
 // Contains Form Fields to be used in differnet forms
 
-export function RenderTextField ({
+export class CustomFriendsFriend extends React.Component {
+  render() {
+    const {
+      label,
+      type,
+      input,
+      meta: { touched, error, warning }
+    } = this.props;
+    return (
+      <div className="Small-Text">
+        <label htmlFor={label}>{label}</label>
+        <br />
+        <input
+          {...input}
+          className="text-field"
+          onChange={input.onChange}
+          placeholder={label}
+          type={type}
+          id={label}
+        />
+
+        {touched &&
+          ((error && <span>{error}</span>) ||
+            (warning && <span>{warning}</span>))}
+      </div>
+    );
+  }
+}
+
+export function RenderTextField({
   input,
   className,
   label,
@@ -18,20 +44,21 @@ export function RenderTextField ({
 }) {
   return (
     <div className="Small-Text">
-      <label>{label}</label> <br />
+      <label htmlFor={label}>{label}</label> <br />
       <input
         {...input}
         className={className}
         onChange={input.onChange}
         placeholder={label}
         type={type}
+        id={label}
       />
       {touched &&
         ((error && <span>{error}</span>) ||
           (warning && <span>{warning}</span>))}
     </div>
   );
-};
+}
 
 export function RenderSmallTextField ({
   input,
@@ -130,7 +157,10 @@ export const renderPresentersField = ({ input, name, label, presenters, onBlur }
   );
 };
 
-export const RenderImageField = ({ input, meta: { touched, error, warning } }) => {
+export const RenderImageField = ({
+  input,
+  meta: { touched, error, warning }
+}) => {
   return (
     <div className="image-file">
       <ImageUploadPreviewer
@@ -171,7 +201,6 @@ export const RenderCategoriesField = ({
     </div>
   );
 };
-
 
 export function renderAgeNumberPicker({
   input,
@@ -215,7 +244,7 @@ export function renderSexCombobox({
           (warning && <span>{warning}</span>))}
     </div>
   );
-};
+}
 
 export function renderReligiousCombobox ({ input, name, label, religions, className }) {
   return (
@@ -231,8 +260,7 @@ export function renderReligiousCombobox ({ input, name, label, religions, classN
       />
     </div>
   );
-};
-
+}
 
 export function RenderUneditableTextField({
   input,
@@ -258,8 +286,14 @@ export function RenderUneditableTextField({
   );
 };
 
-export function renderInterestMultiSelects({ input, name, label, categories,onBlur, className }) {
-
+export function renderInterestMultiSelects({
+  input,
+  name,
+  label,
+  categories,
+  onBlur,
+  className
+}) {
   return (
     <div>
       <label>{label}</label> <br />
@@ -274,7 +308,7 @@ export function renderInterestMultiSelects({ input, name, label, categories,onBl
       />
     </div>
   );
-};
+}
 
 export const RenderStatusField = ({
   input,
@@ -286,12 +320,7 @@ export const RenderStatusField = ({
   return (
     <div className="My-Radio">
       {label}:
-      <DropdownList
-        {...input}
-        name={name}
-        data={status}
-        value={input.value}
-      />
+      <DropdownList {...input} name={name} data={status} value={input.value} />
       {touched &&
         ((error && <span>{error}</span>) ||
           (warning && <span>{warning}</span>))}

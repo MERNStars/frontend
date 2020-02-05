@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Field, reduxForm, FieldArray } from "redux-form";
 import { withRouter } from "react-router-dom";
-import {RenderTextField} from '../FormFields/FormFields'
+import { RenderTextField, CustomFriendsFriend } from "../FormFields/FormFields";
 
-class AttendForm extends Component {
+export class AttendForm extends Component {
   // Form Field To Render Input For Adding Friends
   renderFriends = ({ fields, meta: { error } }) => (
     <ul>
@@ -12,7 +12,7 @@ class AttendForm extends Component {
           <Field
             name={friends}
             type="text"
-            component={RenderTextField}
+            component={CustomFriendsFriend}
             label={`Friend #${index + 1}`}
           />
           <button
@@ -70,7 +70,6 @@ class AttendForm extends Component {
 
   render() {
     const { event } = this.props;
-    console.log(event.event_name);
     return (
       <div>
         <form onSubmit={this.props.handleSubmit}>
