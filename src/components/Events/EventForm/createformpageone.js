@@ -1,9 +1,12 @@
 import React from "react";
 import { RenderCategoriesField } from "../../FormFields/FormFields";
 import { Field, reduxForm } from "redux-form";
+
 import { connect } from "react-redux";
 import validate from "../../FormFields/validate";
-import {RenderTextField, RenderStatusField} from '../../FormFields/FormFields'
+import {RenderTextField, RenderStatusField, RenderTextArea, RenderCheckBox, RenderSmallTextField} from '../../FormFields/FormFields'
+import styles from '../../../styles/form.module.scss';
+
 
 function mapStateToProps(state) {
   return {
@@ -15,6 +18,7 @@ function mapStateToProps(state) {
 const WizardFormFirstPage = props => {
   const { categories, status, handleSubmit, initialValues } = props;
   return (
+    
     <form onSubmit={handleSubmit}>
       <Field
         name="event_name"
@@ -24,9 +28,10 @@ const WizardFormFirstPage = props => {
       />
       <Field
         name="description"
-        component={RenderTextField}
+        component={RenderTextArea}
         type="textarea"
         label="Description"
+        className={styles.description}
       />
       <Field
         name="event_date"
@@ -54,21 +59,24 @@ const WizardFormFirstPage = props => {
       />
       <Field
         name="is_family_friendly"
-        component={RenderTextField}
+        component={RenderCheckBox}
+        className={styles.Checkbox}
         type="checkbox"
         label="Family Friendly"
       />
       <Field
         name="minimum_age"
-        component={RenderTextField}
+        component={RenderSmallTextField}
         type="number"
         label="Minimum Age"
+        className={styles.SmallInput}
       />
       <Field
         name="event_capacity"
-        component={RenderTextField}
+        component={RenderSmallTextField}
         type="number"
         label="Event Capacity"
+        className={styles.SmallInput}
       />
       <Field
         name="event_category"
@@ -76,6 +84,7 @@ const WizardFormFirstPage = props => {
         categories={categories}
         type="text"
         label="Event Category"
+        className={styles.Categories}
       />
       {initialValues && initialValues.status ? (
         <Field
@@ -88,7 +97,7 @@ const WizardFormFirstPage = props => {
       ) : null}
 
       <div>
-        <button type="submit" className="next">
+        <button type="submit" className={styles.NextButton}>
           Next
         </button>
       </div>

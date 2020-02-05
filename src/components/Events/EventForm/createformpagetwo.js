@@ -3,6 +3,8 @@ import { Field, reduxForm } from "redux-form";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { renderPresentersField } from "../../FormFields/FormFields";
+import styles from '../../../styles/form.module.scss';
+import {Button, Icon} from 'semantic-ui-react';
 
 const WizardFromSecondPage = props => {
   const [presenters, setPresenters] = useState([]);
@@ -27,16 +29,16 @@ const WizardFromSecondPage = props => {
         presenters={presenters}
         label="Presenters"
       />
-      <h4>Or Add new presenter</h4>
-      <button>
-        <Link to="/create-presenter">Create Presenter</Link>
-      </button>
+      <Button id={styles.presenterButton} basic icon labelPosition='left'>
+      <Icon name='add user' />
+        <Link to="/create-presenter">Add New Presenter</Link>
+      </Button>
 
       <div>
-        <button type="button" className="previous" onClick={previousPage}>
+        <button type="button" className={styles.NextButton} id={styles.PreviousButton} onClick={previousPage}>
           Previous
         </button>
-        <button type="submit" className="next">
+        <button type="submit" className={styles.NextButton}>
           Next
         </button>
       </div>
