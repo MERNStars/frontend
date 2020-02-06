@@ -2,14 +2,10 @@
 
 import { wait } from "@testing-library/react";
 
-
-
-
   context("tests admin login component", () => {
     beforeEach(() => {
         cy.visit('http://localhost:3000/login');
     })
-
 
     it("Logins and returns a token from backend server", () => {
         cy.get('[type="text"]').type("test@test.com")
@@ -20,10 +16,6 @@ import { wait } from "@testing-library/react";
           })
 
         wait(1000)
-
-        cy.get('.notification').click()
-        cy.get('.simple').click()
-        cy.get('a > div > .ui').click()
     })
 
     it("tests if error message is returned when incorrect login details is used", () => {
@@ -66,7 +58,5 @@ import { wait } from "@testing-library/react";
         cy.get('.simple').click()
         cy.get('a > div > .ui').click()
     })
-    
 
-    
   })
