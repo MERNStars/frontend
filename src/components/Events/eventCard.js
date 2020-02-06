@@ -8,8 +8,8 @@ class EventCard extends React.Component {
       <Image
         src={
           this.props.images
-            ? this.props.images[0]
-            : require("../../assets/placeholder.jpg")
+            ? this.props.images[0] !== "friends.jpg" ? this.props.images[0]
+            : require(`../../assets/${this.props.images[0]}`) : null
         }
         wrapped
         ui={false}
