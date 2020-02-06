@@ -25,6 +25,7 @@ function mapStateToProps(state) {
 }
 
 function usernameValidate(values) {
+  console.log( values )
   return Axios.post(`${process.env.REACT_APP_BACKEND_DB_URL}/users/exists`, {
     username: values.username
   }).then(response => {
