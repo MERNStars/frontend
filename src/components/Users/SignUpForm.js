@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import simpleNumberLocalizer from "react-widgets-simple-number";
-import { NumberPicker, DropdownList, Multiselect } from "react-widgets";
 import { Field, reduxForm } from "redux-form";
 import "react-widgets/dist/css/react-widgets.css";
 import { connect } from "react-redux";

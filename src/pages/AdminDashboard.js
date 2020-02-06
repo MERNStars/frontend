@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import AdminEvent from "../components/AdminDashboard/adminevents";
 import AdminMembers from "../components/AdminDashboard/adminmembers";
-import { Grid, Card, Menu, Icon } from "semantic-ui-react";
+import { Grid, Menu } from "semantic-ui-react";
 import { connect } from "react-redux";
 import Moment from "moment";
 import { populateEvents } from "../reducers/event_reducer";
