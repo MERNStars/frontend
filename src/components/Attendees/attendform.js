@@ -5,7 +5,7 @@ import { RenderTextField, CustomFriendsFriend } from "../FormFields/FormFields";
 import styles from "../../styles/form.module.scss";
 
 export class AttendForm extends Component {
-  // Form Field To Render Input For Adding Friends
+  // Form Field To Render Input For Adding Friends to Form
   renderFriends = ({ fields, meta: { error } }) => (
     <ul>
       {fields.map((friends, index) => (
