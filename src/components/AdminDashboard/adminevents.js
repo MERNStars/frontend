@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import AdminEventCard from "../AdminDashboard/adminEventCards";
-import styles from "../../styles/admin.module.scss";
 import { Menu, Segment, Card, Icon, Header, Placeholder } from "semantic-ui-react";
 require("dotenv").config();
 

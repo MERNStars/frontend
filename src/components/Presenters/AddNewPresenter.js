@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
-import {RenderTextField, RenderImageField} from '../FormFields/FormFields'
+import {RenderTextField} from '../FormFields/FormFields'
 import styles from '../../styles/form.module.scss';
 
 class AddNewPresenter extends Component {
@@ -49,6 +49,12 @@ class AddNewPresenter extends Component {
             label="Long Description"
           />
           <Field
+            name="contact_info"
+            component={RenderTextField}
+            type="textarea"
+            label="Social/Contact Link"
+          />
+          <Field
             name="avatar"
             component={RenderTextField}
             type="textarea"
@@ -57,7 +63,7 @@ class AddNewPresenter extends Component {
           <button type="submit" disabled={submitting} className={styles.NextButton}>
             Submit
           </button>
-          <button onClick={this.props.previousPage.goBack()} className={styles.PreviousButton}>Previous</button>
+          <button onClick={this.props.previousPage.goBack} className={styles.NextButton} id={styles.PreviousButton}>Previous</button>
         </form>
         
       </div>
