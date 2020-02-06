@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.1",
     "axios-mock-adapter": "^1.17.0",
+    "cypress": "^3.8.3",
     "dotenv": "^8.2.0",
     "moment": "^2.24.0",
     "node-sass": "^4.13.1",
