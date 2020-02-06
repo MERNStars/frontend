@@ -14,7 +14,6 @@ import { wait } from "@testing-library/react";
         cy.get('.form_SubmitButton__1Fwci').click().wait(1000).should(() => {
             expect(localStorage.getItem('weexplore_token')).to.exist
           })
-
         wait(1000)
     })
 
