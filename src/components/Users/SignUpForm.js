@@ -24,7 +24,7 @@ function mapStateToProps(state) {
   };
 }
 
-function usernameValidate(values) {
+function asyncValidate(values) {
   return Axios.post(`${process.env.REACT_APP_BACKEND_DB_URL}/users/exists`, {
     username: values.username
   }).then(response => {
@@ -34,13 +34,41 @@ function usernameValidate(values) {
   });
 }
 
+
 class SignUpForm extends Component {
+
+  RenderUsernameField({
+    input,
+    className,
+    label,
+    type,
+    meta: { asyncValidating, touched, error, warning }
+  }) {
+    return (
+      <div className={asyncValidating ? "async-validating" : ""}>
+        <label htmlFor={label}>{label}</label> <br />
+        <input
+          {...input}
+          className={className}
+          onChange={input.onChange}
+          placeholder={label}
+          type={type}
+          id={label}
+        />
+        {touched &&
+          ((error && <span>{error}</span>) ||
+            (warning && <span>{warning}</span>))}
+      </div>
+    );
+  }
+  
   render() {
     return (
       <form onSubmit={this.props.handleSubmit} >
+        
         <Field
           name="username"
-          component={RenderTextField}
+          component={this.RenderUsernameField}
           type="email"
           label="Email"
           className={styles.input}
@@ -115,6 +143,6 @@ class SignUpForm extends Component {
 export default reduxForm({
   form: "SignUpForm",
   validate,
-  usernameValidate,
+  asyncValidate,
   asyncBlurFields: ["username"]
 })(connect(mapStateToProps)(SignUpForm));
