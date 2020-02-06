@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { List, Container, Card, Button, Icon } from "semantic-ui-react";
+import { List, Container, Card, Icon } from "semantic-ui-react";
 import styles from "../styles/aboutus.module.scss";
 
 const items = [

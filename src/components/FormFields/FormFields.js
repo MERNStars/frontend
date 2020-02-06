@@ -1,7 +1,6 @@
 import React from "react";
-import Moment from 'moment'
 import {Image} from 'semantic-ui-react';
-import { NumberPicker, DropdownList, Multiselect, DateTimePicker} from "react-widgets";
+import { NumberPicker, DropdownList, Multiselect} from "react-widgets";
 import ImageUploadPreviewer from "../FormFields/ImageUploadPreviewer";
 
 // Contains Form Fields to be used in differnet forms

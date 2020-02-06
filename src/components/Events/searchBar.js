@@ -1,6 +1,6 @@
 import React from 'react';
 import Axios from 'axios';
-import { Input, Dropdown, Label } from 'semantic-ui-react';
+import { Input, Dropdown } from 'semantic-ui-react';
 import {connect} from 'react-redux';
 
 import styles from '../../styles/searchBar.module.scss';

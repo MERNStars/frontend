@@ -125,8 +125,7 @@ class Event extends React.Component {
         <header>
           <h2><Moment format="D MMM YYYY">{event_date.begin}</Moment></h2>
           <h1>{event_name}</h1>
-          <p>Hosted by {presenter_detail.map( (presenter) => {
-            return( `${presenter.title} ${presenter.first_name} ${presenter.last_name}`)})}</p>
+          <p>Hosted by {presenter_detail.length > 1 ? `${presenter_detail[0].title} ${presenter_detail[0].first_name} ${presenter_detail[0].last_name} & ${presenter_detail.length - 1} others`: `${presenter_detail[0].title} ${presenter_detail[0].first_name} ${presenter_detail[0].last_name}`} </p>
         </header>
         <div className={styles.eventBox}>
           <div className={styles.innerContainer}>
@@ -150,28 +149,33 @@ class Event extends React.Component {
           </div>
         </div>
         <div className={styles.eventBox} id={styles.descriptionBox}>
-        <h2>Here's a little more information</h2>
-            <Segment.Group horizontal >
-              <Segment.Group >
-                <Segment color='green'><Image src={require('../assets/staticmap.png')} size='medium' /></Segment>
-                <Segment.Group>
-                  <Segment><Icon name='point'/>weExplore Centre, Clayton, VIC <br /></Segment>
-                  <Segment><Icon name='clock outline' size='large'/>
+          <div className={styles.extraHeading}>
+            <h2>Here's a little more information<br /> about your event </h2>
+          </div>
+            <Card.Group itemsPerRow={2}>
+              <Card>
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3147.5656072708707!2d145.13745131537834!3d-37.917214979733764!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad61532fb442eab%3A0xe798a3aa5433fe99!2s51%20Morton%20St%2C%20Clayton%20VIC%203168!5e0!3m2!1sen!2sau!4v1580952340941!5m2!1sen!2sau" height={200} frameBorder={0}></iframe>
+                {/* <Image src={require('../assets/staticmap.png')} wrapped ui={false} size="medium"/> */}
+                <Card.Content className={styles.PresenterCard}>
+                  <Segment raised><Icon name='point'/>weExplore Centre, Clayton, VIC <br /></Segment>
+                  <Segment raised><Icon name='clock outline' size='large'/>
                     Duration <Moment to={event_date.begin} ago>
                     {event_date.end}
                     </Moment><br />
                     <h3>Start <Moment format=" h:mm a">{event_date.begin}</Moment></h3>
                     <h3>End <Moment format= "h:mm a">{event_date.end}</Moment></h3></Segment>
-                  <Segment>{this.renderIcons()}</Segment>
-                </Segment.Group>
-              </Segment.Group> 
-              <Segment.Group>
-                <Segment color='green'><Header textAlign='center'>
+                  {this.renderIcons()}
+                </Card.Content>
+              </Card> 
+              <Card className={styles.CustomCard}>
+                <Card.Content className={styles.PresenterCard}>
+                <Segment raised><Header textAlign='center' size='huge'>
                     Event Hosts
                   </Header></Segment>
-                  <Segment><Presenters {...this.state.event} {...this.props} /></Segment>
-              </Segment.Group>
-            </Segment.Group>   
+                  <Segment raised><Presenters {...this.state.event} {...this.props} /></Segment>
+                  </Card.Content>
+              </Card>
+            </Card.Group>  
         </div>
 
         <div className={styles.extraEventsBox}>
@@ -261,16 +265,14 @@ class Event extends React.Component {
 
   renderIcons() {
     const { is_family_friendly } = this.state.event;
-    return is_family_friendly ? <><Icon name='check' />Family Friendly</>: null;
+    return is_family_friendly ? <Segment><Icon name='check' />Family Friendly</Segment>: null;
   }
 
   render() {
-    console.log( this.state.event)
     return (
         <div className={styles.eventContainer}>
           {this.state.event ? this.renderEvent() : null}
         </div>
-      
     );
   }
 }

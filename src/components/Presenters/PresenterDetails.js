@@ -1,7 +1,5 @@
-
 import React from 'react';
-import styles from '../../styles/event.module.scss';
-import {Item} from 'semantic-ui-react';
+import {Item, Segment} from 'semantic-ui-react';
 
 
 class Presenters extends React.Component {
@@ -25,7 +23,8 @@ class Presenters extends React.Component {
                 <Item.Content>
                   <Item.Header>{presenter.title} {presenter.first_name} {presenter.last_name}</Item.Header><br />
                   <Item.Meta>{presenter.qualification}</Item.Meta><br />
-                {presenter.long_description}
+                {presenter.long_description}<br />
+                 <a href={presenter.contact_info}>Connect with {presenter.first_name}</a>
                 </Item.Content>
               </Item>)})
      

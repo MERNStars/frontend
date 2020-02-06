@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios';
-import { useParams } from "react-router-dom";
+import styles from '../../styles/form.module.scss';
+
 
 class PassResetForm extends Component{
 
@@ -68,7 +69,7 @@ class PassResetForm extends Component{
             type="password"
             onChange={this.updateConfirmPassword}
         /><label>{this.state.warning}</label><br/>
-        <button className="btnSubmit" type="submit" onClick={this.submit}>Submit</button>
+        <button className={styles.SubmitButton} type="submit" onClick={this.submit}>Submit</button>
         </div>;
         const confirmation = <div className="Container">
             <h2>{this.state.message}</h2>
