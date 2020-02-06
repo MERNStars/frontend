@@ -8,14 +8,14 @@ afterEach(cleanup);
 describe("<ContactForm />", () => {
   it("checks if contact form has rendered its form fields", () => {
     const { getByText } = render(wrapper(<ContactForm />));
-    expect(getByText("email")).toBeInTheDocument();
+    expect(getByText("Email")).toBeInTheDocument();
     expect(getByText("Submit")).toBeInTheDocument();
   });
   it("inputs data into form field", () => {
     
     const { getByLabelText } = render(wrapper(<ContactForm />));
-    fireEvent.change(getByLabelText("email"), {target: {value: 'test@test.com'}})
-    expect(getByLabelText("email").value).toBe('test@test.com')
+    fireEvent.change(getByLabelText("Email"), {target: {value: 'test@test.com'}})
+    expect(getByLabelText("Email").value).toBe('test@test.com')
   })
   it("checks if submit button has been called",() => {
     const onSubmit = jest.fn();
