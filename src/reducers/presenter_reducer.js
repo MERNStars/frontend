@@ -1,4 +1,6 @@
 import axios from "axios";
+const { presentersLoaded} = require("../actions/presenter_actions");
+
 require("dotenv").config();
 
 const initialState = {
@@ -6,11 +8,6 @@ const initialState = {
   presenters: [],
   selectedPresenters: null
 };
-
-const presentersLoaded = presenters => ({
-  type: "PRESENTERS_POPULATED",
-  data: presenters
-});
 
 export const loadPresenters = () => {
   return dispatch => {

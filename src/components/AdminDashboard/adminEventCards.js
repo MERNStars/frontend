@@ -4,10 +4,11 @@ import Moment from "react-moment";
 import AttendeeList from "../Events/eventAttendeesList";
 import Axios from "axios";
 import { withRouter } from "react-router-dom";
-import { deleteEvents, updateEvents } from "../../reducers/event_reducer";
+// import { deleteEvents, updateEvents } from "../../reducers/event_reducer";
 import { connect } from "react-redux";
 import Presenter from "../Presenters/PresenterDetails";
 import { NotificationManager } from "react-notifications";
+const {deleteEvents, updateEvents} = require("../../actions/event_actions");
 
 const mapDispatchToProps = {
   deleteEvents,

@@ -13,7 +13,7 @@ export default class Contact extends Component {
   submit = data => {
     console.log(data)
     axios
-      .post(`${process.env.REACT_APP_BACKEND_DB_URL}/email`, data)
+      .post(`${process.env.REACT_APP_BASE_URL}/email`, data)
       .then(response => {
         console.log(response);
         if(response.status === 200) 

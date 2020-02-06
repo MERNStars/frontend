@@ -35,7 +35,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test-coverage": "react-scripts test --coverage --watchAll=false",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "jest": "jest",
+    "jest:watch": "yarn jest -- --watch"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -56,5 +58,9 @@
     "cldr$": "cldrjs",
     "cldr": "cldrjs/dist/cldr"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "expect": "^25.1.0",
+    "fetch-mock": "^9.0.0-beta.2",
+    "supertest": "^4.0.2"
+  }
 }

@@ -5,11 +5,14 @@ import AdminMembers from "../components/AdminDashboard/adminmembers";
 import { Grid, Card, Menu, Icon } from "semantic-ui-react";
 import { connect } from "react-redux";
 import Moment from "moment";
-import { populateEvents } from "../reducers/event_reducer";
+
 import { NotificationManager } from "react-notifications";
-import { loadPresenters } from "../reducers/presenter_reducer";
+// import { loadPresenters } from "../reducers/presenter_reducer";
 import styles from "../styles/admin.module.scss";
 require("dotenv").config();
+
+const {loadPresenters} = require('../reducers/presenter_reducer');
+const {populateEvents} = require("../actions/event_actions");
 
 function mapStateToProps(state) {
   return {

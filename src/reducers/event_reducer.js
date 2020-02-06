@@ -1,6 +1,8 @@
 import Axios from "axios";
 import { NotificationManager } from "react-notifications";
 
+const {noImage, newImage, eventUpdated, eventCreated} = require("../actions/event_actions");
+
 require("dotenv").config();
 const initialState = {
   event_categories: [
@@ -30,46 +32,6 @@ const initialState = {
   events: [],
 
   newImage: null
-};
-
-export const populateEvents = events => {
-  return {
-    type: "POPULATE_EVENTS",
-    data: events
-  };
-};
-
-export const deleteEvents = events => {
-  return {
-    type: "EVENT_DELETED",
-    data: events
-  };
-};
-
-const eventCreated = message => ({
-  type: "EVENT_CREATED",
-  message: message
-});
-
-const eventUpdated = data => ({
-  type: "EVENT_EDITED",
-  data: data
-});
-
-const newImage = data => ({
-  type: "NEW_IMAGE",
-  data: data
-});
-
-const noImage = () => ({
-  type: "RESET_IMAGE"
-});
-
-export const updateEvents = events => {
-  return {
-    type: "UPDATE_EVENTS",
-    data: events
-  };
 };
 
 export const setNewImage = fileData => {
@@ -244,3 +206,4 @@ const eventReducer = (state = initialState, action) => {
 };
 
 export default eventReducer;
+// module.export = { eventReducer };
