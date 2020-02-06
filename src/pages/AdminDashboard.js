@@ -62,7 +62,7 @@ class AdminDashboard extends Component {
         new Moment(a.event_date.begin).format("YYYYMMDD") -
         new Moment(b.event_date.begin).format("YYYYMMDD")
     );
-    this.props.populateEvents(data);
+    this.props.populateEvents(sortedArray);
 
     if (localStorage.message) {
       NotificationManager.success(null, localStorage.message);
